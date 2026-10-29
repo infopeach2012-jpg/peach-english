@@ -144,10 +144,12 @@
   const THEME_KEY = 'speak.theme';
   function getTheme() { try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch (e) { return 'auto'; } }
   function applyTheme(t) {
-    const dark = t === 'dark' || (t === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    // 2026-10-29〜 Apple 風の黒い見た目に固定（ライト/ダークの設定より優先）
+    const dark = true;
     document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.classList.add('apple');
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', dark ? '#111c20' : '#0f766e');
+    if (meta) meta.setAttribute('content', '#000000');
   }
   function setTheme(t) {
     try { localStorage.setItem(THEME_KEY, t); } catch (e) {}

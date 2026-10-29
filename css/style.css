@@ -162,3 +162,97 @@ button { cursor:pointer; }
 
 html.dark .bg-violet-100 { background:var(--brand-soft); }
 #ls-play,#ls-prev,#ls-next { font-family:Arial,sans-serif; }
+
+/* ============================================================
+   Apple の製品ページ風の見た目（2026-10-29 代表「このデザインを参考に」）
+   黒地・濃いグレーの角丸の箱・大きく太い白の見出し・灰色の説明・青のボタン
+   Codex の画面構成（app-shell / practice-grid など）の色と形だけを差し替える
+   ============================================================ */
+html.apple { color-scheme: dark;
+  --surface:#0f0f10; --canvas:#000; --line:#1d1d1f; --muted:#86868b; --ink:#f5f5f7;
+  --brand:#2997ff; --brand2:#2997ff; --brand-soft:#1d1d1f; }
+html.apple body { background:#000 !important; color:#f5f5f7; letter-spacing:-0.01em; }
+html.apple .app-header { background:rgba(0,0,0,.85); backdrop-filter:saturate(180%) blur(20px); border-bottom-color:#1d1d1f; }
+html.apple .wordmark { color:#f5f5f7; }
+html.apple .wordmark i { background:#2997ff; }
+html.apple #hdr-title { font-size:17px; }
+html.apple .header-actions button { background:#1d1d1f; border-color:#1d1d1f; color:#f5f5f7; border-radius:980px; }
+html.apple .header-actions .home-button { color:#2997ff; }
+
+/* 箱: 線・影を使わず、濃いグレーの大きな角丸 */
+html.apple .daily-progress, html.apple .practice-card, html.apple .continue-card, html.apple .lesson-feature,
+html.apple .listen-player, html.apple .bg-white.rounded-2xl, html.apple .bg-white.rounded-3xl, html.apple .ls-row,
+html.apple .bg-gray-50.rounded-2xl { background:#0f0f10 !important; border-color:#0f0f10 !important; border-radius:24px !important; box-shadow:none !important; }
+html.apple .practice-card:hover { border-color:#2c2c2e; }
+html.apple .practice-icon { background:#1d1d1f; color:#f5f5f7; border-radius:14px; }
+html.apple .practice-card h3, html.apple .continue-card h3 { font-size:22px; letter-spacing:-0.02em; }
+html.apple .practice-link, html.apple .continue-card>span:last-child { color:#2997ff; }
+html.apple .home-intro h2 { font-size:44px; letter-spacing:-0.03em; line-height:1.15; }
+html.apple .intro-description, html.apple .daily-progress p, html.apple .practice-card p, html.apple .continue-card p { color:#86868b; }
+html.apple .daily-count { color:#f5f5f7; }
+html.apple .progress-track { background:#2c2c2e; } html.apple .progress-track span { background:#f5f5f7; }
+html.apple .daily-meta { border-top-color:#1d1d1f; }
+html.apple .lesson-feature { background:#0f0f10 !important; color:#f5f5f7; }
+html.apple .lesson-feature .eyebrow { color:#86868b; } html.apple .lesson-feature p { color:#86868b; }
+html.apple .lesson-feature h3 { font-size:28px; letter-spacing:-0.02em; }
+html.apple .feature-action { background:#0071e3; color:#fff; border-radius:980px; }
+html.apple .section-heading h3 { font-size:22px; letter-spacing:-0.02em; }
+html.apple .utility-links button { color:#2997ff; }
+html.apple .home-footer { border-top-color:#1d1d1f; color:#6e6e73; }
+html.apple .eyebrow, html.apple .header-eyebrow { color:#86868b; }
+
+/* Tailwind の色クラスを黒地向けに */
+html.apple .bg-white { background:#0f0f10 !important; }
+html.apple .bg-gray-50, html.apple .bg-gray-100, html.apple .bg-violet-50, html.apple .bg-violet-100, html.apple .bg-pink-50, html.apple .bg-blue-50,
+html.apple .bg-green-50, html.apple .bg-red-50, html.apple .bg-orange-50, html.apple .bg-amber-50 { background:#1d1d1f !important; }
+html.apple .bg-gray-200 { background:#2c2c2e !important; }
+html.apple .bg-gray-800 { background:#f5f5f7 !important; color:#000 !important; }
+html.apple .border, html.apple .border-gray-100, html.apple .border-gray-200, html.apple .border-dashed { border-color:#1d1d1f !important; }
+html.apple .shadow-sm, html.apple .shadow-md, html.apple .shadow-lg { box-shadow:none !important; }
+html.apple .rounded-2xl, html.apple .rounded-3xl { border-radius:24px !important; }
+html.apple .text-gray-800, html.apple .text-gray-900 { color:#f5f5f7 !important; }
+html.apple .text-gray-700 { color:#d2d2d7 !important; }
+html.apple .text-gray-600 { color:#a1a1a6 !important; }
+html.apple .text-gray-500 { color:#86868b !important; }
+html.apple .text-gray-400 { color:#6e6e73 !important; }
+html.apple .text-gray-300 { color:#515154 !important; }
+html.apple .text-brand { color:#2997ff !important; }
+html.apple .text-xl { font-size:1.5rem !important; line-height:1.2 !important; }
+html.apple .font-bold, html.apple .font-extrabold { letter-spacing:-0.02em; }
+
+/* 強調: 青（#2997ff / ボタンは #0071e3）。グラデーションは使わない */
+html.apple .brand-grad { background:#1d1d1f !important; background-image:none !important; }
+html.apple .h-full.brand-grad { background:#f5f5f7 !important; }
+html.apple .h-1\.5.bg-gray-100 { background:#2c2c2e !important; }
+html.apple .w-20.h-20.brand-grad, html.apple #ls-play, html.apple .mic-btn.brand-grad { background:#f5f5f7 !important; color:#000 !important; box-shadow:none !important; }
+html.apple #ls-prev, html.apple #ls-next, html.apple .w-12.h-12.bg-gray-100 { background:#1d1d1f !important; color:#f5f5f7 !important; }
+html.apple #ls-en { font-size:32px; letter-spacing:-0.02em; }
+html.apple .listen-options { border-top-color:#1d1d1f; }
+html.apple .situation-select, html.apple .playback-quick select, html.apple select, html.apple input, html.apple textarea { background:#1d1d1f !important; border-color:#2c2c2e !important; color:#f5f5f7 !important; border-radius:12px; }
+html.apple .playback-quick label, html.apple .situation-label { color:#86868b; }
+html.apple .bg-white.text-brand, html.apple .bg-white.text-brand.shadow-sm,
+html.apple [data-tab].brand-grad, html.apple [data-sit].brand-grad, html.apple .chip.brand-grad, html.apple [data-theme].brand-grad,
+html.apple .chip.bg-violet-100 { background:#f5f5f7 !important; color:#000 !important; }
+html.apple button.brand-grad.rounded-xl, html.apple #set-save, html.apple #q-again, html.apple #q-next, html.apple .rounded-full.brand-grad.px-4 { background:#0071e3 !important; color:#fff !important; border-radius:980px !important; }
+html.apple .brand-grad.text-white { color:#fff !important; }
+html.apple #view-home .bg-white\/20 { background:#0071e3 !important; }
+
+/* 下のメニュー・メニューの板 */
+html.apple .bottom-nav, html.apple.dark .bottom-nav { background:rgba(0,0,0,.82) !important; backdrop-filter:saturate(180%) blur(20px); border-color:#1d1d1f; box-shadow:none; }
+html.apple .bottom-nav button { color:#6e6e73; }
+html.apple .bottom-nav button.active, html.apple.dark .bottom-nav button.active { background:#1d1d1f; color:#f5f5f7; }
+html.apple #menu-ov>div { background:#0f0f10 !important; border-color:#1d1d1f; }
+html.apple .fixed.bg-black\/40 { background:rgba(0,0,0,.6) !important; }
+
+/* 正誤・ハイライト */
+html.apple .opt-correct { background:#0d2b1a !important; border-color:#30d158 !important; color:#30d158 !important; }
+html.apple .opt-wrong { background:#2c1214 !important; border-color:#ff453a !important; color:#ff453a !important; }
+html.apple .wtok.ok { color:#30d158; background:#0d2b1a; }
+html.apple .wtok.ng { color:#ff453a; background:#2c1214; }
+html.apple .ls-row.ls-now { border-color:#2997ff !important; background:#0f1b2a !important; }
+html.apple .ls-sent.ls-now { background:#f5f5f7; color:#000; }
+html.apple .text-red-600 { color:#ff453a !important; } html.apple .border-red-200 { border-color:#3a1a1c !important; }
+html.apple button:focus-visible, html.apple a:focus-visible, html.apple select:focus-visible, html.apple summary:focus-visible { outline-color:#2997ff; }
+/* タブ（フレーズ・単語／長文）: 選ばれたものは白地に黒。青のボタンの規則より後に書いて優先 */
+html.apple [data-tab].brand-grad { background:#f5f5f7 !important; color:#000 !important; border-radius:980px !important; }
+html.apple [data-tab].bg-gray-100 { border-radius:980px !important; }
