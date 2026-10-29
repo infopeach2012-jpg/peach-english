@@ -69,6 +69,7 @@
   const textToKey = {};
   const audioEl = (typeof Audio !== 'undefined') ? new Audio() : null;
   let clipStop = null;
+  let clipEpoch = 0;
   function normText(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
   async function loadClips(base) {
     try {
@@ -84,6 +85,7 @@
   function hasClip(key) { return !!(clipIndex && key && clipIndex[key]); }
   function clipKeyFor(text) { return textToKey[normText(text)] || null; }
   function stopClip() {
+    clipEpoch++;
     if (clipStop) { const f = clipStop; clipStop = null; f(); }
   }
   // ---- Web Audio で区間を正確に再生（MP3 の seek に頼らない。seek が効かない端末で頭から鳴って途中で切れていた） ----
@@ -124,8 +126,10 @@
   function playClipWebAudio(ent, rate) {
     const [file, start, dur0] = ent;
     const c = ensureCtx();
+    const epoch = clipEpoch;
     if (!c) return Promise.resolve(false);
     return loadBuffer(file).then((buf) => new Promise((resolve) => {
+      if (epoch !== clipEpoch) { resolve(true); return; }
       const dur = dur0 == null ? Math.max(0, buf.duration - start) : dur0;
       if (c.state === 'suspended') { try { c.resume(); } catch (e) { /* noop */ } }
       const src = c.createBufferSource();
@@ -143,7 +147,7 @@
   // 次に使う場面のファイルを先に読んでおく
   function prefetchClip(key) {
     const ent = clipIndex && clipIndex[key];
-    if (ent && ensureCtx()) loadBuffer(ent[0]).catch(() => {});
+    if (ent && ensureCtx()) loadBuffer(typeof ent === 'string' ? ent : ent[0]).catch(() => {});
   }
 
   function playClip(key, opts) {
@@ -151,7 +155,10 @@
     let ent = clipIndex && clipIndex[key];
     if (!ent) return Promise.resolve(false);
     // 索引の値は [ファイル名, 開始秒, 長さ] か、ファイル名だけ（1文1ファイル。Codex などで作った音声向け）
-    if (typeof ent === 'string') ent = [ent, 0, null];
+    if (typeof ent === 'string') {
+      // Whole clips use the media element to preserve the voice at faster speeds.
+      return playClipElement([ent, 0, null], opts);
+    }
     stopClip();
     if (AC) return playClipWebAudio(ent, opts.rate != null ? opts.rate : 1).then((ok) => ok || playClipElement(ent, opts));
     return playClipElement(ent, opts);
@@ -190,6 +197,8 @@
       // 3) 再生。終わりは「実際の再生位置」で判断する（時計で切ると読み込み待ちの分だけ早く切れる）
       const startPlayback = () => {
         if (finished) return;
+        audioEl.preservesPitch = true;
+        audioEl.webkitPreservesPitch = true;
         audioEl.playbackRate = rate;
         const p = audioEl.play();
         if (p && p.catch) p.catch(() => finish(false));

@@ -2,39 +2,6 @@
 (function () {
   'use strict';
 
-  function ring(pct, count, goal) {
-    const R = 46, C = 2 * Math.PI * R;
-    const off = C * (1 - Math.min(1, pct / 100));
-    return `
-      <svg viewBox="0 0 110 110" width="130" height="130" class="ring">
-        <circle cx="55" cy="55" r="${R}" stroke="#ede9fe"></circle>
-        <circle cx="55" cy="55" r="${R}" stroke="url(#g)" stroke-dasharray="${C}" stroke-dashoffset="${off}"></circle>
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#6d28d9"/><stop offset="1" stop-color="#ec4899"/>
-        </linearGradient></defs>
-      </svg>`;
-  }
-
-  function tile(view, emoji, title, sub, tint) {
-    return `
-      <button data-go="${view}" class="row text-left bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3 w-full">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0" style="background:${tint}">${emoji}</div>
-        <div class="min-w-0 flex-1">
-          <div class="font-bold text-gray-800">${title}</div>
-          <div class="text-xs text-gray-500 mt-0.5">${sub}</div>
-        </div>
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#c4b5fd" stroke-width="2.5"><path d="m9 6 6 6-6 6"/></svg>
-      </button>`;
-  }
-
-  function miniTile(view, emoji, title) {
-    return `
-      <button data-go="${view}" class="row bg-white border border-gray-100 rounded-2xl p-3 shadow-sm text-center">
-        <div class="text-2xl">${emoji}</div>
-        <div class="text-xs font-bold text-gray-700 mt-1">${title}</div>
-      </button>`;
-  }
-
   function render(container) {
     const S = window.Store;
     const C = S.content;
@@ -47,92 +14,32 @@
     const deck = window.CardsView.buildDeck();
     const srs = S.srsSummary(deck);
 
-    const sentences = C.phrases.filter((p) => p.kind === 'sentence').length;
-    const hour = new Date().getHours();
-    const greet = hour < 5 ? 'こんばんは' : hour < 11 ? 'おはようございます' : hour < 18 ? 'こんにちは' : 'こんばんは';
-
     const goalDone = cnt >= goal;
     const lessonDone = window.LessonView && window.LessonView.isDoneToday();
 
+    const modes = [
+      ['listen', '01', '聞く', '聞き流し', '自然な英語を、日常のすきま時間に。', 'headphones'],
+      ['speaking', '02', '話す', '発音・スピーキング', '声に出して、一文ずつ自分の英語に。', 'mic'],
+      ['roleplay', '03', '使う', 'ロールプレイ', '旅先や仕事の会話を、相手役と練習。', 'chat'],
+      ['shadow', '04', '深める', '長文・シャドーイング', '英語のリズムを、聞いて、まねする。', 'book'],
+    ];
+    const icons = {
+      headphones: '<path d="M4 17v-5a8 8 0 0 1 16 0v5M4 13h3v7H5a1 1 0 0 1-1-1zm16 0h-3v7h2a1 1 0 0 0 1-1z"/>',
+      mic: '<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>',
+      chat: '<path d="M20 11a8 8 0 0 1-8 8H5l-3 3V11a9 9 0 0 1 18 0zM7 9h8M7 13h5"/>',
+      book: '<path d="M12 5v16M3 4h5a4 4 0 0 1 4 2 4 4 0 0 1 4-2h5v15h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/>',
+    };
     container.innerHTML = `
-      <!-- 今日のゴール -->
-      <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm flex items-center gap-4 mb-4">
-        <div class="relative shrink-0" style="width:130px;height:130px">
-          ${ring(pct)}
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <div class="text-3xl font-extrabold text-gray-800">${cnt}</div>
-            <div class="text-[11px] text-gray-400 font-semibold">/ ${goal} 今日</div>
-          </div>
-        </div>
-        <div class="flex-1">
-          <div class="text-sm text-gray-500">${greet}、渡辺さん</div>
-          <div class="text-lg font-bold text-gray-800 mt-0.5">${goalDone ? '今日の目標達成！🎉' : '今日の学習を始めましょう'}</div>
-          <div class="flex gap-2 mt-3">
-            <div class="flex-1 bg-violet-50 rounded-xl px-3 py-2 text-center">
-              <div class="text-lg font-bold text-brand">🔥 ${S.progress.streak.count}</div>
-              <div class="text-[10px] text-gray-500">連続日数</div>
-            </div>
-            <div class="flex-1 bg-pink-50 rounded-xl px-3 py-2 text-center">
-              <div class="text-lg font-bold" style="color:var(--brand2)">${spk.avg}<span class="text-xs">%</span></div>
-              <div class="text-[10px] text-gray-500">発音平均</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 今日のレッスン（総合コース） -->
-      <button data-go="lesson" class="w-full text-left rounded-3xl p-5 shadow-md mb-4 relative overflow-hidden brand-grad text-white">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-[11px] font-semibold opacity-80">TODAY'S LESSON</div>
-            <div class="text-xl font-bold mt-1">今日のレッスン ${lessonDone ? '✅' : ''}</div>
-            <div class="text-xs opacity-90 mt-1">${lessonDone ? '本日達成！もう一周もOK' : '単語→発音→会話→クイズを約5分で'}</div>
-          </div>
-          <div class="text-5xl opacity-90">🎓</div>
-        </div>
-        <div class="inline-block mt-3 bg-white/20 rounded-full px-4 py-1.5 text-sm font-bold">${lessonDone ? '▶ もう一度' : '▶ はじめる'}</div>
-      </button>
-
-      <!-- AI会話（目玉機能） -->
-      <button data-go="freetalk" class="w-full text-left rounded-3xl p-5 shadow-md mb-4 relative overflow-hidden" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">
-        <div class="text-white">
-          <div class="text-[11px] font-semibold opacity-80">AIと英会話 · Speak的フリートーク</div>
-          <div class="text-xl font-bold mt-1">AIと自由に話そう 🤖</div>
-          <div class="text-xs opacity-90 mt-1">6つの場面・声で会話・その場で添削とヒント</div>
-          <div class="inline-block mt-3 bg-white/20 rounded-full px-4 py-1.5 text-sm font-bold">▶ 会話をはじめる</div>
-        </div>
-        <div class="absolute -right-3 -bottom-3 text-7xl opacity-20">💬</div>
-      </button>
-
-      <!-- おすすめ（今日の続き） -->
-      <button data-go="cards" class="brand-grad text-white rounded-3xl p-5 w-full text-left shadow-md mb-5 relative overflow-hidden">
-        <div class="text-[11px] font-semibold opacity-80">今日の復習</div>
-        <div class="text-xl font-bold mt-1">${srs.dueNow > 0 ? srs.dueNow + '枚のカードが復習待ち' : '新しいカードに挑戦'}</div>
-        <div class="text-xs opacity-90 mt-1">習得済み ${srs.learned} / ${srs.total} 枚 ・ SRSで記憶に定着</div>
-        <div class="inline-block mt-3 bg-white/20 rounded-full px-4 py-1.5 text-sm font-bold">▶ 今すぐ復習</div>
-        <div class="absolute -right-4 -bottom-4 text-7xl opacity-20">🧠</div>
-      </button>
-
-      <div class="text-xs font-bold text-gray-400 mb-2 px-1">トレーニング</div>
-      <div class="space-y-2.5">
-        ${tile('listen', '🎧', '聞き流し', `${C.phrases.length} フレーズを場面別に・長文も自動で進む`, '#fef3c7')}
-        ${tile('speaking', '🗣️', '発音・スピーキング', `${sentences} 文 ＋ 単語練習・AIが発音を採点`, '#ede9fe')}
-        ${tile('roleplay', '💬', 'ロールプレイ会話', `${C.dialogues.length} 場面・相手役と実践会話`, '#fce7f3')}
-        ${tile('cards', '🎴', 'フラッシュカード', `${C.phrases.length + C.notes.length} 枚・間隔反復で暗記`, '#dbeafe')}
-        ${tile('shadow', '📖', '長文・シャドーイング', `東北旅行エッセイ ＋ スピーチ${C.speeches.length ? '練習' : ''}`, '#dcfce7')}
-      </div>
-
-      <div class="text-xs font-bold text-gray-400 mb-2 px-1 mt-5">その他</div>
-      <div class="grid grid-cols-4 gap-2.5">
-        ${miniTile('review', '⭐', '復習')}
-        ${miniTile('quiz', '🧩', 'クイズ')}
-        ${miniTile('stats', '📊', '統計')}
-        ${miniTile('dict', '📚', '辞書')}
-      </div>
-
-      <div class="mt-5 text-center">
-        <button id="home-settings" class="text-xs text-gray-400 underline">設定・進捗リセット</button>
-      </div>
+      <section class="home-intro"><div><p class="eyebrow">A LITTLE PRACTICE. A BIG DIFFERENCE.</p><h2>英語を、もっと<br>あなたの日常に。</h2><p class="intro-description">聞く。話す。少しずつ、自然に。<br>今日はどんな練習をしましょうか。</p></div>
+        <div class="daily-progress"><span class="eyebrow">TODAY'S PROGRESS</span><div class="daily-count">${cnt}<span> / ${goal}</span></div><div class="progress-track"><span style="width:${Math.min(100,pct)}%"></span></div><p>${goalDone ? '今日の目標を達成しました' : '自分のペースで続けましょう'}</p><div class="daily-meta"><span>${S.progress.streak.count} 日連続</span><span>発音平均 ${spk.avg}%</span></div></div>
+      </section>
+      <button data-go="lesson" class="lesson-feature"><div><span class="eyebrow">YOUR DAILY SESSION · 約5分</span><h3>今日のレッスン</h3><p>${lessonDone ? '今日のレッスンは完了。もう一度練習しますか？' : '単語・発音・会話・クイズを、ひとつの流れで。'}</p></div><span class="feature-action">${lessonDone ? 'もう一度' : 'はじめる'} <span aria-hidden="true">↗</span></span></button>
+      <div class="section-heading"><h3>練習を選ぶ</h3><span>MAKE IT YOUR ROUTINE</span></div>
+      <div class="practice-grid">${modes.map(([view,num,label,title,desc,icon])=>`<button data-go="${view}" class="practice-card"><div class="practice-top"><span class="practice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${icons[icon]}</svg></span><span class="practice-number">${num} / ${label}</span></div><h3>${title}</h3><p>${desc}</p><span class="practice-link">練習する <span aria-hidden="true">→</span></span></button>`).join('')}</div>
+      <div class="section-heading"><h3>もう一歩、続けよう</h3></div>
+      <div class="continue-grid"><button data-go="cards" class="continue-card"><span class="eyebrow">REVIEW</span><h3>${srs.dueNow > 0 ? srs.dueNow + '枚のカードを復習' : 'フラッシュカード'}</h3><p>習得済み ${srs.learned} / ${srs.total} 枚</p><span>カードを開く →</span></button><button data-go="freetalk" class="continue-card"><span class="eyebrow">CONVERSATION</span><h3>AIと自由に話す</h3><p>6つの場面で、英語のやりとりを。</p><span>会話をはじめる →</span></button></div>
+      <div class="utility-links"><button data-go="quiz">クイズ</button><button data-go="review">復習ボックス</button><button data-go="dict">フレーズ辞書</button><button data-go="stats">学習の記録</button><button id="home-settings">設定</button></div>
+      <footer class="home-footer">SPEAK STUDIO <span>少しの練習を、毎日の習慣に。</span></footer>
     `;
 
     container.querySelectorAll('[data-go]').forEach((b) => {

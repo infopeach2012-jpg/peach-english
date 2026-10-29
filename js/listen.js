@@ -22,8 +22,8 @@
     { key: 'grammar', emoji: '🔤', label: '単語・文法メモ' },
   ];
 
-  const SETTINGS_KEY = 'speak.listen.v1';
-  let settings = { tab: 'phrase', sit: 'greet', rate: 1, ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0.8, pattern: 'std' };
+  const SETTINGS_KEY = 'speak.listen.v2';
+  let settings = { tab: 'phrase', sit: 'greet', rate: 1.2, ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std' };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
 
@@ -82,6 +82,8 @@
   function render(c) {
     container = c;
     draw();
+    // Navigation from a tap can unlock audio on iPad; fresh loads need a play tap.
+    if (navigator.userActivation && navigator.userActivation.hasBeenActive) play();
   }
 
   function draw() {
@@ -103,7 +105,7 @@
 
   function player(extra) {
     return `
-      <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-4">
+      <div class="listen-player bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-4">
         <div class="flex items-center justify-between text-xs font-semibold text-gray-500 mb-1">
           <span id="ls-pos">— / —</span><span id="ls-sub"></span>
         </div>
@@ -111,11 +113,12 @@
         <div id="ls-en" class="text-[22px] font-bold text-gray-800 leading-snug min-h-[64px]" style="text-wrap:balance">再生を押すと順に流れます</div>
         <div id="ls-ja" class="text-sm text-gray-500 mt-2 min-h-[20px]"></div>
         <div class="flex items-center justify-center gap-5 mt-5">
-          <button id="ls-prev" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="前へ">⏮</button>
-          <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">▶</button>
-          <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">⏭</button>
+          <button id="ls-prev" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="前へ">⏮︎</button>
+          <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">▶︎</button>
+          <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">⏭︎</button>
         </div>
-        ${extra || ''}
+        <div class="playback-quick"><label>再生速度<select id="ls-speed">${[0.75,1,1.15,1.2,1.25,1.5,1.75,2].map(v=>`<option value="${v}" ${settings.rate === v ? 'selected' : ''}>${v}倍${v===1.2 ? '（おすすめ）' : ''}</option>`).join('')}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
+        <details class="listen-options"><summary>再生設定 <span>速度・和訳・繰り返し</span></summary>${extra || ''}</details>
       </div>`;
   }
 
@@ -130,10 +133,8 @@
         ${seg('pattern', [{ v: 'std', l: '英語 → 和訳' }, { v: 'study', l: '英語 → ゆっくり → 和訳 → 英語' }], settings.pattern)}
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
-        <div><div class="text-gray-400 mb-1">速さ</div>${seg('rate', [{ v: 0.8, l: 'ゆっくり' }, { v: 1, l: '普通' }, { v: 1.2, l: '速め' }], settings.rate)}</div>
         <div><div class="text-gray-400 mb-1">和訳の読み上げ</div>${seg('ja', [{ v: true, l: 'あり' }, { v: false, l: 'なし' }], settings.ja)}</div>
         <div><div class="text-gray-400 mb-1">1文の繰り返し</div>${seg('repeat', [{ v: 1, l: '1回' }, { v: 2, l: '2回' }, { v: 3, l: '3回' }], settings.repeat)}</div>
-        <div><div class="text-gray-400 mb-1">文の間</div>${seg('gap', [{ v: 0.3, l: '短め' }, { v: 0.8, l: '普通' }, { v: 1.5, l: '長め' }], settings.gap)}</div>
       </div>
       ${voiceRow()}`;
   }
@@ -170,12 +171,15 @@
         const n = b.dataset.set, v = b.dataset.val;
         settings[n] = n === 'ja' ? v === 'true' : (isNaN(Number(v)) ? v : Number(v));
         saveSettings();
+        stop();
         onChange();
       };
     });
   }
 
   function bindPlayer(root, buildQueue) {
+    root.querySelector('#ls-speed').onchange = (e) => { settings.rate = Number(e.target.value); saveSettings(); if (playing) { pause(); play(); } };
+    root.querySelector('#ls-gap').onchange = (e) => { settings.gap = Number(e.target.value); saveSettings(); };
     root.querySelector('#ls-play').onclick = () => { if (playing) pause(); else play(buildQueue); };
     root.querySelector('#ls-next').onclick = () => jump(1, buildQueue);
     root.querySelector('#ls-prev').onclick = () => jump(-1, buildQueue);
@@ -185,20 +189,15 @@
   function drawPhrase(body) {
     const all = sitCount('all');
     body.innerHTML = `
-      <div class="flex gap-2 mb-3 overflow-x-auto pb-1 -mx-1 px-1">
-        <button data-sit="all" class="chip whitespace-nowrap ${settings.sit === 'all' ? 'brand-grad text-white' : 'bg-gray-100 text-gray-600'}">🔀 すべて ${all}</button>
-        ${SITS.map((s) => {
-          const n = sitCount(s.key);
-          if (!n) return '';
-          return `<button data-sit="${s.key}" class="chip whitespace-nowrap ${settings.sit === s.key ? 'brand-grad text-white' : 'bg-gray-100 text-gray-600'}">${s.emoji} ${s.label} ${n}</button>`;
-        }).join('')}
-      </div>
+      <label class="situation-label" for="ls-situation">練習する場面</label>
+      <select id="ls-situation" class="situation-select"><option value="all" ${settings.sit === 'all' ? 'selected' : ''}>すべての場面 · ${all}件</option>${SITS.map(s=>`<option value="${s.key}" ${settings.sit === s.key ? 'selected' : ''}>${s.label} · ${sitCount(s.key)}件</option>`).join('')}</select>
       <div class="flex gap-2 mb-4">
         ${[['all', '文も単語も'], ['sentence', '文だけ'], ['word', '単語だけ']].map(([v, l]) => `<button data-kind="${v}" class="chip ${settings.kind === v ? 'bg-violet-100 text-brand' : 'bg-gray-50 text-gray-500'}">${l}</button>`).join('')}
       </div>
       ${player(settingsRow())}
       <div id="ls-list" class="space-y-1"></div>
     `;
+    body.querySelector('#ls-situation').onchange = (e) => { const resume = playing; settings.sit = e.target.value; saveSettings(); draw(); if (resume) play(); };
     body.querySelectorAll('[data-sit]').forEach((b) => { b.onclick = () => { settings.sit = b.dataset.sit; saveSettings(); draw(); }; });
     body.querySelectorAll('[data-kind]').forEach((b) => { b.onclick = () => { settings.kind = b.dataset.kind; saveSettings(); draw(); }; });
     bindSettings(body, () => drawPhrase(body));
@@ -214,6 +213,7 @@
     list.querySelectorAll('[data-i]').forEach((b) => { b.onclick = () => { idx = Number(b.dataset.i); play(); }; });
     const sitLabel = settings.sit === 'all' ? 'すべて' : (SITS.find((s) => s.key === settings.sit) || {}).label;
     body.querySelector('#ls-sub').textContent = sitLabel;
+    if (queue.length) { body.querySelector('#ls-en').textContent = queue[0].en; body.querySelector('#ls-ja').textContent = queue[0].ja; }
     updatePos();
     bindPlayer(body);
   }
@@ -295,16 +295,16 @@
     if (ja) ja.textContent = q.ja || '';
     updatePos();
     const now = container.querySelector('.ls-now');
-    if (now && now.scrollIntoView) now.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (settings.tab === 'text' && now && now.scrollIntoView) now.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
   function setPlayBtn() {
     const b = container.querySelector('#ls-play');
-    if (b) b.textContent = playing ? '⏸' : '▶';
+    if (b) { b.textContent = playing ? 'Ⅱ' : '▶︎'; b.setAttribute('aria-label', playing ? '一時停止' : '再生'); }
   }
 
   async function play() {
     if (!queue.length) { window.App.toast('再生するものがありません'); return; }
-    if (!window.Speech.ttsSupported) { window.App.toast('この端末は音声読み上げに対応していません'); return; }
+    if (!window.Speech.ttsSupported && !window.Speech.clipsLoaded) { window.App.toast('この端末は音声読み上げに対応していません'); return; }
     window.Speech.unlockAudio();
     const my = ++session;
     playing = true;
@@ -321,19 +321,19 @@
       const alive = () => playing && my === session;
       for (let r = 0; r < settings.repeat && alive(); r++) {
         await window.Speech.speak(q.en, { rate: settings.rate, key: q.key });
-        if (r + 1 < settings.repeat && alive()) await sleep(300);
+        if (r + 1 < settings.repeat && alive()) await sleep(100);
       }
       if (settings.pattern === 'study' && alive()) {
         // 学習パターン: 英語 → ゆっくり → 和訳（あれば）→ 英語
-        await sleep(350);
+        await sleep(150);
         if (alive()) await window.Speech.speak(q.en, { rate: settings.rate, key: q.key, slow: true });
       }
       if (settings.ja && q.ja && alive()) {
-        await sleep(200);
+        await sleep(100);
         await window.Speech.speak(q.ja, { lang: 'ja', rate: 1.1 });
       }
       if (settings.pattern === 'study' && alive()) {
-        await sleep(350);
+        await sleep(150);
         if (alive()) await window.Speech.speak(q.en, { rate: settings.rate, key: q.key });
       }
       if (!(playing && my === session)) break;

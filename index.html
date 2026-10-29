@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#6d28d9" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
   <title>Speak Studio — 英会話トレーニング</title>
   <script>
     // テーマを即時適用（ちらつき防止）
@@ -23,38 +23,16 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%A3%EF%B8%8F%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
-  <div class="max-w-[560px] mx-auto min-h-screen bg-white shadow-sm relative">
+  <div class="app-shell">
 
-    <!-- ヘッダー -->
-    <header class="brand-grad text-white px-5 pt-5 pb-4 rounded-b-3xl sticky top-0 z-30">
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="text-[11px] opacity-80 font-semibold tracking-wide">SPEAK STUDIO</div>
-          <h1 id="hdr-title" class="text-xl font-bold leading-tight">ホーム</h1>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="text-right">
-            <div class="text-[10px] opacity-80">レベル</div>
-            <div id="hdr-level" class="text-lg font-bold leading-none">1</div>
-          </div>
-          <div class="flex items-center gap-1 bg-white/20 rounded-full px-3 py-1">
-            <span>🔥</span><span id="hdr-streak" class="font-bold text-sm">0</span>
-          </div>
-          <button id="hdr-menu" class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center" aria-label="メニュー">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-          </button>
-        </div>
+    <header class="app-header">
+      <a href="#home" class="wordmark" aria-label="Speak Studio ホーム">speak<span>studio</span><i></i></a>
+      <div class="header-location"><span class="header-eyebrow">YOUR ENGLISH, EVERY DAY</span><h1 id="hdr-title">ホーム</h1></div>
+      <div class="header-actions">
+        <button id="hdr-home" class="home-button" aria-label="ホームに戻る">⌂ <span>ホーム</span></button>
+        <button id="hdr-menu" class="menu-button" aria-label="すべてのメニュー" aria-expanded="false">☰ <span>メニュー</span></button>
       </div>
-      <!-- XPバー -->
-      <div class="mt-3">
-        <div class="flex justify-between text-[10px] opacity-80 mb-1">
-          <span id="hdr-xp">0 XP</span>
-          <span id="hdr-xpnext"></span>
-        </div>
-        <div class="h-2 rounded-full bg-white/25 overflow-hidden">
-          <div id="hdr-xpbar" class="h-full bg-white rounded-full transition-all" style="width:0%"></div>
-        </div>
-      </div>
+      <div class="hidden-x" aria-hidden="true"><span id="hdr-level"></span><span id="hdr-streak"></span><span id="hdr-xp"></span><span id="hdr-xpnext"></span><div id="hdr-xpbar"></div></div>
     </header>
 
     <!-- ビュー領域 -->
@@ -74,7 +52,7 @@
     </main>
 
     <!-- ボトムナビ -->
-    <nav class="bottom-nav" id="bottom-nav">
+    <nav class="bottom-nav" id="bottom-nav" aria-label="学習メニュー">
       <button data-view="home" class="active">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/></svg>
         ホーム
@@ -121,8 +99,13 @@
   <script src="js/app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
+      const hadController = !!navigator.serviceWorker.controller;
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (hadController && !refreshing) { refreshing = true; location.reload(); }
+      });
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        navigator.serviceWorker.register('sw.js').then((registration) => registration.update()).catch(() => {});
       });
     }
   </script>

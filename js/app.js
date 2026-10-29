@@ -49,8 +49,10 @@
     document.getElementById('hdr-xpbar').style.width = li.pct + '%';
   }
 
-  function navigate(name) {
+  function navigate(name, options) {
+    options = options || {};
     if (!VIEWS[name]) name = 'home';
+    if (!options.fromHistory && location.hash !== '#' + name) history.pushState({ view: name }, '', '#' + name);
     // 前のビューの後始末
     if (current && current !== name) {
       const prevMod = VIEWS[current].mod();
@@ -66,6 +68,8 @@
     // ナビ状態（非ナビビューではホームを弱く点灯）
     document.querySelectorAll('#bottom-nav button').forEach((b) => {
       b.classList.toggle('active', b.dataset.view === name);
+      if (b.dataset.view === name) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
     });
 
     // レンダリング
@@ -91,6 +95,7 @@
 
   // ---- メニューシート（AI会話・クイズ・統計・辞書など） ----
   const MENU = [
+    { view: 'home', emoji: '⌂', title: 'ホームに戻る', desc: '学習メニューと今日の進捗' },
     { view: 'lesson', emoji: '🎓', title: '今日のレッスン', desc: '4ステップの総合トレーニング' },
     { view: 'freetalk', emoji: '🤖', title: 'AI会話（フリートーク）', desc: 'AIと自由に英会話' },
     { view: 'listen', emoji: '🎧', title: '聞き流し', desc: '場面別に音声で連続再生' },
@@ -102,9 +107,12 @@
     { view: 'dict', emoji: '📚', title: 'フレーズ辞書', desc: '全フレーズを検索' },
   ];
   function openMenu() {
+    if (document.getElementById('menu-ov')) return;
+    const opener = document.getElementById('hdr-menu');
+    opener.setAttribute('aria-expanded', 'true');
     const div = document.createElement('div');
     div.innerHTML = `
-      <div class="fixed inset-0 z-50 bg-black/40 flex items-end justify-center" id="menu-ov">
+      <div class="fixed inset-0 z-50 bg-black/40 flex items-end justify-center" id="menu-ov" role="dialog" aria-modal="true" aria-label="メニュー">
         <div class="bg-white w-full max-w-[560px] rounded-t-3xl p-5 max-h-[80vh] overflow-y-auto">
           <div class="flex justify-between items-center mb-4">
             <h3 class="font-bold text-lg">メニュー</h3>
@@ -121,7 +129,10 @@
         </div>
       </div>`;
     document.body.appendChild(div);
-    const close = () => div.remove();
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+    const close = () => { div.remove(); opener.setAttribute('aria-expanded', 'false'); document.removeEventListener('keydown', onKey); opener.focus(); };
+    document.addEventListener('keydown', onKey);
+    div.querySelector('#menu-close').focus();
     div.querySelector('#menu-close').onclick = close;
     div.querySelector('#menu-ov').onclick = (e) => { if (e.target.id === 'menu-ov') close(); };
     div.querySelectorAll('[data-mv]').forEach((b) => {
@@ -136,7 +147,7 @@
     const dark = t === 'dark' || (t === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
     document.documentElement.classList.toggle('dark', dark);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', dark ? '#0f0d17' : '#6d28d9');
+    if (meta) meta.setAttribute('content', dark ? '#111c20' : '#0f766e');
   }
   function setTheme(t) {
     try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
@@ -183,6 +194,13 @@
       b.addEventListener('click', () => navigate(b.dataset.view));
     });
     document.getElementById('hdr-menu').addEventListener('click', openMenu);
+    document.getElementById('hdr-home').addEventListener('click', () => navigate('home'));
+    const restoreRoute = () => {
+      const name = location.hash.slice(1);
+      if (name !== current) navigate(name, { fromHistory: true });
+    };
+    window.addEventListener('popstate', restoreRoute);
+    window.addEventListener('hashchange', restoreRoute);
     // 非対応ブラウザの案内
     if (!window.Speech.asrSupported) {
       setTimeout(() => toast('音声認識はChrome/Edge/Safari推奨です'), 800);
@@ -190,6 +208,6 @@
     refreshHeader();
     // ショートカットから直接開く: index.html#quiz → クイズの形式選び
     const start = (location.hash || '').replace('#', '');
-    navigate(start === 'quiz' ? 'quiz' : 'home');
+    navigate(VIEWS[start] ? start : 'home', { fromHistory: true });
   });
 })();
