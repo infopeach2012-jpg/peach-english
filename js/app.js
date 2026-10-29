@@ -62,6 +62,9 @@
     Object.values(VIEWS).forEach((v) => document.getElementById(v.el).classList.remove('active'));
     document.getElementById(VIEWS[name].el).classList.add('active');
     document.getElementById('hdr-title').textContent = VIEWS[name].title;
+    // ホーム以外では、見出しの左に「←」を出す（下のメニューが画面外に隠れる端末でも戻れるように）
+    const back = document.getElementById('hdr-back');
+    if (back) back.style.display = name === 'home' ? 'none' : 'flex';
 
     // ナビ状態（非ナビビューではホームを弱く点灯）
     document.querySelectorAll('#bottom-nav button').forEach((b) => {
@@ -183,6 +186,7 @@
       b.addEventListener('click', () => navigate(b.dataset.view));
     });
     document.getElementById('hdr-menu').addEventListener('click', openMenu);
+    document.getElementById('hdr-back').addEventListener('click', () => navigate('home'));
     // 非対応ブラウザの案内
     if (!window.Speech.asrSupported) {
       setTimeout(() => toast('音声認識はChrome/Edge/Safari推奨です'), 800);
