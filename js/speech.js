@@ -257,8 +257,15 @@
 
   // ---- 読み上げ ----
   // opts.lang = 'ja' で日本語音声。onend が来ない端末向けに見積もり時間で打ち切る。
+  const SOURCE_KEY = 'speak.voiceSource';
+  function getSource() { try { return localStorage.getItem(SOURCE_KEY) || 'clip'; } catch (e) { return 'clip'; } }
+  function setSource(v) { try { localStorage.setItem(SOURCE_KEY, v); } catch (e) { /* noop */ } }
   function speak(text, opts) {
     opts = opts || {};
+    if (opts.lang !== 'ja' && getSource() === 'device') {
+      return speakTts(text, Object.assign({}, opts, { rate: (opts.rate != null ? opts.rate : 1) * (opts.slow ? 0.75 : 1) }));
+    }
+
     if (opts.lang !== 'ja') {
       const key = opts.key || clipKeyFor(text);
       if (opts.slow) {
@@ -459,7 +466,7 @@
   }
 
   window.Speech = {
-    listVoices, setVoice,
+    listVoices, setVoice, getSource, setSource,
     loadClips, registerText, hasClip, clipKeyFor, playClip, unlockAudio, releaseAudio, prefetchClip,
     get clipsLoaded() { return !!clipIndex; },
     ttsSupported,
