@@ -12,7 +12,8 @@ ap.add_argument('--app', default=os.path.join(os.path.dirname(__file__), '..'))
 ap.add_argument('--voice', default='af_sarah')
 ap.add_argument('--model-dir', default='.')
 ap.add_argument('--peak-db', type=float, default=-3.0)
-ap.add_argument('--bitrate', default='96k')
+ap.add_argument('--bitrate', default='112k')
+ap.add_argument('--only', default='', help='この接頭辞のキーだけ作る（例: n ＝ノート）')
 args = ap.parse_args()
 APP = os.path.abspath(args.app); OUT = os.path.join(APP, 'audio', 'clips'); os.makedirs(OUT, exist_ok=True)
 FF = shutil.which('ffmpeg')
@@ -25,6 +26,8 @@ def split(t): return [s.strip() for s in (re.findall(r'[^.!?]+[.!?]*', t) or [t]
 J = lambda n: json.load(open(os.path.join(APP, 'data', n), encoding='utf-8'))
 items = []  # (key, text)
 for p in J('phrases.json'): items.append(('p%d' % p['id'], p['en']))
+for n in J('notes.json'):
+    if n.get('en'): items.append(('n%d' % n['id'], n['en']))
 for d in J('dialogues.json'): items.append(('d%da' % d['id'], d['a'])); items.append(('d%db' % d['id'], d['b']))
 for r in J('reading.json'):
     for i, s in enumerate(split(r['en'])): items.append(('r%d_%d' % (r['id'], i), s))
@@ -39,6 +42,7 @@ if os.path.exists(os.path.join(APP, 'data', 'patterns.json')):
     for c in J('patterns.json'):
         for it in c['items']: items.append((it['key'], it['en']))
 
+if args.only: items = [it for it in items if it[0].startswith(args.only)]
 peak = 10 ** (args.peak_db / 20)
 def synth(key, text):
     wav = os.path.join(OUT, key + '.wav')
@@ -55,12 +59,13 @@ def encode(key, wav):
     outs = {}
     for suf, af in (('', 'anull'), ('_slow', 'atempo=0.75'), ('_fast', 'atempo=1.25'), ('_faster', 'atempo=1.5')):
         mp3 = os.path.join(OUT, key + suf + '.mp3')
-        subprocess.run([FF, '-loglevel', 'error', '-y', '-i', wav, '-af', af + ',alimiter=limit=0.7', '-codec:a', 'libmp3lame', '-b:a', args.bitrate, '-ac', '1', mp3], check=True)
+        subprocess.run([FF, '-loglevel', 'error', '-y', '-i', wav, '-af', af + ',alimiter=limit=0.9:level=0', '-codec:a', 'libmp3lame', '-b:a', args.bitrate, '-ac', '1', mp3], check=True)
         outs[key + ('@' + suf[1:] if suf else '')] = 'clips/' + key + suf
     os.remove(wav)
     return outs
 
-index = {}
+idx_path = os.path.join(APP, 'audio', 'audio_index.json')
+index = json.load(open(idx_path)) if (args.only and os.path.exists(idx_path)) else {}
 total = len(items); done = 0
 with ThreadPoolExecutor(3) as ex:
     futs = []

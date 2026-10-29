@@ -1,5 +1,5 @@
 /* sw.js — Service Worker（オフライン対応・アプリシェルキャッシュ） */
-const CACHE = 'speak-studio-v27';
+const CACHE = 'speak-studio-v28';
 const ASSETS = [
   './',
   './index.html',
