@@ -245,14 +245,12 @@
   // 単一の Audio 要素は、最初のタップで一度 play しておくと iPhone でも続けて鳴らせる
   // タップの中で呼ぶ。AudioContext を起こし、無音の <audio> をループ再生して
   // iPhone のサイレントスイッチが入っていても Web Audio が鳴るようにする。
-  const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+  // 以前は「無音の WAV をループ再生」して iPhone のサイレントスイッチを回避していたが、
+  // データ長ゼロの WAV をループさせると iPad でパチパチと割れた音が混ざった（2026-10-29）。
+  // 1文1ファイルの音声は <audio> で鳴らすのでサイレントスイッチの影響を受けない。ループはやめる。
   let silentEl = null;
   function unlockAudio() {
     ensureCtx();
-    try {
-      if (!silentEl && typeof Audio !== 'undefined') { silentEl = new Audio(SILENT_WAV); silentEl.loop = true; silentEl.volume = 0.01; }
-      if (silentEl && silentEl.paused) { const p = silentEl.play(); if (p && p.catch) p.catch(() => {}); }
-    } catch (e) { /* noop */ }
     if (!audioEl || audioEl.dataset.unlocked) return;
     try { audioEl.muted = true; const p = audioEl.play(); if (p && p.catch) p.catch(() => {}); audioEl.pause(); audioEl.muted = false; audioEl.dataset.unlocked = '1'; } catch (e) { /* noop */ }
   }
