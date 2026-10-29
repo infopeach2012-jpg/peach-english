@@ -135,7 +135,9 @@
       const src = c.createBufferSource();
       src.buffer = buf;
       src.playbackRate.value = rate;
-      src.connect(c.destination);
+      // 少し音量を下げて余裕を持たせる（0 dB まで振れている音声が iPad のスピーカーで割れないように）
+      const gain = c.createGain(); gain.gain.value = 0.82;
+      src.connect(gain); gain.connect(c.destination);
       let done = false;
       const finish = () => { if (done) return; done = true; clipStop = null; clearTimeout(guard); resolve(true); };
       src.onended = finish;
@@ -200,6 +202,7 @@
         audioEl.preservesPitch = true;
         audioEl.webkitPreservesPitch = true;
         audioEl.playbackRate = rate;
+        audioEl.volume = 0.82;
         const p = audioEl.play();
         if (p && p.catch) p.catch(() => finish(false));
         poll = setInterval(() => {
@@ -274,7 +277,17 @@
         if (hasClip(key)) return playClip(key, { rate: 0.8 * (opts.rate != null ? opts.rate : 1) }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
         return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
       }
-      if (hasClip(key)) return playClip(key, opts).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      // 速さは、あらかじめ作った版（@fast=1.25倍・@faster=1.5倍・@slow=0.75倍）を選ぶ。
+      // 端末の中で引き伸ばすと音が割れたように聞こえるため、引き伸ばしは残りの小さな差だけにする
+      const want = opts.rate != null ? opts.rate : 1;
+      let pick = key, baseRate = 1;
+      if (want >= 1.4 && hasClip(key + '@faster')) { pick = key + '@faster'; baseRate = 1.5; }
+      else if (want >= 1.15 && hasClip(key + '@fast')) { pick = key + '@fast'; baseRate = 1.25; }
+      else if (want <= 0.85 && hasClip(key + '@slow')) { pick = key + '@slow'; baseRate = 0.75; }
+      if (hasClip(pick)) {
+        const r = want / baseRate;
+        return playClip(pick, Object.assign({}, opts, { rate: Math.abs(r - 1) < 0.08 ? 1 : r })).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      }
     }
     return speakTts(text, opts);
   }
