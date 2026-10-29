@@ -73,6 +73,8 @@
     bindBack(container);
     container.querySelectorAll('[data-mode]').forEach((b) => {
       b.onclick = () => {
+        // iPad / iPhone はタップの中で音を起こしておかないと、あとで鳴らない
+        window.Speech.unlockAudio();
         state = { questions: buildQuestions(b.dataset.mode, 10), idx: 0, correct: 0, mode: b.dataset.mode };
         drawQuestion(container);
       };
@@ -99,8 +101,12 @@
         <div class="text-[11px] font-bold text-brand mb-2">${isListen ? '音声を聞いて意味を選ぼう' : q.mode === 'ja2en' ? '日本語に合う英語は？' : '意味を選ぼう'}</div>
         ${isListen
           ? `<button id="q-play" class="w-20 h-20 rounded-full brand-grad text-white mx-auto flex items-center justify-center text-3xl shadow-md">🔊</button>
-             <div class="text-xs text-gray-400 mt-3">タップで再生</div>`
-          : `<div class="text-xl font-bold text-gray-800 leading-relaxed">${window.App.escapeHtml(prompt)}</div>`}
+             <div class="text-xs text-gray-400 mt-3">タップでもう一度</div>`
+          : `<div class="text-xl font-bold text-gray-800 leading-relaxed">${window.App.escapeHtml(prompt)}</div>
+             ${q.mode === 'en2ja' ? `<div class="flex justify-center gap-2 mt-3">
+               <button id="q-play" class="px-4 py-2 rounded-full brand-grad text-white text-sm font-bold">🔊 もう一度</button>
+               <button id="q-slow" class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-bold">🐢 ゆっくり</button>
+             </div>` : ''}`}
       </div>
 
       <div id="q-opts" class="space-y-2.5">
@@ -111,10 +117,15 @@
       </div>`;
     bindBack(container);
 
-    if (isListen) {
-      const play = () => window.Speech.speak(q.item.en, { rate: 0.9 });
+    // 英語が出る問題（リスニング・英語→日本語）は、出たときに英語を読む
+    if (isListen || q.mode === 'en2ja') {
+      const play = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { rate: 0.95 }); };
+      const slow = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { slow: true }); };
       container.querySelector('#q-play').onclick = play;
-      setTimeout(play, 300);
+      const s = container.querySelector('#q-slow');
+      if (s) s.onclick = slow;
+      // タップの流れの中ですぐ鳴らす（iPad の読み上げは、タップから時間をおくと止められる）
+      play();
     }
     container.querySelectorAll('.q-opt').forEach((b) => {
       b.onclick = () => choose(container, parseInt(b.dataset.i, 10));
@@ -135,19 +146,25 @@
       if (idx === q.answer) b.classList.add('opt-correct');
       else if (idx === i) b.classList.add('opt-wrong');
     });
-    // 正解の英語を読み上げ（リスニング以外でも定着）
     if (correct) window.App.toast('⭕ 正解！');
+    // 答えたら、正しい英語を読み上げる（どの形式でも耳に残す）
+    window.Speech.unlockAudio();
+    window.Speech.speak(q.item.en, { rate: 0.95 });
 
     const bar = document.createElement('div');
     bar.className = 'mt-4';
     bar.innerHTML = `
       <div class="bg-gray-50 rounded-2xl p-4 text-sm">
-        <div class="font-bold text-gray-800">${window.App.escapeHtml(q.item.en)}</div>
+        <div class="flex items-start justify-between gap-2">
+          <div class="font-bold text-gray-800">${window.App.escapeHtml(q.item.en)}</div>
+          <button id="q-say" class="shrink-0 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-bold">🔊</button>
+        </div>
         <div class="text-gray-500 mt-1">${window.App.escapeHtml(q.item.ja)}</div>
       </div>
       <button id="q-next" class="w-full mt-3 bg-gray-800 text-white rounded-xl py-3 font-bold">${state.idx < state.questions.length - 1 ? '次の問題 →' : '結果を見る'}</button>`;
     container.appendChild(bar);
-    container.querySelector('#q-next').onclick = () => { state.idx++; drawQuestion(container); };
+    container.querySelector('#q-say').onclick = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { rate: 0.95 }); };
+    container.querySelector('#q-next').onclick = () => { window.Speech.stopSpeaking(); state.idx++; drawQuestion(container); };
   }
 
   function drawResult(container) {
