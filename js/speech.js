@@ -122,10 +122,11 @@
     return pending[file];
   }
   function playClipWebAudio(ent, rate) {
-    const [file, start, dur] = ent;
+    const [file, start, dur0] = ent;
     const c = ensureCtx();
     if (!c) return Promise.resolve(false);
     return loadBuffer(file).then((buf) => new Promise((resolve) => {
+      const dur = dur0 == null ? Math.max(0, buf.duration - start) : dur0;
       if (c.state === 'suspended') { try { c.resume(); } catch (e) { /* noop */ } }
       const src = c.createBufferSource();
       src.buffer = buf;
@@ -147,8 +148,10 @@
 
   function playClip(key, opts) {
     opts = opts || {};
-    const ent = clipIndex && clipIndex[key];
+    let ent = clipIndex && clipIndex[key];
     if (!ent) return Promise.resolve(false);
+    // 索引の値は [ファイル名, 開始秒, 長さ] か、ファイル名だけ（1文1ファイル。Codex などで作った音声向け）
+    if (typeof ent === 'string') ent = [ent, 0, null];
     stopClip();
     if (AC) return playClipWebAudio(ent, opts.rate != null ? opts.rate : 1).then((ok) => ok || playClipElement(ent, opts));
     return playClipElement(ent, opts);
@@ -158,10 +161,11 @@
     return new Promise((resolve) => {
       if (!ent || !audioEl) { resolve(false); return; }
       stopClip();
-      const [file, start, dur] = ent;
+      const [file, start, dur0] = ent;
       const rate = opts.rate != null ? opts.rate : 1;
       const src = clipBase + file + '.mp3';
-      const end = start + dur;
+      const dur = dur0 == null ? 30 : dur0;            // 1文1ファイルのときは ended で終わる
+      const end = dur0 == null ? Infinity : start + dur;
       let finished = false;
       let poll = null, watchdog = null;
       let lastT = -1, stallSince = 0;
