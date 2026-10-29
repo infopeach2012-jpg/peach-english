@@ -271,20 +271,18 @@
       const key = opts.key || clipKeyFor(text);
       if (opts.slow) {
         // ゆっくり版のクリップがあればそれを。無ければ通常クリップを 0.8 倍で
-        if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: opts.rate != null ? opts.rate : 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
-        if (hasClip(key)) return playClip(key, { rate: 0.8 * (opts.rate != null ? opts.rate : 1) }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
+        if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
+        if (hasClip(key)) return playClip(key, { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
         return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
       }
       // 速さは、あらかじめ作った版（@fast=1.25倍・@faster=1.5倍・@slow=0.75倍）を選ぶ。
       // 端末の中で引き伸ばすと音が割れたように聞こえるため、引き伸ばしは残りの小さな差だけにする
       const want = opts.rate != null ? opts.rate : 1;
-      let pick = key, baseRate = 1;
-      if (want >= 1.4 && hasClip(key + '@faster')) { pick = key + '@faster'; baseRate = 1.5; }
-      else if (want >= 1.15 && hasClip(key + '@fast')) { pick = key + '@fast'; baseRate = 1.25; }
-      else if (want <= 0.85 && hasClip(key + '@slow')) { pick = key + '@slow'; baseRate = 0.75; }
-      if (hasClip(pick)) {
-        const r = want / baseRate;
-        return playClip(pick, Object.assign({}, opts, { rate: Math.abs(r - 1) < 0.08 ? 1 : r })).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      // 端末の中で引き伸ばすと割れて聞こえるので、いちばん近い版をそのまま（1.0 倍で）鳴らす。引き伸ばしはしない
+      const cands = [[1, key], [0.75, key + '@slow'], [1.25, key + '@fast'], [1.5, key + '@faster']].filter((c) => hasClip(c[1]));
+      if (cands.length) {
+        cands.sort((a, b) => Math.abs(a[0] - want) - Math.abs(b[0] - want));
+        return playClip(cands[0][1], Object.assign({}, opts, { rate: 1 })).then((ok) => (ok ? undefined : speakTts(text, opts)));
       }
     }
     return speakTts(text, opts);
