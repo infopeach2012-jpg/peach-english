@@ -141,10 +141,19 @@
   // 英語の声の選択（端末に入っている音声から）
   function voiceRow() {
     const vs = window.Speech.listVoices ? window.Speech.listVoices() : [];
-    if (!vs.length) return '';
-    if (window.Speech.clipsLoaded) return `<div class="mt-3 text-xs text-gray-400">🎧 自然な音声（事前生成）で再生します。無い文だけ端末の声になります。</div>`;
+    const src = window.Speech.getSource ? window.Speech.getSource() : 'clip';
+    const srcRow = `
+      <div class="mt-3 text-xs">
+        <div class="text-gray-400 mb-1">声の種類</div>
+        <div class="grid grid-cols-2 gap-1 bg-gray-100 rounded-xl p-1">
+          <button data-src="clip" class="ls-src rounded-lg py-2 font-bold ${src === 'clip' ? 'bg-white text-brand shadow-sm' : 'text-gray-500'}">作った音声</button>
+          <button data-src="device" class="ls-src rounded-lg py-2 font-bold ${src === 'device' ? 'bg-white text-brand shadow-sm' : 'text-gray-500'}">iPad の声</button>
+        </div>
+      </div>`;
+    if (src === 'clip' && window.Speech.clipsLoaded) return srcRow + `<div class="mt-2 text-xs text-gray-400">🎧 作った音声で再生します。無い文だけ端末の声になります。</div>`;
+    if (!vs.length) return srcRow;
     const good = vs.some((v) => v.score >= 20);
-    return `
+    return srcRow + `
       <div class="mt-3 text-xs">
         <div class="flex items-center justify-between mb-1">
           <span class="text-gray-400">英語の声</span>
@@ -153,10 +162,13 @@
         <select id="ls-voice" class="w-full rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
           ${vs.map((v) => `<option value="${window.App.escapeHtml(v.name)}" ${v.current ? 'selected' : ''}>${window.App.escapeHtml(v.name)}（${window.App.escapeHtml(v.lang)}）${v.score >= 20 ? ' ★' : ''}</option>`).join('')}
         </select>
-        ${good ? '' : `<div class="text-gray-400 mt-1 leading-relaxed">★の自然な声がありません。iPhoneは「設定 → アクセシビリティ → 読み上げコンテンツ → 声 → 英語」で Ava・Zoe・Samantha などの「Premium / Enhanced」版を入れると、ここに出てきます。</div>`}
+        ${good ? '' : `<div class="text-gray-400 mt-1 leading-relaxed">★の自然な声がありません。iPad の「設定 → アクセシビリティ → 読み上げコンテンツ → 声 → 英語」で、Ava・Zoe などの「プレミアム」版をダウンロードすると、ここに出てきます。</div>`}
       </div>`;
   }
   function bindVoice(root) {
+    root.querySelectorAll('.ls-src').forEach((b) => {
+      b.onclick = () => { stop(); window.Speech.setSource(b.dataset.src); window.App.toast(b.dataset.src === 'device' ? 'iPad の声にしました' : '作った音声にしました'); window.App.navigate('listen'); };
+    });
     const sel = root.querySelector('#ls-voice');
     if (!sel) return;
     sel.onchange = () => { window.Speech.setVoice(sel.value); window.App.toast('声を変えました'); };
