@@ -105,4 +105,6 @@ AI会話だけは通信とAPIキーが要る。進捗は端末のブラウザに
 
 ## 自然な音声（2026-10-14〜）
 
-`audio/` に Kokoro（ニューラルTTS・声は `af_heart`）で作った英語音声が入っている。場面・章ごとに1つのMP3に連結し、`audio/audio_index.json` が文ごとの開始秒と長さを持つ。`js/speech.js` が区間再生し、無い文だけ端末の読み上げに戻る。作り直すときは `for_chatgpt/generate_audio.py`（手順はファイル冒頭）。file:// で開く1ファイル版には音声は入らない。
+2026-10-29 に **Kokoro v1.0（kokoro-onnx 0.6.1）・`af_sarah`（アメリカ英語・女性）** で全英文の音声を再生成した。`data/phrases.json`・`dialogues.json`・`reading.json`・`speeches.json` の1,865件を、通常版とゆっくり版の計3,730ファイルとして `audio/clips/` に保存している。MP3はモノラル・64 kbps。ゆっくり版は通常版を FFmpeg の `atempo=0.75` で声の高さを保って0.75倍にしたもの。
+
+`audio/audio_index.json` はキーから拡張子なしの相対ファイル名への対応表（例: `p1` → `clips/p1`、`p1@slow` → `clips/p1_slow`）。長文は文ごと、スピーチは同じ `section` をつないで文ごとに分割している。`js/speech.js` が音声を再生し、無い文だけ端末の読み上げに戻る。置き方とキーの仕様は `for_chatgpt/音声の仕様_Codex向け.md`。`for_chatgpt/generate_audio.py` は従来の場面別連結形式（B）用。file:// で開く1ファイル版には音声は入らない。
