@@ -188,6 +188,8 @@
       setTimeout(() => toast('音声認識はChrome/Edge/Safari推奨です'), 800);
     }
     refreshHeader();
-    navigate('home');
+    // ショートカットから直接開く: index.html#quiz → クイズの形式選び
+    const start = (location.hash || '').replace('#', '');
+    navigate(start === 'quiz' ? 'quiz' : 'home');
   });
 })();

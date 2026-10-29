@@ -28,13 +28,15 @@
   function buildQuestions(mode, n) {
     const all = pool();
     const picked = shuffle(all).slice(0, n);
-    return picked.map((item) => {
+    return picked.map((item, i) => {
       // ダミー選択肢を3つ
-      const distractors = shuffle(all.filter((x) => x.ja !== item.ja)).slice(0, 3);
+      const distractors = shuffle(all.filter((x) => x.ja !== item.ja && x.en !== item.en)).slice(0, 3);
       const opts = shuffle([item].concat(distractors));
+      // 'mix'（まぜて）は1問ごとに 日→英 か 英→日 をランダムに選ぶ
+      const m = mode === 'mix' ? (Math.random() < 0.5 ? 'ja2en' : 'en2ja') : mode;
       return {
         item,
-        mode, // 'listen'（英語音声→意味）/ 'ja2en'（日本語→英語）/ 'en2ja'（英語→意味）
+        mode: m, // 'listen'（英語音声→意味）/ 'ja2en'（日本語→英語）/ 'en2ja'（英語→意味）
         options: opts,
         answer: opts.indexOf(item),
       };
@@ -55,14 +57,17 @@
         <div class="text-sm text-gray-500 mt-1">10問4択・出題形式を選んでね</div>
       </div>
       <div class="space-y-3">
-        <button data-mode="listen" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
-          <div class="text-3xl">🔊</div><div><div class="font-bold text-gray-800">リスニング</div><div class="text-xs text-gray-500">英語を聞いて意味を選ぶ</div></div>
+        <button data-mode="ja2en" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
+          <div class="text-3xl">🇯🇵</div><div><div class="font-bold text-gray-800">① 日本語 → 英語</div><div class="text-xs text-gray-500">日本語に合う英語を選ぶ</div></div>
         </button>
         <button data-mode="en2ja" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
-          <div class="text-3xl">🔤</div><div><div class="font-bold text-gray-800">英語 → 意味</div><div class="text-xs text-gray-500">英文を読んで意味を選ぶ</div></div>
+          <div class="text-3xl">🔤</div><div><div class="font-bold text-gray-800">② 英語 → 日本語</div><div class="text-xs text-gray-500">英文を読んで意味を選ぶ</div></div>
         </button>
-        <button data-mode="ja2en" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
-          <div class="text-3xl">🇯🇵</div><div><div class="font-bold text-gray-800">意味 → 英語</div><div class="text-xs text-gray-500">日本語に合う英語を選ぶ</div></div>
+        <button data-mode="mix" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
+          <div class="text-3xl">🔀</div><div><div class="font-bold text-gray-800">③ まぜて（混合）</div><div class="text-xs text-gray-500">1問ごとに ①と② が入れ替わる</div></div>
+        </button>
+        <button data-mode="listen" class="row w-full bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left flex items-center gap-3">
+          <div class="text-3xl">🔊</div><div><div class="font-bold text-gray-800">リスニング</div><div class="text-xs text-gray-500">英語を聞いて意味を選ぶ</div></div>
         </button>
       </div>`;
     bindBack(container);
