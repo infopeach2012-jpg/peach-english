@@ -1,0 +1,346 @@
+[
+{
+"id": 1,
+"a": "Are there any tickets left?",
+"aJa": "チケットはまだありますか?",
+"b": "We're sold out.",
+"bJa": "完売です。",
+"note": "tickets left=残りのチケット / sold out=売り切れ"
+},
+{
+"id": 2,
+"a": "It's my treat.",
+"aJa": "ここは私がおごるよ。",
+"b": "Thank you. But let's split the bill.",
+"bJa": "ありがとう。でも割り勘でいいよ。",
+"note": "It's my treat=私のおごり / split the bill=割り勘にする"
+},
+{
+"id": 3,
+"a": "Do you have a bigger one?",
+"aJa": "もっと大きいサイズはありますか?",
+"b": "I think so. I'll check.",
+"bJa": "あると思いますが、確認してみますね。",
+"note": "bigger one=もっと大きいもの"
+},
+{
+"id": 4,
+"a": "Can I use e-money here?",
+"aJa": "電子マネーは使えますか?",
+"b": "Sorry. We only accept cash.",
+"bJa": "すみません。現金のみの取り扱いです。",
+"note": "e-money=電子マネー / accept cash=現金を受け付ける"
+},
+{
+"id": 5,
+"a": "What time does the concert start?",
+"aJa": "コンサートは何時に開演だっけ?",
+"b": "It starts at 7 pm, I think.",
+"bJa": "7時だったと思う。",
+"note": "concert=コンサート / start=始まる"
+},
+{
+"id": 6,
+"a": "I've cleaned the toilet.",
+"aJa": "トイレ掃除をしておいたよ。",
+"b": "Thanks for helping out. I really appreciate it.",
+"bJa": "手伝ってくれてありがとう。助かったよ。",
+"note": "help out=手伝う / appreciate=感謝する"
+},
+{
+"id": 7,
+"a": "What's the score now?",
+"aJa": "スコアは?",
+"b": "It's a 3-3 tie. Can we come back from this?",
+"bJa": "3対3の引き分けだよ。逆転できるかな?",
+"note": "tie=引き分け / come back=逆転する"
+},
+{
+"id": 8,
+"a": "I want to ride a roller coaster.",
+"aJa": "ジェットコースターに乗りたい。",
+"b": "No way, I'm afraid of heights.",
+"bJa": "絶対ヤダ、高所恐怖症なんだから。",
+"note": "No way=絶対いや / afraid of heights=高所恐怖症"
+},
+{
+"id": 9,
+"a": "Why don't you take your shirt off?",
+"aJa": "どうしてシャツを脱がないの?",
+"b": "I don't want to get sunburned.",
+"bJa": "日焼けが嫌なのよ。",
+"note": "take off=脱ぐ / get sunburned=日焼けする"
+},
+{
+"id": 10,
+"a": "How much longer can you play?",
+"aJa": "あとどれくらいゲームできる?",
+"b": "I want to go to bed by 11 pm.",
+"bJa": "11時には寝たいかな。",
+"note": "How much longer=あとどれくらい / go to bed=寝る"
+},
+{
+"id": 11,
+"a": "What do you do in your free time?",
+"aJa": "ひまなときは何をしてるの?",
+"b": "I usually watch YouTube for hours.",
+"bJa": "ずっとYouTube動画を見てるよ。",
+"note": "free time=ひまな時間 / for hours=何時間も"
+},
+{
+"id": 12,
+"a": "Have you read any books lately?",
+"aJa": "最近何か本は読んでる?",
+"b": "Not really. I don't have time to read.",
+"bJa": "あんまりかな。読む時間がないんだ。",
+"note": "lately=最近 / not really=あんまり"
+},
+{
+"id": 13,
+"a": "Did you add the next song?",
+"aJa": "次の曲は入れた?",
+"b": "Let's see. I'm searching for that anime song.",
+"bJa": "ええとね、あのアニソンを探しているんだけど…。",
+"note": "add=追加する / search for=探す"
+},
+{
+"id": 14,
+"a": "Oh no, the laundry is soaked.",
+"aJa": "大変!洗濯物がびしょびしょになっちゃった。",
+"b": "The weather forecast can never be relied on.",
+"bJa": "天気予報は全然当てにならないね。",
+"note": "soaked=びしょ濡れ / rely on=当てにする"
+},
+{
+"id": 15,
+"a": "Shall we exchange LINE IDs?",
+"aJa": "LINEのIDを交換しない?",
+"b": "Sure. Please scan the QR code with your smartphone.",
+"bJa": "いいよ。スマホカメラでQRコードを読み込んで。",
+"note": "exchange=交換する / scan=読み取る"
+},
+{
+"id": 16,
+"a": "Do you have any recommendations for Korean dramas?",
+"aJa": "おすすめの韓国ドラマを教えて。",
+"b": "I was really into \"Itaewon Class\".",
+"bJa": "私は『梨泰院クラス』にどハマりしたよ。",
+"note": "recommendation=おすすめ / be into ~=〜にハマる"
+},
+{
+"id": 17,
+"a": "What would you like to eat?",
+"aJa": "何食べたい?",
+"b": "A salad! But we have to go shopping first.",
+"bJa": "サラダかな。でもまずは買い物に行かなきゃ。",
+"note": "would like to ~=〜したい(丁寧)"
+},
+{
+"id": 18,
+"a": "Let's set up a tent here.",
+"aJa": "ここにテントを張ろうか。",
+"b": "Okay, I'll bring the tarp and chairs as well.",
+"bJa": "オーケー、タープとイスも持ってくるよ。",
+"note": "set up a tent=テントを張る / tarp=タープ"
+},
+{
+"id": 19,
+"a": "Can I send you a friend request?",
+"aJa": "友達申請していい?",
+"b": "Sure. I'll approve it once you send it.",
+"bJa": "もちろん。申請してくれたら承認するよ。",
+"note": "friend request=友達申請 / approve=承認する / once=〜したら"
+},
+{
+"id": 20,
+"a": "Who is your favorite member of the group?",
+"aJa": "グループでの推しは誰ですか?",
+"b": "I'm a fan of the whole group.",
+"bJa": "箱推しです。",
+"note": "favorite member=推し / the whole group=グループ全体(箱推し)"
+},
+{
+"id": 21,
+"a": "How should I cut the meat? What size?",
+"aJa": "お肉はどれくらいに切ればいいの?",
+"b": "Please cut it into bite-sized pieces.",
+"bJa": "一口サイズに切って。",
+"note": "bite-sized=一口サイズの"
+},
+{
+"id": 22,
+"a": "I found a delivery notice slip in the mailbox.",
+"aJa": "ポストに宅配便の不在票が入っていたよ。",
+"b": "I should request redelivery for tomorrow.",
+"bJa": "明日再配達してもらえばいいね。",
+"note": "delivery notice slip=不在票 / redelivery=再配達"
+},
+{
+"id": 23,
+"a": "Would you consider this burnable trash?",
+"aJa": "これは燃えるごみかな?",
+"b": "I think it's non-burnable trash. Maybe it's recyclable.",
+"bJa": "燃えないごみだと思う。いや、資源ごみかも。",
+"note": "burnable=燃える / recyclable=リサイクル可能な"
+},
+{
+"id": 24,
+"a": "Can you turn down the TV?",
+"aJa": "テレビのボリュームを下げてくれる?",
+"b": "Sure. I was worried the sound might be too loud.",
+"bJa": "わかった。私も音が大き過ぎるかなと思ってたんだ。",
+"note": "turn down=(音量を)下げる / too loud=うるさすぎる"
+},
+{
+"id": 25,
+"a": "We are running out of Kleenex and milk.",
+"aJa": "ティッシュペーパーと牛乳がなくなりそうだよ。",
+"b": "Okay, I'm going to get them this afternoon.",
+"bJa": "わかった、午後に買ってくるよ。",
+"note": "run out of ~=〜が切れそう / Kleenex=ティッシュ"
+},
+{
+"id": 26,
+"a": "Did you watch this video on YouTube?",
+"aJa": "YouTubeのこの動画は見た?",
+"b": "Yeah, the comments on that were pretty lively too.",
+"bJa": "見たよ。コメント欄も盛り上がってたね。",
+"note": "comments=コメント / lively=盛り上がった・活発な"
+},
+{
+"id": 27,
+"a": "How can I remove this grease stain?",
+"aJa": "この油汚れはどうすれば落とせるだろう?",
+"b": "You could try scrubbing the stain with a toothbrush.",
+"bJa": "歯ブラシでゴシゴシこすってみたらどうだろう。",
+"note": "grease stain=油汚れ / scrub=ゴシゴシこする"
+},
+{
+"id": 28,
+"a": "Whenever I come, Disneyland is the best place.",
+"aJa": "ディズニーランドっていつ来ても最高だよね。",
+"b": "That's because Disneyland is called a magical wonderland.",
+"bJa": "それはディズニーランドが夢の国だからだよ。",
+"note": "whenever=いつ〜しても / magical wonderland=夢の国"
+},
+{
+"id": 29,
+"a": "What a mess this room is!",
+"aJa": "なんて汚い部屋なの!",
+"b": "I know, I'm going to tidy up the room right now.",
+"bJa": "わかってる、今片付けるよ。",
+"note": "What a mess!=なんて散らかりよう / tidy up=片付ける"
+},
+{
+"id": 30,
+"a": "I have so many unread messages on LINE.",
+"aJa": "LINEに未読がいっぱいだ。",
+"b": "Read it. It feels bad to be left unread.",
+"bJa": "読んでよ。未読のままにされるのは気分が悪いよ。",
+"note": "unread=未読の / left unread=未読のままにされる"
+},
+{
+"id": 31,
+"a": "It's tough to decide on the menu daily, right?",
+"aJa": "毎日のメニューを決めるのって大変だよね?",
+"b": "I feel you. They often say \"whatever!\", though.",
+"bJa": "わかるよ。すぐに「なんでもいい」って言うけどさ。",
+"note": "I feel you=わかるよ(共感) / whatever=なんでもいい"
+},
+{
+"id": 32,
+"a": "My child has been talking back a lot lately.",
+"aJa": "最近子どもがよく口答えするの。",
+"b": "That's probably just a sign he's growing up.",
+"bJa": "それだけ成長してるってことじゃない?",
+"note": "talk back=口答えする / a sign=兆候"
+},
+{
+"id": 33,
+"a": "Did you get the same pattern cushion again?",
+"aJa": "また同じ柄のクッションを買ったの?",
+"b": "Because I thought it would match my new chair.",
+"bJa": "新しく買ったイスにも合うと思って。",
+"note": "pattern=柄 / match=(色や柄が)合う"
+},
+{
+"id": 34,
+"a": "How long should I put the pot on the stove for?",
+"aJa": "火にかける時間は何分?",
+"b": "Simmer for ten minutes on low heat.",
+"bJa": "とろ火で10分。",
+"note": "simmer=とろ火で煮る / low heat=弱火"
+},
+{
+"id": 35,
+"a": "The bathroom is stuffy. How is the ventilation?",
+"aJa": "浴室がこもってるよ。換気はどうなってるの?",
+"b": "Okay. Sorry, but can you open the window a crack?",
+"bJa": "ああ、悪いけど窓を少し開けてくれる?",
+"note": "stuffy=空気がこもった / ventilation=換気 / a crack=少しだけ"
+},
+{
+"id": 36,
+"a": "I want him to work at the office not from home, actually.",
+"aJa": "正直、旦那は在宅じゃなくて会社で仕事してほしい。",
+"b": "True. It just makes more chores for me.",
+"bJa": "確かに。余計な家事が増えるのよね。",
+"note": "work from home=在宅勤務 / chores=家事"
+},
+{
+"id": 37,
+"a": "I heard a mom friend of mine got slim with supplements.",
+"aJa": "ママ友がさ、サプリで痩せたらしいよ。",
+"b": "I wanna get slim! But I don't like taking supplements.",
+"bJa": "私も痩せたいけど、サプリを飲むのが苦手なんだよね。",
+"note": "get slim=痩せる / supplements=サプリ"
+},
+{
+"id": 38,
+"a": "The Impressionist exhibition is held at the Tokyo Metropolitan Art Museum now.",
+"aJa": "今、東京都美術館で印象派展をやってるんだって。",
+"b": "I heard! Do you want to go there together?",
+"bJa": "知ってる!一緒に行かない?",
+"note": "Impressionist=印象派 / exhibition=展覧会"
+},
+{
+"id": 39,
+"a": "What do you think? Does this suit me?",
+"aJa": "どう、似合う?",
+"b": "I think the size fits you, but it might be a bit too flashy.",
+"bJa": "サイズはいいね。でもちょっと派手かな。",
+"note": "suit=似合う / fit=(サイズが)合う / flashy=派手な"
+},
+{
+"id": 40,
+"a": "Her new song is really good. Have you listened to it yet?",
+"aJa": "彼女の新曲はすごくいいよ。もう聴いた?",
+"b": "Yeah, I downloaded that song from the iTunes Store too.",
+"bJa": "うん。その曲ならiTunes Storeでダウンロードしたよ。",
+"note": "new song=新曲 / download=ダウンロードする"
+},
+{
+"id": 41,
+"a": "How do you want to get your hair cut today?",
+"aJa": "今日はどうしますか?",
+"b": "I'll leave it up to you. But just leave my bangs the way they are.",
+"bJa": "お任せでお願いします。でも前髪だけはそのままにしてください。",
+"note": "leave it up to you=お任せする / bangs=前髪"
+},
+{
+"id": 42,
+"a": "You put your socks into the washing machine inside out again, didn't you?",
+"aJa": "また靴下を裏返しのまま洗濯機に入れたね?",
+"b": "Oh, dear. Sorry. I didn't realize. It's your pet peeve, isn't it?",
+"bJa": "あー、ごめんね。気づかなかった。イラッとしたよね?",
+"note": "inside out=裏返し / pet peeve=(個人的に)イラッとすること"
+},
+{
+"id": 43,
+"a": "Can you tell me how to return the product I bought?",
+"aJa": "購入品の返品方法を教えてください。",
+"b": "Please put it in the box with the receipt, and then ship it at the post office.",
+"bJa": "商品とレシートを一緒に箱に入れて返送してください。",
+"note": "return=返品する / receipt=レシート / ship=発送する"
+}
+]

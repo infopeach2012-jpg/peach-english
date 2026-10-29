@@ -1,0 +1,1 @@
+module.exports={content:['../index.html','../js/*.js'],darkMode:'class'}
