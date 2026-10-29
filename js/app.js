@@ -9,6 +9,7 @@
     cards: { el: 'view-cards', title: 'フラッシュカード', mod: () => window.CardsView },
     shadow: { el: 'view-shadow', title: '長文・シャドーイング', mod: () => window.ShadowView },
     listen: { el: 'view-listen', title: '聞き流し', mod: () => window.ListenView },
+    practice: { el: 'view-practice', title: 'パターン練習', mod: () => window.PracticeView },
     lesson: { el: 'view-lesson', title: '今日のレッスン', mod: () => window.LessonView },
     freetalk: { el: 'view-freetalk', title: 'AI会話', mod: () => window.FreetalkView },
     quiz: { el: 'view-quiz', title: 'クイズ', mod: () => window.QuizView },
@@ -95,6 +96,7 @@
 
   // ---- メニューシート（AI会話・クイズ・統計・辞書など） ----
   const MENU = [
+    { view: 'practice', emoji: '▶', title: 'パターン練習', desc: '短いお手本を聞いて、繰り返す' },
     { view: 'home', emoji: '⌂', title: 'ホームに戻る', desc: '学習メニューと今日の進捗' },
     { view: 'lesson', emoji: '🎓', title: '今日のレッスン', desc: '4ステップの総合トレーニング' },
     { view: 'freetalk', emoji: '🤖', title: 'AI会話（フリートーク）', desc: 'AIと自由に英会話' },

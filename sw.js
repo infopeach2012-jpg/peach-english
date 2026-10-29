@@ -1,5 +1,5 @@
 /* sw.js — Service Worker（オフライン対応・アプリシェルキャッシュ） */
-const CACHE = 'speak-studio-v22';
+const CACHE = 'speak-studio-v23';
 const ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS = [
   './js/shadow.js',
   './js/listen.js',
   './js/lesson.js',
+  './js/practice.js',
   './js/achievements.js',
   './js/freetalk.js',
   './js/quiz.js',
@@ -23,6 +24,7 @@ const ASSETS = [
   './icon.svg',
   './manifest.webmanifest',
   './data/phrases.json',
+  './data/patterns.json',
   './data/dialogues.json',
   './data/notes.json',
   './data/reading.json',

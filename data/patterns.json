@@ -1,0 +1,242 @@
+[
+  {
+    "id": "feel",
+    "title": "気持ちを自然に伝える",
+    "pattern": "I really …",
+    "note": "really を加えて「本当に」「とても」を伝えます。",
+    "items": [
+      {
+        "key": "pt_feel_1",
+        "en": "I really miss my friends.",
+        "ja": "友達に本当に会いたいです。"
+      },
+      {
+        "key": "pt_feel_2",
+        "en": "I really hate loud noises.",
+        "ja": "大きな音が本当に苦手です。"
+      },
+      {
+        "key": "pt_feel_3",
+        "en": "I really love this song.",
+        "ja": "この曲が本当に大好きです。"
+      },
+      {
+        "key": "pt_feel_4",
+        "en": "I really like this place.",
+        "ja": "ここがとても気に入っています。"
+      },
+      {
+        "key": "pt_feel_5",
+        "en": "I really need a break.",
+        "ja": "本当にひと休みしたいです。"
+      },
+      {
+        "key": "pt_feel_6",
+        "en": "I really enjoy cooking.",
+        "ja": "料理がとても楽しいです。"
+      },
+      {
+        "key": "pt_feel_7",
+        "en": "I really appreciate your help.",
+        "ja": "手伝ってくれて本当に感謝しています。"
+      },
+      {
+        "key": "pt_feel_8",
+        "en": "I really want to try that.",
+        "ja": "それをぜひ試してみたいです。"
+      }
+    ]
+  },
+  {
+    "id": "order",
+    "title": "カフェで注文する",
+    "pattern": "I'd like …",
+    "note": "欲しいものを、丁寧に伝える練習です。",
+    "items": [
+      {
+        "key": "pt_order_1",
+        "en": "I'd like a small coffee.",
+        "ja": "小さいコーヒーをお願いします。"
+      },
+      {
+        "key": "pt_order_2",
+        "en": "I'd like some water, please.",
+        "ja": "お水をお願いします。"
+      },
+      {
+        "key": "pt_order_3",
+        "en": "I'd like a table for two.",
+        "ja": "2人用の席をお願いします。"
+      },
+      {
+        "key": "pt_order_4",
+        "en": "I'd like the chicken sandwich.",
+        "ja": "チキンサンドイッチをお願いします。"
+      },
+      {
+        "key": "pt_order_5",
+        "en": "I'd like that without ice.",
+        "ja": "氷なしでお願いします。"
+      },
+      {
+        "key": "pt_order_6",
+        "en": "I'd like another cup of tea.",
+        "ja": "紅茶をもう1杯お願いします。"
+      },
+      {
+        "key": "pt_order_7",
+        "en": "I'd like to pay by card.",
+        "ja": "カードで払いたいです。"
+      },
+      {
+        "key": "pt_order_8",
+        "en": "I'd like this to go.",
+        "ja": "これを持ち帰りでお願いします。"
+      }
+    ]
+  },
+  {
+    "id": "ask",
+    "title": "お願いをする",
+    "pattern": "Could you …?",
+    "note": "Could you で相手に丁寧にお願いします。",
+    "items": [
+      {
+        "key": "pt_ask_1",
+        "en": "Could you say that again?",
+        "ja": "もう一度言ってもらえますか？"
+      },
+      {
+        "key": "pt_ask_2",
+        "en": "Could you speak a little slower?",
+        "ja": "少しゆっくり話してもらえますか？"
+      },
+      {
+        "key": "pt_ask_3",
+        "en": "Could you help me with this?",
+        "ja": "これを手伝ってもらえますか？"
+      },
+      {
+        "key": "pt_ask_4",
+        "en": "Could you show me the way?",
+        "ja": "道を教えてもらえますか？"
+      },
+      {
+        "key": "pt_ask_5",
+        "en": "Could you send me the address?",
+        "ja": "住所を送ってもらえますか？"
+      },
+      {
+        "key": "pt_ask_6",
+        "en": "Could you open the window?",
+        "ja": "窓を開けてもらえますか？"
+      },
+      {
+        "key": "pt_ask_7",
+        "en": "Could you take a photo of us?",
+        "ja": "私たちの写真を撮ってもらえますか？"
+      },
+      {
+        "key": "pt_ask_8",
+        "en": "Could you give me a minute?",
+        "ja": "少し待ってもらえますか？"
+      }
+    ]
+  },
+  {
+    "id": "plan",
+    "title": "これからの予定を話す",
+    "pattern": "I'm going to …",
+    "note": "これからするつもりのことを伝えます。",
+    "items": [
+      {
+        "key": "pt_plan_1",
+        "en": "I'm going to call my friend.",
+        "ja": "友達に電話するつもりです。"
+      },
+      {
+        "key": "pt_plan_2",
+        "en": "I'm going to make dinner.",
+        "ja": "夕食を作るつもりです。"
+      },
+      {
+        "key": "pt_plan_3",
+        "en": "I'm going to take a walk.",
+        "ja": "散歩するつもりです。"
+      },
+      {
+        "key": "pt_plan_4",
+        "en": "I'm going to visit my family.",
+        "ja": "家族に会いに行くつもりです。"
+      },
+      {
+        "key": "pt_plan_5",
+        "en": "I'm going to leave at six.",
+        "ja": "6時に出発するつもりです。"
+      },
+      {
+        "key": "pt_plan_6",
+        "en": "I'm going to try something new.",
+        "ja": "新しいことを試すつもりです。"
+      },
+      {
+        "key": "pt_plan_7",
+        "en": "I'm going to stay home tonight.",
+        "ja": "今夜は家にいるつもりです。"
+      },
+      {
+        "key": "pt_plan_8",
+        "en": "I'm going to practice every day.",
+        "ja": "毎日練習するつもりです。"
+      }
+    ]
+  },
+  {
+    "id": "work",
+    "title": "仕事で確認する",
+    "pattern": "Let me …",
+    "note": "自分から確認・対応するときのひと言です。",
+    "items": [
+      {
+        "key": "pt_work_1",
+        "en": "Let me check the schedule.",
+        "ja": "予定を確認しますね。"
+      },
+      {
+        "key": "pt_work_2",
+        "en": "Let me send you the details.",
+        "ja": "詳しい情報を送りますね。"
+      },
+      {
+        "key": "pt_work_3",
+        "en": "Let me explain how it works.",
+        "ja": "仕組みを説明しますね。"
+      },
+      {
+        "key": "pt_work_4",
+        "en": "Let me know what you think.",
+        "ja": "どう思うか教えてください。"
+      },
+      {
+        "key": "pt_work_5",
+        "en": "Let me take a look.",
+        "ja": "ちょっと見せてください。"
+      },
+      {
+        "key": "pt_work_6",
+        "en": "Let me ask my team.",
+        "ja": "チームに確認しますね。"
+      },
+      {
+        "key": "pt_work_7",
+        "en": "Let me get back to you.",
+        "ja": "改めて連絡しますね。"
+      },
+      {
+        "key": "pt_work_8",
+        "en": "Let me write that down.",
+        "ja": "それをメモしますね。"
+      }
+    ]
+  }
+]

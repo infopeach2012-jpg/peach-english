@@ -15,7 +15,6 @@
     const srs = S.srsSummary(deck);
 
     const goalDone = cnt >= goal;
-    const lessonDone = window.LessonView && window.LessonView.isDoneToday();
 
     const modes = [
       ['listen', '01', '聞く', '聞き流し', '自然な英語を、日常のすきま時間に。', 'headphones'],
@@ -33,7 +32,7 @@
       <section class="home-intro"><div><p class="eyebrow">A LITTLE PRACTICE. A BIG DIFFERENCE.</p><h2>英語を、もっと<br>あなたの日常に。</h2><p class="intro-description">聞く。話す。少しずつ、自然に。<br>今日はどんな練習をしましょうか。</p></div>
         <div class="daily-progress"><span class="eyebrow">TODAY'S PROGRESS</span><div class="daily-count">${cnt}<span> / ${goal}</span></div><div class="progress-track"><span style="width:${Math.min(100,pct)}%"></span></div><p>${goalDone ? '今日の目標を達成しました' : '自分のペースで続けましょう'}</p><div class="daily-meta"><span>${S.progress.streak.count} 日連続</span><span>発音平均 ${spk.avg}%</span></div></div>
       </section>
-      <button data-go="lesson" class="lesson-feature"><div><span class="eyebrow">YOUR DAILY SESSION · 約5分</span><h3>今日のレッスン</h3><p>${lessonDone ? '今日のレッスンは完了。もう一度練習しますか？' : '単語・発音・会話・クイズを、ひとつの流れで。'}</p></div><span class="feature-action">${lessonDone ? 'もう一度' : 'はじめる'} <span aria-hidden="true">↗</span></span></button>
+      <button data-go="practice" class="lesson-feature"><div><span class="eyebrow">LISTEN & REPEAT · 1レッスン8文</span><h3>聞いて、まねして、話せるように。</h3><p>同じフレーズの型で、短い文をテンポよく練習。</p></div><span class="feature-action">レッスンを選ぶ <span aria-hidden="true">→</span></span></button>
       <div class="section-heading"><h3>練習を選ぶ</h3><span>MAKE IT YOUR ROUTINE</span></div>
       <div class="practice-grid">${modes.map(([view,num,label,title,desc,icon])=>`<button data-go="${view}" class="practice-card"><div class="practice-top"><span class="practice-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${icons[icon]}</svg></span><span class="practice-number">${num} / ${label}</span></div><h3>${title}</h3><p>${desc}</p><span class="practice-link">練習する <span aria-hidden="true">→</span></span></button>`).join('')}</div>
       <div class="section-heading"><h3>もう一歩、続けよう</h3></div>
