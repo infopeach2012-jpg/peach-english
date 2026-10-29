@@ -268,3 +268,122 @@ html.apple [data-tab].bg-gray-100 { border-radius:980px !important; }
 @media(max-width:600px) { .pattern-picker h2 { font-size:27px; }.pattern-courses button { padding:18px; gap:16px; }.pattern-courses strong { font-size:21px; }.pattern-session { padding:12px; margin:0 -8px; border-radius:18px; }.pattern-context { padding-bottom:12px; }.pattern-focus { padding:22px 18px; min-height:300px; }.pattern-focus #pt-en { font-size:29px; }.pattern-mode { margin-bottom:14px; }.pattern-options { gap:8px; }.pattern-top { gap:10px; } }
 
 .pattern-controls #pt-toggle svg { width:26px; height:26px; margin:auto; }
+
+
+/* ============================================================
+   Speak 風（2026-10-29 代表「このアプリの内容を参考に」）
+   黒地 #0b0c10・箱 #1b1e26・青 #2d4fff・上の丸いメニュー・中央のカード
+   ============================================================ */
+html.speak { --canvas:#0b0c10; --surface:#1b1e26; --line:#262a33; --muted:#9aa0ad; --ink:#f2f3f5; --brand:#2d4fff; --brand2:#2d4fff; --brand-soft:#1f2a4a; }
+html.speak body { background:#0b0c10 !important; color:#f2f3f5; padding-bottom:40px; }
+html.speak .bottom-nav { display:none !important; }
+html.speak .app-shell { max-width:1000px; }
+html.speak #app { padding:16px 20px 60px; }
+html.speak .bg-white, html.speak .daily-progress, html.speak .practice-card, html.speak .continue-card, html.speak .listen-player, html.speak .bg-white.rounded-2xl, html.speak .bg-white.rounded-3xl, html.speak .ls-row, html.speak #menu-ov>div { background:#1b1e26 !important; border-color:#1b1e26 !important; }
+html.speak .bg-gray-50, html.speak .bg-gray-100, html.speak .bg-violet-50, html.speak .bg-violet-100, html.speak .bg-pink-50, html.speak .bg-blue-50, html.speak .bg-green-50, html.speak .bg-amber-50 { background:#262a33 !important; }
+html.speak .text-brand, html.speak .practice-link, html.speak .utility-links button { color:#6b86ff !important; }
+html.speak .ls-row.ls-now { border-color:#2d4fff !important; background:#1f2a4a !important; }
+html.speak .brand-grad { background:#262a33 !important; }
+html.speak button.brand-grad.rounded-xl, html.speak #set-save, html.speak #q-again, html.speak #q-next, html.speak .feature-action, html.speak #view-home .bg-white\/20 { background:#2d4fff !important; color:#fff !important; }
+html.speak .bg-white.text-brand, html.speak .bg-white.text-brand.shadow-sm, html.speak [data-tab].brand-grad, html.speak [data-sit].brand-grad, html.speak .chip.brand-grad, html.speak .chip.bg-violet-100 { background:#f2f3f5 !important; color:#0b0c10 !important; }
+html.speak .w-20.h-20.brand-grad, html.speak #ls-play, html.speak .mic-btn.brand-grad { background:#262a33 !important; color:#6b86ff !important; }
+html.speak .h-full.brand-grad, html.speak .progress-track span { background:#2d4fff !important; }
+
+/* 上の丸いメニュー */
+html.speak .sp-top { position:sticky; top:0; z-index:30; display:flex; justify-content:center; padding:10px 12px 6px; background:linear-gradient(#0b0c10 70%, rgba(11,12,16,0)); }
+html.speak .sp-nav { display:flex; gap:4px; background:#1b1e26; border-radius:999px; padding:5px; }
+html.speak .sp-nav button { min-height:40px; padding:8px 18px; border-radius:999px; font-size:15px; font-weight:600; color:#f2f3f5; white-space:nowrap; }
+html.speak .sp-nav button.on { background:#2a2e38; color:#6b86ff; }
+@media (max-width:600px) { html.speak .sp-nav button { padding:8px 11px; font-size:13px; } }
+
+/* ページの部品 */
+.sp-page { max-width:760px; margin:0 auto; }
+.sp-h1 { font-size:34px; font-weight:800; letter-spacing:-0.02em; line-height:1.25; margin:14px 0 10px; }
+.sp-h2 { font-size:20px; font-weight:700; margin:26px 0 10px; }
+.sp-lead { color:#9aa0ad; font-size:14px; line-height:1.8; margin-bottom:14px; }
+.sp-greet { color:#9aa0ad; font-size:14px; margin-top:8px; }
+.sp-eyebrow { font-size:11px; letter-spacing:.12em; color:#9aa0ad; font-weight:700; }
+.sp-card { background:#1b1e26; border-radius:22px; padding:20px; margin-bottom:12px; }
+button.sp-card { width:100%; text-align:left; }
+.sp-row { display:flex; align-items:center; gap:14px; }
+.sp-row-card { padding:18px 20px; }
+.sp-row-btn { display:flex; align-items:center; gap:14px; }
+.sp-icon { width:48px; height:48px; border-radius:50%; display:grid; place-items:center; font-size:22px; flex-shrink:0; background:#262a33; }
+.sp-icon.blue { background:#2d4fff; }
+.sp-item-body { flex:1; min-width:0; }
+.sp-item-title { font-size:17px; font-weight:700; }
+.sp-item-sub { font-size:13px; color:#9aa0ad; margin-top:3px; }
+.sp-pct { color:#9aa0ad; font-size:14px; font-weight:600; }
+.sp-track { height:6px; border-radius:6px; background:#2a2e38; overflow:hidden; margin-top:10px; }
+.sp-track span { display:block; height:100%; background:#2d4fff; border-radius:6px; }
+.sp-label { font-size:15px; }
+.sp-btn-wide { width:100%; margin-top:16px; background:#262a33; color:#f2f3f5; border-radius:14px; padding:16px; font-weight:700; font-size:16px; }
+.sp-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.sp-tile { min-height:150px; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start; }
+.sp-tile-icon { width:48px; height:48px; border-radius:12px; display:grid; place-items:center; font-size:24px; }
+.sp-stat-num { font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1; }
+.sp-stat-num span { font-size:16px; color:#9aa0ad; font-weight:600; margin-left:4px; }
+.sp-hero { padding:26px 24px; background:linear-gradient(160deg,#1f2a4a,#1b1e26) !important; }
+.sp-hero-title { font-size:30px; font-weight:800; letter-spacing:-0.02em; margin:6px 0 4px; }
+.sp-pill { display:inline-flex; align-items:center; gap:6px; background:#2d4fff; color:#fff; border-radius:999px; padding:8px 16px; font-weight:700; font-size:14px; }
+.sp-pill.cta { margin-top:16px; }
+.sp-pill.muted { background:#262a33; color:#9aa0ad; }
+.sp-chips { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 30px; }
+.sp-chip { background:#1b1e26; color:#f2f3f5; border-radius:999px; padding:10px 16px; font-size:14px; font-weight:600; }
+.sp-next { display:block; width:100%; background:#2d4fff; color:#fff; border-radius:16px; padding:18px; font-size:17px; font-weight:700; margin:16px 0; }
+.sp-btn-ghost { background:#262a33; color:#f2f3f5; border-radius:14px; padding:12px 18px; font-weight:700; }
+.sp-link { color:#6b86ff; font-weight:600; }
+.sp-note { color:#9aa0ad; font-size:12px; background:#1b1e26; border-radius:12px; padding:10px 14px; margin-top:8px; }
+.sp-empty { color:#9aa0ad; text-align:center; padding:60px 0; }
+.sp-seg2 { display:flex; background:#262a33; border-radius:999px; padding:4px; margin-bottom:16px; }
+.sp-seg2 button { flex:1; padding:12px; border-radius:999px; font-weight:700; color:#9aa0ad; }
+.sp-seg2 button.on { background:#3a3f4b; color:#f2f3f5; }
+.sp-mins { display:flex; gap:10px; margin-bottom:16px; }
+.sp-mins button { width:64px; height:64px; border-radius:50%; border:2px solid #3a3f4b; color:#9aa0ad; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1; }
+.sp-mins button b { font-size:20px; } .sp-mins button span { font-size:11px; margin-top:2px; }
+.sp-mins button.on { background:#2d4fff; border-color:#2d4fff; color:#fff; }
+.sp-list { display:flex; flex-direction:column; }
+.sp-item { display:flex; align-items:center; gap:14px; padding:12px 4px; text-align:left; width:100%; }
+.sp-item.dim { opacity:.4; }
+.sp-check { color:#6b86ff; font-weight:800; width:20px; }
+.sp-ring { width:48px; height:48px; flex-shrink:0; transform:rotate(-90deg); }
+.sp-ring circle { fill:none; stroke:#2a2e38; stroke-width:4; } .sp-ring circle.val { stroke:#2d4fff; stroke-linecap:round; }
+
+/* フリートークの場面カード */
+.sp-scenes { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.sp-scene { text-align:left; background:#1b1e26; border-radius:22px; overflow:hidden; }
+.sp-scene-art { height:180px; display:grid; place-items:center; font-size:72px; }
+.sp-scene-body { padding:14px 16px 18px; }
+@media (max-width:600px) { .sp-scenes { grid-template-columns:1fr; } .sp-scene-art { height:130px; font-size:56px; } }
+
+/* レッスン画面（1文ずつのカード） */
+html.sp-fullscreen .sp-top { display:none; }
+.sp-drill { min-height:calc(100vh - 40px); display:flex; flex-direction:column; }
+.sp-drill-top { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:4px 0 10px; }
+.sp-drill-title { font-size:17px; font-weight:700; text-align:center; flex:1; }
+.sp-round { width:48px; height:48px; border-radius:50%; background:#1b1e26; color:#f2f3f5; display:grid; place-items:center; font-size:18px; font-weight:700; }
+.sp-round.off { color:#9aa0ad; }
+.sp-round.big { width:60px; height:60px; font-size:24px; color:#9aa0ad; }
+.sp-round.huge { width:80px; height:80px; font-size:26px; color:#6b86ff; }
+.sp-segs { display:flex; gap:6px; margin-bottom:10px; }
+.sp-segs span { flex:1; height:6px; border-radius:6px; background:#262a33; }
+.sp-segs span.done { background:#2d4fff; } .sp-segs span.now { background:linear-gradient(90deg,#2d4fff 50%,#262a33 50%); }
+.sp-drill-body { flex:1; display:grid; place-items:center; padding:10px 0; }
+.sp-drill .sp-card { width:100%; max-width:520px; min-height:300px; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(45,79,255,.12); }
+.sp-card-tools { display:flex; justify-content:space-between; align-items:center; }
+.sp-tool { color:#9aa0ad; font-size:20px; width:36px; height:36px; }
+.sp-group { color:#9aa0ad; font-size:12px; text-align:center; margin-top:18px; }
+.sp-en { font-size:34px; font-weight:800; letter-spacing:-0.02em; text-align:center; line-height:1.3; margin:10px 0 8px; color:#f2f3f5; }
+.sp-ja { color:#c7cbd4; font-size:16px; text-align:center; }
+.sp-fb { text-align:center; font-size:14px; margin-top:14px; min-height:20px; color:#9aa0ad; }
+.sp-fb.good { color:#3ddc84; } .sp-fb.ok { color:#ffb13d; } .sp-fb.bad { color:#ff5a5a; } .sp-fb.hint { color:#6b86ff; }
+.sp-score { font-size:22px; font-weight:800; margin-bottom:4px; }
+.sp-card-actions { display:flex; justify-content:center; align-items:center; gap:14px; margin-top:auto; padding-top:22px; }
+.sp-avatar { width:52px; height:52px; border-radius:50%; background:#2d4fff; display:grid; place-items:center; font-size:24px; }
+.sp-drill-ctl { display:flex; justify-content:center; align-items:center; gap:26px; padding:14px 0 6px; }
+.sp-sub { text-align:center; color:#9aa0ad; font-size:13px; padding-bottom:14px; }
+.sp-done { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px; }
+.sp-done-emoji { font-size:64px; } .sp-done h2 { font-size:26px; font-weight:800; } .sp-done p { color:#9aa0ad; }
+.sp-done-actions { width:100%; max-width:420px; display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.sp-done-actions .sp-next { margin:0; }
+#dr-mic.listening { background:#ff5a5a; animation:pulse 1.2s infinite; }

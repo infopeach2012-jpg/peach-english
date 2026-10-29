@@ -14,17 +14,17 @@
   let busy = false;
 
   const SCENARIOS = [
-    { key: 'chat', emoji: '☕', title: '日常の雑談', desc: '天気・週末・趣味など気軽に',
+    { key: 'chat', bg: 'linear-gradient(160deg,#5a3d2b,#1a120e)', emoji: '☕', title: '日常の雑談', desc: '天気・週末・趣味など気軽に',
       opener: "Hi Watanabe-san! It's great to see you. How's your day going so far?" },
-    { key: 'restaurant', emoji: '🍽️', title: 'レストラン', desc: '注文・おすすめを聞く',
+    { key: 'restaurant', bg: 'linear-gradient(160deg,#6b2d2d,#1a0e0e)', emoji: '🍽️', title: 'レストラン', desc: '注文・おすすめを聞く',
       opener: "Good evening! Welcome to our restaurant. Here's the menu. Can I get you something to drink first?" },
-    { key: 'travel', emoji: '✈️', title: '旅行の話', desc: '東北旅行の予定を英語で',
+    { key: 'travel', bg: 'linear-gradient(160deg,#1f4d6b,#0a1620)', emoji: '✈️', title: '旅行の話', desc: '東北旅行の予定を英語で',
       opener: "I heard you're planning a road trip to Tohoku! That sounds exciting. Where will you go first?" },
-    { key: 'business', emoji: '💼', title: 'ビジネス自己紹介', desc: '会社や仕事を紹介',
+    { key: 'business', bg: 'linear-gradient(160deg,#2d3a5a,#0e111a)', emoji: '💼', title: 'ビジネス自己紹介', desc: '会社や仕事を紹介',
       opener: "Nice to meet you! I don't think we've met before. Could you tell me a little about yourself and your company?" },
-    { key: 'shopping', emoji: '🛍️', title: '買い物・返品', desc: '店員とのやりとり',
+    { key: 'shopping', bg: 'linear-gradient(160deg,#5a2d6b,#160a1a)', emoji: '🛍️', title: '買い物・返品', desc: '店員とのやりとり',
       opener: "Hi there! Welcome. Are you looking for anything in particular today?" },
-    { key: 'meat', emoji: '🥩', title: 'お肉の商談', desc: '精肉卸として英語で提案',
+    { key: 'meat', bg: 'linear-gradient(160deg,#6b3a1f,#1a0f08)', emoji: '🥩', title: 'お肉の商談', desc: '精肉卸として英語で提案',
       opener: "Hello! I run a restaurant and I'm looking for a new meat supplier. What kind of products do you offer?" },
   ];
 
@@ -58,35 +58,39 @@ Rules:
   }
 
   function drawScenarioPicker(container) {
+    const custom = loadCustom();
+    const card = (s) => `
+      <button data-sc="${s.key}" class="sp-scene">
+        <div class="sp-scene-art" style="background:${s.bg || 'linear-gradient(160deg,#243b6b,#0f1424)'}"><span>${s.emoji}</span></div>
+        <div class="sp-scene-body"><div class="sp-item-title">${window.App.escapeHtml(s.title)}</div><div class="sp-item-sub">${window.App.escapeHtml(s.desc)}</div></div>
+      </button>`;
     container.innerHTML = `
-      <button class="text-sm text-gray-400 mb-3 back-home">← ホーム</button>
-      <div class="text-center mb-5">
-        <div class="text-5xl mb-2">🤖💬</div>
-        <div class="text-lg font-bold text-gray-800">AIと英会話</div>
-        <div class="text-sm text-gray-500 mt-1">場面を選んで、声に出して会話しよう</div>
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        ${SCENARIOS.map((s) => `
-          <button data-sc="${s.key}" class="row bg-white border border-gray-100 rounded-2xl p-4 shadow-sm text-left">
-            <div class="text-3xl mb-1">${s.emoji}</div>
-            <div class="font-bold text-gray-800 text-sm">${s.title}</div>
-            <div class="text-[11px] text-gray-500 mt-0.5">${s.desc}</div>
-          </button>`).join('')}
-      </div>
-      ${getKey() ? '' : `<div class="mt-5 text-xs text-gray-500 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2">
-        💡 AI会話にはAnthropic APIキーが必要です（経営分析と共用・Anthropicのみに送信）。会話を始めると入力欄が出ます。</div>`}
-    `;
-    bindBack(container);
+      <div class="sp-page">
+        <div class="sp-head-row"><h1 class="sp-h1">フリートーク</h1></div>
+        <p class="sp-lead">場面を選んで、声に出して会話します。短く返してくれるので、テンポよく続きます。</p>
+        <div class="sp-scenes">${SCENARIOS.map(card).join('')}${custom.map(card).join('')}</div>
+        <button id="ft-custom" class="sp-next">＋ 自分のシナリオを作成</button>
+        ${getKey() ? '' : `<div class="sp-note">💡 AI 会話には Anthropic の API キーが要ります。会話を始めると入力欄が出ます。</div>`}
+      </div>`;
+    const start = (sc) => {
+      convo = { sc, messages: [{ role: 'assistant', en: sc.opener, ja: '' }] };
+      saveConvo();
+      drawChat(container);
+      window.Speech.speak(sc.opener, { rate: 1 });
+    };
     container.querySelectorAll('[data-sc]').forEach((b) => {
-      b.onclick = () => {
-        const sc = SCENARIOS.find((x) => x.key === b.dataset.sc);
-        convo = { sc, messages: [{ role: 'assistant', en: sc.opener, ja: '' }] };
-        saveConvo();
-        drawChat(container);
-        window.Speech.speak(sc.opener, { rate: 0.95 });
-      };
+      b.onclick = () => { const sc = SCENARIOS.concat(custom).find((x) => x.key === b.dataset.sc); if (sc) start(sc); };
     });
+    container.querySelector('#ft-custom').onclick = () => {
+      const title = prompt('シナリオの名前（例: ホテルのフロント）'); if (!title) return;
+      const desc = prompt('どんな場面か、ひとこと（例: チェックインから部屋の案内まで）') || '';
+      const sc = { key: 'c' + Date.now(), emoji: '✨', title, desc, opener: 'Hi! Let\'s start. ' + (desc ? 'Today\'s situation: ' + desc + '. ' : '') + 'Are you ready?', bg: 'linear-gradient(160deg,#4b2d7a,#141020)' };
+      custom.push(sc); saveCustom(custom); start(sc);
+    };
   }
+  const CUSTOM_KEY = 'speak.freetalk.custom';
+  function loadCustom() { try { return JSON.parse(localStorage.getItem(CUSTOM_KEY) || '[]'); } catch (e) { return []; } }
+  function saveCustom(list) { try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(list)); } catch (e) {} }
 
   function drawChat(container) {
     const sc = convo.sc;

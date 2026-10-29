@@ -1,125 +1,86 @@
-/* Focused pattern practice: listen, repeat, then use another sentence. */
+/* practice.js — 練習（Speak 風）。window.PracticeView
+ * AI と会話 ／ クイックレッスン（語彙・表現）／ 復習（スマートレビュー・保存した表現・苦手・場面で聞く）
+ */
 (function () {
   'use strict';
-  let root, courses, course = null, index = 0, active = false, epoch = 0, mic = {};
-  let completed = new Set(), feedback = '';
-  const KEY = 'speak.patterns.v1';
-  let prefs = { mode: 'listen', rate: 1, gap: 0.5, repeat: 2 };
-  try { Object.assign(prefs, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
-  const esc = (s) => window.App.escapeHtml(s);
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch (_) {} }
-  function halt() {
-    active = false; epoch++;
-    if (mic.stop) mic.stop(); mic = {};
-    window.Speech.stopSpeaking();
-    if (window.Speech.releaseAudio) window.Speech.releaseAudio();
-    updateButton();
+
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function quick(kind) {
+    const S = window.Store, C = S.content;
+    const SITS = (window.ListenView && window.ListenView.SITS) || [];
+    const label = (k) => { const s = SITS.find((x) => x.key === k); return s ? s.label : ''; };
+    const pool = C.phrases.filter((p) => kind === 'word' ? p.kind === 'word' : p.kind === 'sentence')
+      .map((p) => ({ key: 'p' + p.id, en: p.en, ja: p.ja, note: p.note, group: label(p.sit) }));
+    const { due, fresh } = S.srsDue(pool);
+    const items = shuffle(due).concat(shuffle(fresh), shuffle(pool)).filter((x, i, a) => a.indexOf(x) === i).slice(0, 10);
+    window.App.drill = { mode: 'speak', items, title: kind === 'word' ? '語彙' : '表現', back: 'practice' };
+    window.App.navigate('drill');
   }
-  async function render(container) {
-    root = container; course = null; halt();
-    const ticket = epoch;
-    root.innerHTML = '<p class="pattern-loading">レッスンを準備しています…</p>';
-    try {
-      if (!courses) { const res = await fetch('data/patterns.json'); if (!res.ok) throw new Error('load'); courses = await res.json(); }
-      if (ticket !== epoch) return;
-      chooser();
-    } catch (_) {
-      if (ticket !== epoch) return;
-      root.innerHTML = '<p>レッスンを読み込めませんでした。通信を確認して再度開いてください。</p>';
-    }
+
+  function weakDrill() {
+    const S = window.Store;
+    const items = S.weakItems().map((it) => ({ key: it.key, en: it.en, ja: it.ja, note: it.note, group: '苦手' })).slice(0, 15);
+    if (!items.length) { window.App.toast('まだ苦手はありません。話す練習で60点未満だった文がここに入ります'); return; }
+    window.App.drill = { mode: 'speak', items, title: '苦手', back: 'practice' };
+    window.App.navigate('drill');
   }
-  function chooser() {
-    halt(); course = null;
-    root.innerHTML = `<section class="pattern-picker"><p class="pattern-kicker">LISTEN. REPEAT. MAKE IT YOURS.</p><h2>ひとつの型から、<br>話せる英語を増やそう。</h2><p>短いお手本を聞いて、繰り返す。<br>1レッスン8文。声を出せないときは、聞くだけでも。</p><div class="pattern-courses">${courses.map((c,i)=>`<button data-course="${c.id}"><span class="course-number">${String(i+1).padStart(2,'0')}</span><span><small>${esc(c.title)}</small><strong>${esc(c.pattern)}</strong><em>8文 · 約1分</em></span><b aria-hidden="true">→</b></button>`).join('')}</div></section>`;
-    root.querySelectorAll('[data-course]').forEach(b=>b.onclick=()=>{course=courses.find(c=>c.id===b.dataset.course);index=0;completed=new Set();feedback='';screen();run();});
+
+  function render(container) {
+    const S = window.Store;
+    const gs = window.SmartView.groups();
+    const score = window.SmartView.overall(gs);
+    const favs = S.favoriteItems().length;
+    const weak = S.weakItems().length;
+    container.innerHTML = `
+      <div class="sp-page">
+        <h1 class="sp-h1">練習</h1>
+
+        <div class="sp-card">
+          <div class="sp-row"><span class="sp-icon blue">🤖</span><div><div class="sp-item-title">AI と会話</div><div class="sp-item-sub">場面を選んで、声で話す。その場で直してくれる</div></div></div>
+          <button data-go="freetalk" class="sp-btn-wide">📞 会話をはじめる</button>
+        </div>
+
+        <h2 class="sp-h2">クイックレッスン</h2>
+        <div class="sp-grid2">
+          <button data-quick="word" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff8a3d">🃏</span><div class="sp-item-title">語彙</div></button>
+          <button data-quick="sentence" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff4d6d">❞</span><div class="sp-item-title">表現</div></button>
+        </div>
+
+        <h2 class="sp-h2">復習</h2>
+        <button data-go="smart" class="sp-card sp-row-btn">
+          <span class="sp-icon" style="background:#3b5bff">⚡</span>
+          <div class="sp-item-body"><div class="sp-item-title">スマートレビュー</div><div class="sp-item-sub">習熟度スコア</div><div class="sp-track"><span style="width:${score}%"></span></div></div>
+          <span class="sp-pct">${score}%</span>
+        </button>
+        <button data-go="review" class="sp-card sp-row-btn">
+          <span class="sp-icon" style="background:#2fbf8f">🔖</span>
+          <div class="sp-item-body"><div class="sp-item-title">保存した表現</div><div class="sp-item-sub">${favs} 保存済み</div></div>
+        </button>
+        <button data-weak class="sp-card sp-row-btn">
+          <span class="sp-icon" style="background:#e5734a">✱</span>
+          <div class="sp-item-body"><div class="sp-item-title">苦手</div><div class="sp-item-sub">${weak ? weak + ' 件の間違いを復習しましょう' : 'まだありません'}</div></div>
+        </button>
+        <button data-go="listen" class="sp-card sp-row-btn">
+          <span class="sp-icon" style="background:#7c5cff">✦</span>
+          <div class="sp-item-body"><div class="sp-item-title">場面で聞く</div><div class="sp-item-sub">${gs.length} の場面 ・ 聞き流し</div></div>
+        </button>
+
+        <h2 class="sp-h2">ほかの練習</h2>
+        <div class="sp-chips">
+          <button data-go="patterns" class="sp-chip">パターン練習（型で覚える）</button>
+          <button data-go="lesson" class="sp-chip">今日のレッスン</button>
+          <button data-go="roleplay" class="sp-chip">ロールプレイ</button>
+          <button data-go="shadow" class="sp-chip">長文・シャドーイング</button>
+          <button data-go="cards" class="sp-chip">フラッシュカード</button>
+          <button data-go="speaking" class="sp-chip">発音</button>
+          <button data-go="dict" class="sp-chip">辞書</button>
+        </div>
+      </div>`;
+    container.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => window.App.navigate(b.dataset.go); });
+    container.querySelectorAll('[data-quick]').forEach((b) => { b.onclick = () => quick(b.dataset.quick); });
+    container.querySelector('[data-weak]').onclick = weakDrill;
   }
-  function updateButton() {
-    if (!root) return;
-    const b = root.querySelector('#pt-toggle');
-    if (b) { b.innerHTML = active ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="4"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>'; b.setAttribute('aria-label', active ? '一時停止' : '再生'); }
-  }
-  function screen() {
-    const item = course.items[index];
-    root.innerHTML = `<section class="pattern-session">
-      <div class="pattern-top"><button id="pt-exit" aria-label="レッスン一覧へ">×</button><div class="pattern-segments" aria-label="${index+1} / ${course.items.length}">${course.items.map((_,i)=>`<span class="${i<index?'done':i===index?'current':''}"></span>`).join('')}</div><span>${index+1}/${course.items.length}</span></div>
-      <div class="pattern-mode"><button data-mode="listen" aria-pressed="${prefs.mode==='listen'}">聞くだけ</button><button data-mode="speak" aria-pressed="${prefs.mode==='speak'}">声に出す</button></div>
-      <div class="pattern-context"><p>${esc(course.title)}</p><strong>${esc(course.pattern)}</strong><span>${esc(course.note)}</span></div>
-      <div class="pattern-focus"><div id="pt-status" class="pattern-status" role="status">お手本を聞きましょう</div><p id="pt-en" lang="en">${esc(item.en)}</p><p id="pt-ja">${esc(item.ja)}</p>
-      <div class="pattern-controls"><button id="pt-replay" aria-label="もう一度">↺</button><button id="pt-toggle" aria-label="再生">▶︎</button><button id="pt-slow" aria-label="ゆっくり再生">0.75×</button></div>
-      <button id="pt-mic" class="pattern-mic" ${prefs.mode==='listen'?'hidden':''}>マイクで話す</button><p id="pt-feedback" class="pattern-feedback" aria-live="polite">${esc(feedback)}</p></div>
-      <div class="pattern-navigation"><button id="pt-prev" ${index===0?'disabled':''}>← 前の文</button><button id="pt-next">${index===course.items.length-1?'練習を終える':'次の文 →'}</button></div>
-      <div class="pattern-options"><label>速さ<select id="pt-rate">${[0.75,1,1.15,1.2,1.25,1.5,1.75,2].map(v=>`<option value="${v}" ${v===prefs.rate?'selected':''}>${v}倍</option>`).join('')}</select></label><label>文の間<select id="pt-gap">${[0,0.25,0.5,1].map(v=>`<option value="${v}" ${v===prefs.gap?'selected':''}>${v===0?'なし':v+'秒'}</option>`).join('')}</select></label><label>繰り返し<select id="pt-repeat">${[1,2,3].map(v=>`<option value="${v}" ${v===prefs.repeat?'selected':''}>${v}回</option>`).join('')}</select></label></div>
-    </section>`;
-    root.querySelector('#pt-exit').onclick=chooser;
-    root.querySelector('#pt-toggle').onclick=()=>{if(active){halt();status('一時停止中');}else run();};
-    root.querySelector('#pt-replay').onclick=run;
-    root.querySelector('#pt-slow').onclick=()=>run(true);
-    root.querySelector('#pt-prev').onclick=()=>move(-1);
-    root.querySelector('#pt-next').onclick=()=>move(1);
-    root.querySelector('#pt-mic').onclick=record;
-    root.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{halt();prefs.mode=b.dataset.mode;save();feedback='';screen();run();});
-    ['rate','gap','repeat'].forEach(name=>{root.querySelector('#pt-'+name).onchange=e=>{prefs[name]=Number(e.target.value);save();if(active)run();};});
-    updateButton();
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }
-  function status(text) { const el=root&&root.querySelector('#pt-status'); if(el)el.textContent=text; }
-  function mark() {
-    const key=course.items[index].key;
-    if(completed.has(key))return;
-    completed.add(key);window.Store.recordActivity(1);window.App.refreshHeader();
-  }
-  async function run(slow) {
-    if(!course)return;
-    halt(); active=true;const ticket=epoch;updateButton();window.Speech.unlockAudio();
-    const live=()=>active&&ticket===epoch;
-    try {
-      while(live()) {
-        const item=course.items[index];
-        const next=course.items[index+1];if(next)window.Speech.prefetchClip(next.key);
-        for(let pass=0;pass<(slow?1:prefs.repeat)&&live();pass++) {
-          status(slow?'ゆっくり聞いてみましょう':`お手本 ${pass+1} / ${prefs.repeat}`);
-          await window.Speech.speak(item.en,{key:item.key,rate:slow?1:prefs.rate,slow:!!slow});
-          if(live()&&pass+1<prefs.repeat&&!slow)await wait(350);
-        }
-        if(!live())return;
-        if(slow){active=false;updateButton();status('もう一度聞くか、次の文へ');return;}
-        if(prefs.mode==='speak') {active=false;updateButton();status('あなたの番です。マイクを押して話しましょう');return;}
-        mark();status('聞き終わりました');
-        await wait(prefs.gap*1000);if(!live())return;
-        if(index===course.items.length-1){finish();return;}
-        index++;feedback='';screen();
-      }
-    } catch (_) {if(ticket===epoch){halt();status('再生を押して、もう一度お試しください');}}
-  }
-  function move(delta) {
-    halt();
-    if(index+delta>=course.items.length){finish();return;}
-    index=Math.max(0,index+delta);feedback='';screen();run();
-  }
-  async function record() {
-    if(!window.Speech.asrSupported){status('このブラウザは音声認識に対応していません');return;}
-    halt();const ticket=epoch;mic={};status('聞き取り中…');
-    const button=root.querySelector('#pt-mic');button.textContent='話し終えたら停止';button.onclick=()=>{if(mic.stop)mic.stop();};
-    try {
-      const said=await window.Speech.listenOnce({ref:mic,onPartial:text=>{if(ticket===epoch)root.querySelector('#pt-feedback').textContent=text;}});
-      if(ticket!==epoch)return;
-      if(!said){status('声が聞き取れませんでした。もう一度どうぞ');return;}
-      const result=window.Speech.score(course.items[index].en,said);
-      feedback=`聞き取った言葉：${said}（お手本との単語一致 ${result.score}%）`;
-      root.querySelector('#pt-feedback').textContent=feedback;
-      status(result.score>=80?'言葉が伝わりました。次の文に進めます':'お手本を聞いて、もう一度練習しましょう');
-      mark();
-    } catch(e){if(ticket===epoch)status(window.Speech.errorMessage(e));}
-    finally {if(ticket===epoch){button.textContent='もう一度話す';button.onclick=record;}}
-  }
-  function finish() {
-    halt();
-    const title=course.title,count=completed.size;
-    root.innerHTML=`<section class="pattern-finish"><span>SESSION COMPLETE</span><h2>今日も、ひとつ前へ。</h2><p>${esc(title)}</p><strong>${count}<small> / ${course.items.length}文を練習</small></strong><button id="pt-again">もう一度練習</button><button id="pt-courses">ほかのレッスンを選ぶ</button><button id="pt-home">ホームへ戻る</button></section>`;
-    root.querySelector('#pt-again').onclick=()=>{index=0;completed=new Set();feedback='';screen();run();};
-    root.querySelector('#pt-courses').onclick=chooser;
-    root.querySelector('#pt-home').onclick=()=>window.App.navigate('home');
-  }
-  window.PracticeView={render,onLeave:halt};
+
+  window.PracticeView = { render };
 })();

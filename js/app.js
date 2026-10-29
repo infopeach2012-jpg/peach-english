@@ -9,13 +9,16 @@
     cards: { el: 'view-cards', title: 'フラッシュカード', mod: () => window.CardsView },
     shadow: { el: 'view-shadow', title: '長文・シャドーイング', mod: () => window.ShadowView },
     listen: { el: 'view-listen', title: '聞き流し', mod: () => window.ListenView },
-    practice: { el: 'view-practice', title: 'パターン練習', mod: () => window.PracticeView },
     lesson: { el: 'view-lesson', title: '今日のレッスン', mod: () => window.LessonView },
     freetalk: { el: 'view-freetalk', title: 'AI会話', mod: () => window.FreetalkView },
     quiz: { el: 'view-quiz', title: 'クイズ', mod: () => window.QuizView },
     stats: { el: 'view-stats', title: '統計・進捗', mod: () => window.StatsView },
     dict: { el: 'view-dict', title: 'フレーズ辞書', mod: () => window.DictView },
-    review: { el: 'view-review', title: '復習ボックス', mod: () => window.ReviewView },
+    review: { el: 'view-review', title: '保存した表現・苦手', mod: () => window.ReviewView },
+    practice: { el: 'view-practice', title: '練習', mod: () => window.PracticeView },
+    patterns: { el: 'view-patterns', title: 'パターン練習', mod: () => window.PatternsView },
+    smart: { el: 'view-smart', title: 'スマートレビュー', mod: () => window.SmartView },
+    drill: { el: 'view-drill', title: 'レッスン', mod: () => window.DrillView },
   };
 
   // ボトムナビに載っている主要ビュー
@@ -67,6 +70,11 @@
     document.getElementById('hdr-title').textContent = VIEWS[name].title;
 
     // ナビ状態（非ナビビューではホームを弱く点灯）
+    // 上のメニュー（Speak 風）: どの画面がどの見出しに属するか
+    const TOP = { home: 'home', freetalk: 'freetalk', quiz: 'quiz', stats: 'stats' };
+    const topKey = TOP[name] || 'practice';
+    document.querySelectorAll('.sp-nav [data-top]').forEach((b) => b.classList.toggle('on', b.dataset.top === topKey));
+    document.documentElement.classList.toggle('sp-fullscreen', name === 'drill');
     document.querySelectorAll('#bottom-nav button').forEach((b) => {
       b.classList.toggle('active', b.dataset.view === name);
       if (b.dataset.view === name) b.setAttribute('aria-current', 'page');
@@ -96,7 +104,7 @@
 
   // ---- メニューシート（AI会話・クイズ・統計・辞書など） ----
   const MENU = [
-    { view: 'practice', emoji: '▶', title: 'パターン練習', desc: '短いお手本を聞いて、繰り返す' },
+    { view: 'patterns', emoji: '▶', title: 'パターン練習', desc: '短いお手本を聞いて、繰り返す' },
     { view: 'home', emoji: '⌂', title: 'ホームに戻る', desc: '学習メニューと今日の進捗' },
     { view: 'lesson', emoji: '🎓', title: '今日のレッスン', desc: '4ステップの総合トレーニング' },
     { view: 'freetalk', emoji: '🤖', title: 'AI会話（フリートーク）', desc: 'AIと自由に英会話' },
@@ -150,6 +158,7 @@
     const dark = true;
     document.documentElement.classList.toggle('dark', dark);
     document.documentElement.classList.add('apple');
+    document.documentElement.classList.add('speak');
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', '#000000');
   }
@@ -199,6 +208,7 @@
     });
     document.getElementById('hdr-menu').addEventListener('click', openMenu);
     document.getElementById('hdr-home').addEventListener('click', () => navigate('home'));
+    document.querySelectorAll('.sp-nav [data-top]').forEach((b) => b.addEventListener('click', () => navigate(b.dataset.top)));
     const restoreRoute = () => {
       const name = location.hash.slice(1);
       if (name !== current) navigate(name, { fromHistory: true });
