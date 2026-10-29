@@ -104,6 +104,8 @@
 
   // ---- メニューシート（AI会話・クイズ・統計・辞書など） ----
   const MENU = [
+    { view: 'practice', emoji: '🏃', title: '練習', desc: 'クイックレッスン・復習・苦手' },
+    { view: 'smart', emoji: '⚡', title: 'スマートレビュー', desc: '習熟度と間隔反復で復習' },
     { view: 'patterns', emoji: '▶', title: 'パターン練習', desc: '短いお手本を聞いて、繰り返す' },
     { view: 'home', emoji: '⌂', title: 'ホームに戻る', desc: '学習メニューと今日の進捗' },
     { view: 'lesson', emoji: '🎓', title: '今日のレッスン', desc: '4ステップの総合トレーニング' },
@@ -158,7 +160,6 @@
     const dark = true;
     document.documentElement.classList.toggle('dark', dark);
     document.documentElement.classList.add('apple');
-    document.documentElement.classList.add('speak');
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', '#000000');
   }

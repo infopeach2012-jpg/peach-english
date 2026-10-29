@@ -387,3 +387,14 @@ html.sp-fullscreen .sp-top { display:none; }
 .sp-done-actions { width:100%; max-width:420px; display:flex; flex-direction:column; gap:10px; margin-top:16px; }
 .sp-done-actions .sp-next { margin:0; }
 #dr-mic.listening { background:#ff5a5a; animation:pulse 1.2s infinite; }
+
+/* Apple 風に戻した（2026-10-29 代表「デザインは先ほどに戻して」）。練習・スマートレビュー・レッスンの画面は Apple 風の色で */
+html.sp-fullscreen .bottom-nav { display:none !important; }
+html.apple:not(.speak) .sp-card, html.apple:not(.speak) .sp-scene, html.apple:not(.speak) .sp-chip, html.apple:not(.speak) .sp-round, html.apple:not(.speak) .sp-note { background:#0f0f10; }
+html.apple:not(.speak) .sp-icon, html.apple:not(.speak) .sp-btn-wide, html.apple:not(.speak) .sp-btn-ghost, html.apple:not(.speak) .sp-seg2, html.apple:not(.speak) .sp-pill.muted, html.apple:not(.speak) .sp-track, html.apple:not(.speak) .sp-segs span { background:#1d1d1f; }
+html.apple:not(.speak) .sp-icon.blue, html.apple:not(.speak) .sp-pill, html.apple:not(.speak) .sp-next, html.apple:not(.speak) .sp-avatar, html.apple:not(.speak) .sp-mins button.on, html.apple:not(.speak) .sp-track span, html.apple:not(.speak) .sp-segs span.done { background:#0071e3; border-color:#0071e3; }
+html.apple:not(.speak) .sp-segs span.now { background:linear-gradient(90deg,#0071e3 50%,#1d1d1f 50%); }
+html.apple:not(.speak) .sp-link, html.apple:not(.speak) .sp-check, html.apple:not(.speak) .sp-round.huge, html.apple:not(.speak) .sp-fb.hint { color:#2997ff; }
+html.apple:not(.speak) .sp-ring circle.val { stroke:#2997ff; }
+html.apple:not(.speak) .sp-hero { background:#0f0f10 !important; }
+html.apple:not(.speak) .sp-page { padding-top:8px; }

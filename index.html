@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" class="dark apple speak">
+<html lang="ja" class="dark apple">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -26,15 +26,14 @@
 <body>
   <div class="app-shell">
 
-    <header class="sp-top">
-      <nav class="sp-nav" aria-label="メインメニュー">
-        <button data-top="home">ホーム</button>
-        <button data-top="freetalk">フリートーク</button>
-        <button data-top="practice">練習</button>
-        <button data-top="quiz">チャレンジ</button>
-        <button data-top="stats">プロフィール</button>
-      </nav>
-      <div class="hidden-x" aria-hidden="true"><h1 id="hdr-title">ホーム</h1><button id="hdr-home"></button><button id="hdr-menu"></button><span id="hdr-level"></span><span id="hdr-streak"></span><span id="hdr-xp"></span><span id="hdr-xpnext"></span><div id="hdr-xpbar"></div></div>
+    <header class="app-header">
+      <a href="#home" class="wordmark" aria-label="Speak Studio ホーム">speak<span>studio</span><i></i></a>
+      <div class="header-location"><span class="header-eyebrow">YOUR ENGLISH, EVERY DAY</span><h1 id="hdr-title">ホーム</h1></div>
+      <div class="header-actions">
+        <button id="hdr-home" class="home-button" aria-label="ホームに戻る">⌂ <span>ホーム</span></button>
+        <button id="hdr-menu" class="menu-button" aria-label="すべてのメニュー" aria-expanded="false">☰ <span>メニュー</span></button>
+      </div>
+      <div class="hidden-x" aria-hidden="true"><span id="hdr-level"></span><span id="hdr-streak"></span><span id="hdr-xp"></span><span id="hdr-xpnext"></span><div id="hdr-xpbar"></div></div>
     </header>
 
     <!-- ビュー領域 -->
