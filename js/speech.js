@@ -153,7 +153,10 @@
     // 索引の値は [ファイル名, 開始秒, 長さ] か、ファイル名だけ（1文1ファイル。Codex などで作った音声向け）
     if (typeof ent === 'string') ent = [ent, 0, null];
     stopClip();
-    if (AC) return playClipWebAudio(ent, opts.rate != null ? opts.rate : 1).then((ok) => ok || playClipElement(ent, opts));
+    const rate = opts.rate != null ? opts.rate : 1;
+    // 速さを変えるときは <audio> の preservesPitch で声の高さを保つ（Web Audio は高さごと変わる）。1文1ファイルのときだけ
+    if (ent[2] == null && Math.abs(rate - 1) > 0.01 && audioEl && 'preservesPitch' in audioEl) return playClipElement(ent, opts);
+    if (AC) return playClipWebAudio(ent, rate).then((ok) => ok || playClipElement(ent, opts));
     return playClipElement(ent, opts);
   }
   function playClipElement(ent, opts) {
@@ -190,6 +193,7 @@
       // 3) 再生。終わりは「実際の再生位置」で判断する（時計で切ると読み込み待ちの分だけ早く切れる）
       const startPlayback = () => {
         if (finished) return;
+        try { audioEl.preservesPitch = true; audioEl.webkitPreservesPitch = true; } catch (e) { /* noop */ }
         audioEl.playbackRate = rate;
         const p = audioEl.play();
         if (p && p.catch) p.catch(() => finish(false));

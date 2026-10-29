@@ -23,7 +23,7 @@
   ];
 
   const SETTINGS_KEY = 'speak.listen.v1';
-  let settings = { tab: 'phrase', sit: 'greet', rate: 1, ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0.8, pattern: 'std' };
+  let settings = { tab: 'phrase', sit: 'greet', rate: 1, ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0.8, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
 
@@ -82,6 +82,8 @@
   function render(c) {
     container = c;
     draw();
+    // 開いたら自動で再生（タップで画面に入った流れの中で始めるので iPad でも鳴る）
+    if (settings.auto && queue.length && !playing) play();
   }
 
   function draw() {
@@ -130,10 +132,15 @@
         ${seg('pattern', [{ v: 'std', l: '英語 → 和訳' }, { v: 'study', l: '英語 → ゆっくり → 和訳 → 英語' }], settings.pattern)}
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
-        <div><div class="text-gray-400 mb-1">速さ</div>${seg('rate', [{ v: 0.8, l: 'ゆっくり' }, { v: 1, l: '普通' }, { v: 1.2, l: '速め' }], settings.rate)}</div>
+      </div>
+      <div class="mt-3 text-xs">
+        <div class="text-gray-400 mb-1">速さ</div>${seg('rate', [{ v: 0.8, l: 'ゆっくり' }, { v: 1, l: '普通' }, { v: 1.2, l: '少し速く' }, { v: 1.4, l: '速く' }, { v: 1.6, l: 'もっと速く' }, { v: 1.8, l: '最速' }], settings.rate)}
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
         <div><div class="text-gray-400 mb-1">和訳の読み上げ</div>${seg('ja', [{ v: true, l: 'あり' }, { v: false, l: 'なし' }], settings.ja)}</div>
+        <div><div class="text-gray-400 mb-1">開いたら自動で再生</div>${seg('auto', [{ v: true, l: 'する' }, { v: false, l: 'しない' }], settings.auto)}</div>
         <div><div class="text-gray-400 mb-1">1文の繰り返し</div>${seg('repeat', [{ v: 1, l: '1回' }, { v: 2, l: '2回' }, { v: 3, l: '3回' }], settings.repeat)}</div>
-        <div><div class="text-gray-400 mb-1">文の間</div>${seg('gap', [{ v: 0.3, l: '短め' }, { v: 0.8, l: '普通' }, { v: 1.5, l: '長め' }], settings.gap)}</div>
+        <div><div class="text-gray-400 mb-1">文の間</div>${seg('gap', [{ v: 0, l: 'なし' }, { v: 0.3, l: '短め' }, { v: 0.8, l: '普通' }, { v: 1.5, l: '長め' }], settings.gap)}</div>
       </div>
       ${voiceRow()}`;
   }
@@ -180,7 +187,7 @@
     root.querySelectorAll('[data-set]').forEach((b) => {
       b.onclick = () => {
         const n = b.dataset.set, v = b.dataset.val;
-        settings[n] = n === 'ja' ? v === 'true' : (isNaN(Number(v)) ? v : Number(v));
+        settings[n] = (n === 'ja' || n === 'auto') ? v === 'true' : (isNaN(Number(v)) ? v : Number(v));
         saveSettings();
         onChange();
       };
@@ -342,7 +349,7 @@
       }
       if (settings.ja && q.ja && alive()) {
         await sleep(200);
-        await window.Speech.speak(q.ja, { lang: 'ja', rate: 1.1 });
+        await window.Speech.speak(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * settings.rate) });
       }
       if (settings.pattern === 'study' && alive()) {
         await sleep(350);
