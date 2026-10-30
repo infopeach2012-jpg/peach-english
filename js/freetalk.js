@@ -52,6 +52,7 @@ Rules:
   function saveConvo() { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(convo)); } catch (e) {} }
 
   function render(container) {
+    SCENARIOS.forEach((sc) => window.Speech.registerText(sc.opener, 'ft_' + sc.key));
     convo = loadConvo();
     if (!convo || !convo.sc) { drawScenarioPicker(container); return; }
     drawChat(container);
@@ -148,9 +149,10 @@ Rules:
             <div class="bg-white border border-gray-100 rounded-2xl rounded-tl-sm p-3 shadow-sm max-w-[85%]">
               <div class="text-gray-800">${window.App.escapeHtml(m.en)}</div>
               ${m.ja ? `<div class="text-xs text-gray-500 mt-1">${window.App.escapeHtml(m.ja)}</div>` : ''}
-              <div class="flex gap-3 mt-1.5">
-                <button class="ft-say text-brand text-xs font-semibold" data-i="${i}">🔊</button>
-                <button class="ft-tr text-gray-400 text-xs" data-i="${i}">和訳</button>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <button class="ft-say ft-btn" data-i="${i}">🔊 もう一度聞く</button>
+                <button class="ft-slow ft-btn" data-i="${i}">🐢 ゆっくり</button>
+                <button class="ft-tr ft-btn" data-i="${i}">和訳</button>
               </div>
             </div>
           </div>`;
@@ -164,7 +166,10 @@ Rules:
         </div>`;
     }).join('');
     log.querySelectorAll('.ft-say').forEach((b) => {
-      b.onclick = () => window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 1 });
+      b.onclick = () => { window.Speech.unlockAudio(); window.Speech.stopSpeaking(); window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 1 }); };
+    });
+    log.querySelectorAll('.ft-slow').forEach((b) => {
+      b.onclick = () => { window.Speech.unlockAudio(); window.Speech.stopSpeaking(); window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 0.75, slow: true }); };
     });
     log.querySelectorAll('.ft-tr').forEach((b) => {
       b.onclick = () => translateMsg(container, +b.dataset.i);

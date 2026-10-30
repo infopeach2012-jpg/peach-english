@@ -73,7 +73,8 @@
   function normText(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
   async function loadClips(base) {
     try {
-      const res = await fetch((base || 'audio/') + 'audio_index.json', { cache: 'force-cache' });
+      // 毎回新しい一覧を取る（force-cache だと、iPad が古い一覧を使い続け、新しく作った音声を知らずに端末の声で読んでいた）
+      const res = await fetch((base || 'audio/') + 'audio_index.json?v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) return false;
       clipIndex = await res.json();
       clipBase = base || 'audio/';

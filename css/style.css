@@ -398,3 +398,7 @@ html.apple:not(.speak) .sp-link, html.apple:not(.speak) .sp-check, html.apple:no
 html.apple:not(.speak) .sp-ring circle.val { stroke:#2997ff; }
 html.apple:not(.speak) .sp-hero { background:#0f0f10 !important; }
 html.apple:not(.speak) .sp-page { padding-top:8px; }
+
+/* AI 会話の「もう一度聞く」などのボタン（大きく押しやすく） */
+.ft-btn { min-height:36px; padding:6px 12px; border-radius:999px; font-size:13px; font-weight:700; background:#1d1d1f; color:#f5f5f7; }
+.ft-btn.ft-say { background:#0071e3; color:#fff; }
