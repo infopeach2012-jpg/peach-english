@@ -76,7 +76,7 @@ Rules:
       convo = { sc, messages: [{ role: 'assistant', en: sc.opener, ja: '' }] };
       saveConvo();
       drawChat(container);
-      window.Speech.speak(sc.opener, { rate: 1 });
+      window.Speech.speak(sc.opener, { rate: 1, key: 'ft_' + sc.key });
     };
     container.querySelectorAll('[data-sc]').forEach((b) => {
       b.onclick = () => { const sc = SCENARIOS.concat(custom).find((x) => x.key === b.dataset.sc); if (sc) start(sc); };
@@ -164,7 +164,7 @@ Rules:
         </div>`;
     }).join('');
     log.querySelectorAll('.ft-say').forEach((b) => {
-      b.onclick = () => window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 0.95 });
+      b.onclick = () => window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 1 });
     });
     log.querySelectorAll('.ft-tr').forEach((b) => {
       b.onclick = () => translateMsg(container, +b.dataset.i);
@@ -238,7 +238,7 @@ Rules:
       window.Store.recordActivity(8);
       window.App.checkLevelUp();
       renderLog(container);
-      window.Speech.speak(reply, { rate: 0.95 });
+      window.Speech.speak(reply, { rate: 1 });
     } catch (e) {
       window.App.toast(e.message.startsWith('API') ? e.message : 'AI応答に失敗しました');
       const status = container.querySelector('#ft-status');
@@ -320,5 +320,5 @@ Rules:
     window.Speech.stopSpeaking();
   }
 
-  window.FreetalkView = { render, onLeave };
+  window.FreetalkView = { SCENARIOS, render, onLeave };
 })();

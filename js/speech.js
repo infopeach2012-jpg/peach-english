@@ -154,6 +154,7 @@
 
   function playClip(key, opts) {
     opts = opts || {};
+    try { if (ctx && ctx.state === 'suspended') ctx.resume(); } catch (e) { /* noop */ }
     let ent = clipIndex && clipIndex[key];
     if (!ent) return Promise.resolve(false);
     // 索引の値は [ファイル名, 開始秒, 長さ] か、ファイル名だけ（1文1ファイル。Codex などで作った音声向け）
@@ -302,8 +303,11 @@
         if (preferredVoice) u.voice = preferredVoice;
         u.lang = (preferredVoice && preferredVoice.lang) || 'en-US';
       }
-      u.rate = rate;
+      // 英語は 1.0 倍で読む（端末の読み上げも、1.0 以外にすると iPad で音がざらつきやすい）
+      u.rate = opts.lang === 'ja' ? rate : 1;
       u.pitch = opts.pitch != null ? opts.pitch : 1;
+      // 作った音声用の Web Audio が動いたままだと、iPad で読み上げの音が割れる。読み上げの間は止めておく
+      try { if (ctx && ctx.state === 'running') ctx.suspend(); } catch (e) { /* noop */ }
       let done = false;
       const finish = () => { if (done) return; done = true; clearTimeout(guard); resolve(); };
       u.onend = finish;
