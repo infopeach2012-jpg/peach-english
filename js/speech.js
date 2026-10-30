@@ -135,7 +135,9 @@
       const src = c.createBufferSource();
       src.buffer = buf;
       src.playbackRate.value = rate;
-      src.connect(c.destination);
+      // 少し音量を下げて余裕を持たせる（0 dB まで振れている音声が iPad のスピーカーで割れないように）
+      const gain = c.createGain(); gain.gain.value = 0.82;
+      src.connect(gain); gain.connect(c.destination);
       let done = false;
       const finish = () => { if (done) return; done = true; clipStop = null; clearTimeout(guard); resolve(true); };
       src.onended = finish;
@@ -200,6 +202,7 @@
         audioEl.preservesPitch = true;
         audioEl.webkitPreservesPitch = true;
         audioEl.playbackRate = rate;
+        audioEl.volume = 0.82;
         const p = audioEl.play();
         if (p && p.catch) p.catch(() => finish(false));
         poll = setInterval(() => {
@@ -242,14 +245,12 @@
   // 単一の Audio 要素は、最初のタップで一度 play しておくと iPhone でも続けて鳴らせる
   // タップの中で呼ぶ。AudioContext を起こし、無音の <audio> をループ再生して
   // iPhone のサイレントスイッチが入っていても Web Audio が鳴るようにする。
-  const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
+  // 以前は「無音の WAV をループ再生」して iPhone のサイレントスイッチを回避していたが、
+  // データ長ゼロの WAV をループさせると iPad でパチパチと割れた音が混ざった（2026-10-29）。
+  // 1文1ファイルの音声は <audio> で鳴らすのでサイレントスイッチの影響を受けない。ループはやめる。
   let silentEl = null;
   function unlockAudio() {
     ensureCtx();
-    try {
-      if (!silentEl && typeof Audio !== 'undefined') { silentEl = new Audio(SILENT_WAV); silentEl.loop = true; silentEl.volume = 0.01; }
-      if (silentEl && silentEl.paused) { const p = silentEl.play(); if (p && p.catch) p.catch(() => {}); }
-    } catch (e) { /* noop */ }
     if (!audioEl || audioEl.dataset.unlocked) return;
     try { audioEl.muted = true; const p = audioEl.play(); if (p && p.catch) p.catch(() => {}); audioEl.pause(); audioEl.muted = false; audioEl.dataset.unlocked = '1'; } catch (e) { /* noop */ }
   }
@@ -270,11 +271,19 @@
       const key = opts.key || clipKeyFor(text);
       if (opts.slow) {
         // ゆっくり版のクリップがあればそれを。無ければ通常クリップを 0.8 倍で
-        if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: opts.rate != null ? opts.rate : 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
-        if (hasClip(key)) return playClip(key, { rate: 0.8 * (opts.rate != null ? opts.rate : 1) }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
+        if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
+        if (hasClip(key)) return playClip(key, { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
         return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
       }
-      if (hasClip(key)) return playClip(key, opts).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      // 速さは、あらかじめ作った版（@fast=1.25倍・@faster=1.5倍・@slow=0.75倍）を選ぶ。
+      // 端末の中で引き伸ばすと音が割れたように聞こえるため、引き伸ばしは残りの小さな差だけにする
+      const want = opts.rate != null ? opts.rate : 1;
+      // 端末の中で引き伸ばすと割れて聞こえるので、いちばん近い版をそのまま（1.0 倍で）鳴らす。引き伸ばしはしない
+      const cands = [[1, key], [0.75, key + '@slow'], [1.25, key + '@fast'], [1.5, key + '@faster']].filter((c) => hasClip(c[1]));
+      if (cands.length) {
+        cands.sort((a, b) => Math.abs(a[0] - want) - Math.abs(b[0] - want));
+        return playClip(cands[0][1], Object.assign({}, opts, { rate: 1 })).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      }
     }
     return speakTts(text, opts);
   }

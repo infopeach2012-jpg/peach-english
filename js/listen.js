@@ -22,8 +22,8 @@
     { key: 'grammar', emoji: '🔤', label: '単語・文法メモ' },
   ];
 
-  const SETTINGS_KEY = 'speak.listen.v2';
-  let settings = { tab: 'phrase', sit: 'greet', rate: 1.2, ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
+  const SETTINGS_KEY = 'speak.listen.v3';
+  let settings = { tab: 'phrase', sit: 'greet', rate: 1, ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
 
@@ -117,7 +117,7 @@
           <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">▶︎</button>
           <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">⏭︎</button>
         </div>
-        <div class="playback-quick"><label>再生速度<select id="ls-speed">${[0.75,1,1.15,1.2,1.25,1.5,1.75,2].map(v=>`<option value="${v}" ${settings.rate === v ? 'selected' : ''}>${v}倍${v===1.2 ? '（おすすめ）' : ''}</option>`).join('')}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
+        <div class="playback-quick"><label>再生速度<select id="ls-speed">${[0.75,1,1.25,1.5].map(v=>`<option value="${v}" ${settings.rate === v ? 'selected' : ''}>${v}倍${v===1 ? '（自然な速さ）' : ''}</option>`).join('')}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
         <details class="listen-options"><summary>再生設定 <span>速度・和訳・繰り返し</span></summary>${extra || ''}</details>
       </div>`;
   }

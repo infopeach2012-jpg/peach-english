@@ -236,6 +236,7 @@
       const base = window.__AUDIO_BASE__ || 'audio/';
       await window.Speech.loadClips(base);
       content.phrases.forEach((p) => window.Speech.registerText(p.en, 'p' + p.id));
+      content.notes.forEach((n) => { if (n.en) window.Speech.registerText(n.en, 'n' + n.id); });
       content.dialogues.forEach((d) => { window.Speech.registerText(d.a, 'd' + d.id + 'a'); window.Speech.registerText(d.b, 'd' + d.id + 'b'); });
       // 長文は文ごと（r1_0 / s1_0）。スピーチは同じセクションを1章にまとめる（listen.js と同じ）
       const split = (t) => ((t || '').match(/[^.!?]+[.!?]*/g) || [t]).map((x) => x.trim()).filter(Boolean);
