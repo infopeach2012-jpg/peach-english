@@ -74,6 +74,7 @@
           <button data-go="shadow" class="sp-chip">長文・シャドーイング</button>
           <button data-go="cards" class="sp-chip">フラッシュカード</button>
           <button data-go="speaking" class="sp-chip">発音</button>
+          <button data-go="notes" class="sp-chip">レッスンノート</button>
           <button data-go="dict" class="sp-chip">辞書</button>
         </div>
       </div>`;

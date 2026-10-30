@@ -273,3 +273,21 @@ html.apple.speak #ls-en { font-size:34px; font-weight:550; line-height:1.45!impo
 html[data-view="listen"] .global-speed,html[data-view="patterns"] .global-speed,html[data-view="freetalk"] .global-speed,html[data-view="drill"] .global-speed { display:none; }
 @media(max-width:620px) { .global-speed { gap:7px; font-size:10px; }.global-speed select { font-size:10px; padding-left:8px; }.pattern-options { grid-template-columns:minmax(140px,1.5fr) 1fr 1fr; gap:8px; }.pattern-options select { padding:8px 5px; font-size:11px; } }
 @media(max-width:360px) { .pattern-options { grid-template-columns:1fr 1fr; }.pattern-options label:first-child { grid-column:1 / -1; } }
+
+/* Daily notes share the existing black and silver learning screens. */
+.notes-home { display:flex; align-items:center; justify-content:space-between; gap:20px; width:100%; margin:0 0 32px; padding:22px 26px; background:#10151c; border:1px solid #303b49; border-radius:20px; text-align:left; }
+.notes-home strong { display:block; margin:7px 0; font-size:19px; font-weight:500; }
+.notes-home small { color:#a9b4c2; font-size:12px; }
+.notes-home>.studio-icon { flex-shrink:0; width:24px; height:24px; color:#9dcaff; }
+.notes-heading { margin:12px 0 30px; }.notes-heading h1 { margin:14px 0; font-size:clamp(30px,5vw,48px); line-height:1.3; letter-spacing:-.05em; font-weight:600; }
+.notes-heading>p:last-child,.notes-batch-info p { color:#a4afbe; line-height:1.8; font-size:13px; }
+.notes-filters { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; }.notes-filters label { min-width:0; color:#adb8c6; font-size:12px; }
+.notes-filters input,.notes-filters select { display:block; width:100%; min-width:0; margin-top:8px; padding:12px; min-height:46px; border:1px solid #3a414c; border-radius:12px; color:#e9eef6; background:#171b21; font-size:13px; }
+.notes-batch-info { margin:26px 0 18px; }.notes-batch-info h2 { font-size:20px; font-weight:500; }.notes-batch-info p { margin:6px 0; }
+.notes-actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px; }.notes-actions .studio-icon { width:20px; height:20px; }
+.notes-secondary { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:46px; padding:10px 20px; border:1px solid #414953; border-radius:99px; color:#c8ddfa; font-size:13px; }
+.notes-actions button:disabled { opacity:.4; cursor:default; }.notes-section { margin:26px 0 12px; color:#adbbcd; font-size:13px; font-weight:600; }
+.note-entry { display:flex; align-items:flex-start; gap:16px; padding:24px; margin:10px 0; border:1px solid #2c323b; border-radius:20px; background:#101216; }.note-entry-main { flex:1; min-width:0; overflow-wrap:anywhere; }
+.note-en { font-size:clamp(18px,2.5vw,24px); font-weight:500; line-height:1.5; color:#eef3fb; }.note-ja { margin-top:10px; color:#b5bfcd; line-height:1.7; font-size:14px; }.note-explanation { margin-top:14px; padding-top:12px; border-top:1px solid #292f38; color:#96adc9; font-size:12px; line-height:1.8; }
+.note-play { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; background:#1b2b41; border-radius:50%; color:#9ac4ff; }.note-play .studio-icon { width:21px; height:21px; }.notes-empty { padding:40px 0; color:#a5aeba; }#notes-more { margin-top:16px; }#notes-more[hidden] { display:none; }
+@media(max-width:620px) { .notes-filters { grid-template-columns:1fr; }.note-entry { padding:18px 14px; gap:10px; }.notes-home { padding:18px; }.notes-home strong { font-size:17px; }.notes-actions { gap:8px; }.notes-actions button { font-size:12px; padding:10px 15px; gap:8px; } }

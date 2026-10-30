@@ -3,6 +3,7 @@
   'use strict';
 
   const VIEWS = {
+    notes: { el: 'view-notes', title: 'レッスンノート', mod: () => window.NotesView },
     home: { el: 'view-home', title: 'ホーム', mod: () => window.HomeView },
     speaking: { el: 'view-speaking', title: '発音・スピーキング', mod: () => window.SpeakingView },
     roleplay: { el: 'view-roleplay', title: 'ロールプレイ会話', mod: () => window.RoleplayView },
@@ -63,7 +64,7 @@
       prev: '<path d="M5 5v14m14-14L7 12l12 7Z"/>',
       next: '<path d="M19 5v14M5 5l12 7-12 7Z"/>',
     };
-    const aliases = { roleplay:'freetalk', shadow:'dict', word:'cards' };
+    const aliases = { notes:'dict', roleplay:'freetalk', shadow:'dict', word:'cards' };
     return `<svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[aliases[name] || name] || paths.freetalk}</svg>`;
   }
 
@@ -103,7 +104,7 @@
 
     // ナビ状態（非ナビビューではホームを弱く点灯）
     // 上のメニュー（Speak 風）: どの画面がどの見出しに属するか
-    const TOP = { home: 'home', freetalk: 'freetalk', quiz: 'practice', stats: 'stats', listen: 'listen' };
+    const TOP = { notes: 'notes', home: 'home', freetalk: 'freetalk', quiz: 'practice', stats: 'stats', listen: 'listen' };
     const topKey = TOP[name] || 'practice';
     document.querySelectorAll('.sp-nav [data-top]').forEach((b) => {
       b.classList.toggle('on', b.dataset.top === topKey);
@@ -141,6 +142,7 @@
 
   // ---- メニューシート（AI会話・クイズ・統計・辞書など） ----
   const MENU = [
+    { view: 'notes', title: 'レッスンノート', desc: '毎日の追加教材を読む・聞く・話す' },
     { view: 'practice', emoji: '🏃', title: '練習', desc: 'クイックレッスン・復習・苦手' },
     { view: 'smart', emoji: '⚡', title: 'スマートレビュー', desc: '習熟度と間隔反復で復習' },
     { view: 'patterns', emoji: '▶', title: 'パターン練習', desc: '短いお手本を聞いて、繰り返す' },
@@ -231,7 +233,7 @@
   };
 
   // 画面の左下に版の番号を出す（iPad が新しい版を読んでいるかを、見て確かめられるように）
-  window.APP_VERSION = 'v35';
+  window.APP_VERSION = 'v36';
   document.addEventListener('DOMContentLoaded', () => {
     const b = document.createElement('div');
     b.id = 'app-version';

@@ -9,6 +9,7 @@
     const lessonDone = window.LessonView && window.LessonView.isDoneToday();
     const groups = window.SmartView ? window.SmartView.groups() : [];
     const score = window.SmartView ? window.SmartView.overall(groups) : 0;
+    const latestNotes = window.NotesView && window.NotesView.latest();
     const arrow = '<span aria-hidden="true">' + window.App.icon('arrow') + '</span>';
     container.innerHTML = `
       <section class="launch-hero" aria-labelledby="launch-title">
@@ -22,6 +23,8 @@
         </div>
         <p class="launch-caption">1レッスン8文。自然なアメリカ英語で。</p>
       </section>
+
+      ${latestNotes ? `<button data-go="notes" class="notes-home"><span><span class="studio-eyebrow">LESSON NOTES · ${window.App.escapeHtml(latestNotes.added_on)}</span><strong>新しく学んだ言葉を、ノートから。</strong><small>${window.App.escapeHtml(latestNotes.title)} · ${latestNotes.items.length}件</small></span>${window.App.icon('arrow')}</button>` : ''}
 
       <section class="studio-progress" aria-label="学習の記録">
         <div><span class="studio-stat-label">今日の学習</span><p><strong>${cnt}</strong><span> / ${goal} 項目</span></p><div class="studio-mini-track" role="progressbar" aria-label="今日の目標" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>

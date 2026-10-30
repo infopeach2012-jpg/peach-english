@@ -9,6 +9,7 @@
     phrases: 'data/phrases.json',
     dialogues: 'data/dialogues.json',
     notes: 'data/notes.json',
+    noteBatches: 'data/note_batches.json',
     reading: 'data/reading.json',
     speeches: 'data/speeches.json',
     situations: 'data/situations.json', // { "p12": "food", "d3": "shop", ... } 聞き流し用の場面分け
@@ -19,6 +20,7 @@
     phrases: [],
     dialogues: [],
     notes: [],
+    noteBatches: [],
     reading: [],
     speeches: [],
   };
