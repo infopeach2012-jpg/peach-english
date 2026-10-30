@@ -113,9 +113,9 @@
         <div id="ls-en" class="text-[22px] font-bold text-gray-800 leading-snug min-h-[64px]" style="text-wrap:balance">再生を押すと順に流れます</div>
         <div id="ls-ja" class="text-sm text-gray-500 mt-2 min-h-[20px]"></div>
         <div class="flex items-center justify-center gap-5 mt-5">
-          <button id="ls-prev" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="前へ">⏮︎</button>
-          <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">▶︎</button>
-          <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">⏭︎</button>
+          <button id="ls-prev" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="前へ">${window.App.icon('prev')}</button>
+          <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">${window.App.icon('patterns')}</button>
+          <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">${window.App.icon('next')}</button>
         </div>
         <div class="playback-quick"><label>再生速度<select id="ls-speed">${[0.75,1,1.25,1.5].map(v=>`<option value="${v}" ${settings.rate === v ? 'selected' : ''}>${v}倍${v===1 ? '（自然な速さ）' : ''}</option>`).join('')}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
         <details class="listen-options"><summary>再生設定 <span>速度・和訳・繰り返し</span></summary>${extra || ''}</details>
@@ -312,7 +312,7 @@
   }
   function setPlayBtn() {
     const b = container.querySelector('#ls-play');
-    if (b) { b.textContent = playing ? 'Ⅱ' : '▶︎'; b.setAttribute('aria-label', playing ? '一時停止' : '再生'); }
+    if (b) { b.innerHTML = window.App.icon(playing ? 'pause' : 'patterns'); b.setAttribute('aria-label', playing ? '一時停止' : '再生'); }
   }
 
   async function play() {

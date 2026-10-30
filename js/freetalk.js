@@ -61,7 +61,7 @@ Rules:
     const custom = loadCustom();
     const card = (s) => `
       <button data-sc="${s.key}" class="sp-scene">
-        <div class="sp-scene-art" style="background:${s.bg || 'linear-gradient(160deg,#243b6b,#0f1424)'}"><span>${s.emoji}</span></div>
+        <div class="sp-scene-art" style="background:${s.bg || 'linear-gradient(160deg,#243b6b,#0f1424)'}"><span>${window.App.icon(s.key)}</span></div>
         <div class="sp-scene-body"><div class="sp-item-title">${window.App.escapeHtml(s.title)}</div><div class="sp-item-sub">${window.App.escapeHtml(s.desc)}</div></div>
       </button>`;
     container.innerHTML = `

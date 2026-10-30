@@ -9,7 +9,7 @@
     const lessonDone = window.LessonView && window.LessonView.isDoneToday();
     const groups = window.SmartView ? window.SmartView.groups() : [];
     const score = window.SmartView ? window.SmartView.overall(groups) : 0;
-    const arrow = '<span aria-hidden="true">↗</span>';
+    const arrow = '<span aria-hidden="true">' + window.App.icon('arrow') + '</span>';
     container.innerHTML = `
       <section class="launch-hero" aria-labelledby="launch-title">
         <p class="launch-kicker">A LITTLE PRACTICE. A NEW POSSIBILITY.</p>
@@ -26,11 +26,11 @@
       <section class="studio-progress" aria-label="学習の記録">
         <div><span class="studio-stat-label">今日の学習</span><p><strong>${cnt}</strong><span> / ${goal} 項目</span></p><div class="studio-mini-track" role="progressbar" aria-label="今日の目標" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>
         <div><span class="studio-stat-label">続けた日数</span><p><strong>${S.progress.streak.count}</strong><span> 日</span></p></div>
-        <button data-go="smart"><span class="studio-stat-label">習熟度</span><p><strong>${score}</strong><span> %</span></p><span class="studio-stat-more">復習する ↗</span></button>
+        <button data-go="smart"><span class="studio-stat-label">習熟度</span><p><strong>${score}</strong><span> %</span></p><span class="studio-stat-more">復習する →</span></button>
       </section>
 
       <section class="studio-discover" aria-labelledby="discover-title">
-        <div class="studio-section-title"><div><p class="studio-eyebrow">MAKE IT YOURS</p><h2 id="discover-title">毎日に、話すきっかけを。</h2></div><button data-go="practice" class="studio-text-link">すべての練習 <span aria-hidden="true">↗</span></button></div>
+        <div class="studio-section-title"><div><p class="studio-eyebrow">MAKE IT YOURS</p><h2 id="discover-title">毎日に、話すきっかけを。</h2></div><button data-go="practice" class="studio-text-link">すべての練習 <span aria-hidden="true">${window.App.icon('arrow')}</span></button></div>
         <button data-go="lesson" class="studio-lesson">
           <div><span class="studio-eyebrow">TODAY’S LESSON</span><h3>5分から、<br>新しい自分へ。</h3><p>単語、発音、会話。今日のひとつを身につけよう。</p><span class="studio-card-link">${lessonDone ? 'もう一度レッスン' : '今日のレッスン'} ${arrow}</span></div>
           <div class="lesson-art" aria-hidden="true"><span>05</span><small>MINUTES. EVERY DAY.</small></div>
@@ -45,7 +45,7 @@
             <div class="conversation-art" aria-hidden="true"><span>How’s your day?</span><span>Better already.</span></div><span class="studio-card-link">会話をはじめる ${arrow}</span>
           </button>
         </div>
-        <button data-go="smart" class="studio-review"><span class="review-symbol" aria-hidden="true">↺</span><span><strong>覚えた英語を、使える英語に。</strong><small>スマートレビューで、今日の復習。</small></span><span class="studio-review-arrow" aria-hidden="true">↗</span></button>
+        <button data-go="smart" class="studio-review"><span class="review-symbol" aria-hidden="true">↺</span><span><strong>覚えた英語を、使える英語に。</strong><small>スマートレビューで、今日の復習。</small></span><span class="studio-review-arrow" aria-hidden="true">${window.App.icon('arrow')}</span></button>
       </section>
       <footer class="studio-footer"><span>Speak Studio <span class="footer-dot">·</span> Every word opens a door.</span><div><button data-go="stats">学習の記録</button><button id="home-settings">設定</button></div></footer>`;
     container.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => window.App.navigate(b.dataset.go)));

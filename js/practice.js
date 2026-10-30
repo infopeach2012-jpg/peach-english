@@ -34,35 +34,35 @@
     const weak = S.weakItems().length;
     container.innerHTML = `
       <div class="sp-page">
-        <h1 class="sp-h1">練習</h1>
+        <p class="studio-eyebrow">YOUR DAILY PRACTICE</p><h1 class="sp-h1">今日の一言を、増やそう。</h1>
 
         <div class="sp-card">
-          <div class="sp-row"><span class="sp-icon blue">🤖</span><div><div class="sp-item-title">AI と会話</div><div class="sp-item-sub">場面を選んで、声で話す。その場で直してくれる</div></div></div>
-          <button data-go="freetalk" class="sp-btn-wide">📞 会話をはじめる</button>
+          <div class="sp-row"><span class="sp-icon blue">${window.App.icon('freetalk')}</span><div><div class="sp-item-title">AI と会話</div><div class="sp-item-sub">場面を選んで、声で話す。その場で直してくれる</div></div></div>
+          <button data-go="freetalk" class="sp-btn-wide">会話をはじめる →</button>
         </div>
 
         <h2 class="sp-h2">クイックレッスン</h2>
         <div class="sp-grid2">
-          <button data-quick="word" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff8a3d">🃏</span><div class="sp-item-title">語彙</div></button>
-          <button data-quick="sentence" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff4d6d">❞</span><div class="sp-item-title">表現</div></button>
+          <button data-quick="word" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff8a3d">${window.App.icon('cards')}</span><div class="sp-item-title">語彙</div></button>
+          <button data-quick="sentence" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff4d6d">${window.App.icon('sentence')}</span><div class="sp-item-title">表現</div></button>
         </div>
 
         <h2 class="sp-h2">復習</h2>
         <button data-go="smart" class="sp-card sp-row-btn">
-          <span class="sp-icon" style="background:#3b5bff">⚡</span>
+          <span class="sp-icon" style="background:#3b5bff">${window.App.icon('smart')}</span>
           <div class="sp-item-body"><div class="sp-item-title">スマートレビュー</div><div class="sp-item-sub">習熟度スコア</div><div class="sp-track"><span style="width:${score}%"></span></div></div>
           <span class="sp-pct">${score}%</span>
         </button>
         <button data-go="review" class="sp-card sp-row-btn">
-          <span class="sp-icon" style="background:#2fbf8f">🔖</span>
+          <span class="sp-icon" style="background:#2fbf8f">${window.App.icon('review')}</span>
           <div class="sp-item-body"><div class="sp-item-title">保存した表現</div><div class="sp-item-sub">${favs} 保存済み</div></div>
         </button>
         <button data-weak class="sp-card sp-row-btn">
-          <span class="sp-icon" style="background:#e5734a">✱</span>
+          <span class="sp-icon" style="background:#e5734a">${window.App.icon('weak')}</span>
           <div class="sp-item-body"><div class="sp-item-title">苦手</div><div class="sp-item-sub">${weak ? weak + ' 件の間違いを復習しましょう' : 'まだありません'}</div></div>
         </button>
         <button data-go="listen" class="sp-card sp-row-btn">
-          <span class="sp-icon" style="background:#7c5cff">✦</span>
+          <span class="sp-icon" style="background:#7c5cff">${window.App.icon('listen')}</span>
           <div class="sp-item-body"><div class="sp-item-title">場面で聞く</div><div class="sp-item-sub">${gs.length} の場面 ・ 聞き流し</div></div>
         </button>
 

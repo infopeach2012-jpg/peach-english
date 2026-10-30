@@ -39,22 +39,22 @@
       <button class="text-sm text-gray-400 mb-3 back-home">← ホーム</button>
 
       <div class="grid grid-cols-3 gap-2.5 mb-5">
-        ${stat('🔥', P.streak.count, '連続日数')}
-        ${stat('⭐', 'Lv' + li.level, li.xp + ' XP')}
-        ${stat('🗣️', spk.avg + '%', '発音平均')}
-        ${stat('📚', totalStudied, '累計学習')}
-        ${stat('🎴', srs.learned, '習得カード')}
-        ${stat('🎯', spk.attempts, '発話回数')}
+        ${stat('practice', P.streak.count, '連続日数')}
+        ${stat('smart', 'Lv' + li.level, li.xp + ' XP')}
+        ${stat('speaking', spk.avg + '%', '発音平均')}
+        ${stat('dict', totalStudied, '累計学習')}
+        ${stat('cards', srs.learned, '習得カード')}
+        ${stat('freetalk', spk.attempts, '発話回数')}
       </div>
 
       <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-4">
         <div class="text-sm font-bold text-gray-700 mb-3">直近14日の学習量</div>
-        <canvas id="c-daily" height="150"></canvas>
+        <div class="studio-chart"><canvas id="c-daily" height="200"></canvas></div>
       </div>
 
       <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-4">
         <div class="text-sm font-bold text-gray-700 mb-3">発音スコアの分布</div>
-        ${spk.attempts ? '<canvas id="c-score" height="150"></canvas>' : '<div class="text-center text-gray-400 text-sm py-8">まだ発音練習の記録がありません</div>'}
+        ${spk.attempts ? '<div class="studio-chart"><canvas id="c-score" height="200"></canvas></div>' : '<div class="text-center text-gray-400 text-sm py-8">まだ発音練習の記録がありません</div>'}
       </div>
 
       ${calendarHtml()}
@@ -109,11 +109,11 @@
     }
     const shade = (c, future) => {
       if (future) return 'transparent';
-      if (c === 0) return '#f1f0f5';
-      if (c < 5) return '#ddd6fe';
-      if (c < 10) return '#a78bfa';
-      if (c < 20) return '#7c3aed';
-      return '#5b21b6';
+      if (c === 0) return '#252c36';
+      if (c < 5) return '#425874';
+      if (c < 10) return '#7192bc';
+      if (c < 20) return '#a4c4ec';
+      return '#d3e6ff';
     };
     return `
       <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mb-4">
@@ -129,11 +129,11 @@
           </div>
         </div>
         <div class="flex items-center justify-end gap-1 mt-2 text-[10px] text-gray-400">
-          少 <span style="width:10px;height:10px;border-radius:2px;background:#f1f0f5;display:inline-block"></span>
-          <span style="width:10px;height:10px;border-radius:2px;background:#ddd6fe;display:inline-block"></span>
-          <span style="width:10px;height:10px;border-radius:2px;background:#a78bfa;display:inline-block"></span>
-          <span style="width:10px;height:10px;border-radius:2px;background:#7c3aed;display:inline-block"></span>
-          <span style="width:10px;height:10px;border-radius:2px;background:#5b21b6;display:inline-block"></span> 多
+          少 <span style="width:10px;height:10px;border-radius:2px;background:#252c36;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:2px;background:#425874;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:2px;background:#7192bc;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:2px;background:#a4c4ec;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:2px;background:#d3e6ff;display:inline-block"></span> 多
         </div>
       </div>`;
   }
@@ -158,9 +158,9 @@
       </div>`;
   }
 
-  function stat(emoji, big, label) {
+  function stat(icon, big, label) {
     return `<div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm text-center">
-      <div class="text-xl">${emoji}</div>
+      <div class="studio-stat-icon">${window.App.icon(icon)}</div>
       <div class="text-lg font-extrabold text-gray-800 leading-tight mt-0.5">${big}</div>
       <div class="text-[10px] text-gray-400">${label}</div>
     </div>`;
@@ -173,13 +173,14 @@
       type: 'bar',
       data: {
         labels: days.map((d) => d.slice(5).replace('-', '/')),
-        datasets: [{ data: counts, backgroundColor: '#a78bfa', borderRadius: 5, maxBarThickness: 16 }],
+        datasets: [{ data: counts, backgroundColor: '#7192bc', borderRadius: 5, maxBarThickness: 16 }],
       },
       options: {
+        maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } },
-          y: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+          x: { grid: { display: false }, ticks: { color: '#a5b2c3', font: { size: 9 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } },
+          y: { beginAtZero: true, ticks: { color: '#a5b2c3', precision: 0, font: { size: 10 } }, grid: { color: '#282e37' } },
         },
       },
     }));
@@ -199,10 +200,11 @@
         }],
       },
       options: {
+        maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-          y: { beginAtZero: true, ticks: { precision: 0, font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+          x: { grid: { display: false }, ticks: { color: '#a5b2c3', font: { size: 10 } } },
+          y: { beginAtZero: true, ticks: { color: '#a5b2c3', precision: 0, font: { size: 10 } }, grid: { color: '#282e37' } },
         },
       },
     }));

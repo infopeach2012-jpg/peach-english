@@ -35,6 +35,38 @@
       .replace(/'/g, '&#39;');
   }
 
+  // Small line icons keep navigation and lesson controls visually consistent.
+  function icon(name) {
+    const paths = {
+      home: '<path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/>',
+      practice: '<path d="M4 9v6m4-10v14m4-17v20m4-17v14m4-10v6"/>',
+      listen: '<path d="M3 14v-3a9 9 0 0 1 18 0v3M3 12h4v9H5a2 2 0 0 1-2-2zm18 0h-4v9h2a2 2 0 0 0 2-2z"/>',
+      freetalk: '<path d="M21 11a8 8 0 0 1-8 8H5l-3 3V11a8 8 0 0 1 8-8h3a8 8 0 0 1 8 8Z"/><path d="M7 11h.01M12 11h.01M17 11h.01" stroke-width="3"/>',
+      speaking: '<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8"/>',
+      patterns: '<path d="m8 4 12 8-12 8Z"/>',
+      smart: '<path d="M20 7a9 9 0 1 0 1 9M20 2v6h-6m-2-1v6l4 2"/>',
+      lesson: '<path d="m3 8 9-5 9 5-9 5Zm3 2v7c4 3 8 3 12 0v-7m3-2v10"/>',
+      cards: '<rect x="3" y="7" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/>',
+      sentence: '<path d="M4 6h6v7H4V6Zm10 0h6v7h-6V6ZM10 13c0 4-2 6-5 6m15-6c0 4-2 6-5 6"/>',
+      review: '<path d="M6 3h12v19l-6-4-6 4Z"/>',
+      weak: '<path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z"/>',
+      stats: '<path d="M4 21V11m8 10V3m8 18V7" stroke-width="3"/>',
+      dict: '<path d="M12 5C8 2 4 2 2 3v17c4-1 7 0 10 2m0-17c4-3 8-3 10-2v17c-4-1-7 0-10 2V5Z"/>',
+      quiz: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="m14 18 3 3 5-7"/>',
+      cafe: '<path d="M4 7h12v8a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V7Zm12 1h2a3 3 0 0 1 0 6h-2M2 23h18M7 2v2m5-2v2"/>',
+      travel: '<path d="m2 14 8-3V3a2 2 0 0 1 4 0v8l8 3v3l-8-2v5l3 2H7l3-2v-5l-8 2Z"/>',
+      work: '<rect x="2" y="7" width="20" height="15" rx="2"/><path d="M8 7V3h8v4M2 12c6 4 14 4 20 0m-10 1v5"/>',
+      shop: '<path d="M5 7h14l2 15H3L5 7Zm3 0V5a4 4 0 0 1 8 0v2"/>',
+      meat: '<path d="M4 2v7a3 3 0 0 0 6 0V2M7 2v20M19 2c-4 3-4 8 0 10v10m0-20v10"/>',
+      arrow: '<path d="M5 19 19 5M5 5h14v14"/>',
+      pause: '<path d="M8 5v14M16 5v14" stroke-width="3"/>',
+      prev: '<path d="M5 5v14m14-14L7 12l12 7Z"/>',
+      next: '<path d="M19 5v14M5 5l12 7-12 7Z"/>',
+    };
+    const aliases = { roleplay:'freetalk', shadow:'dict', word:'cards' };
+    return `<svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[aliases[name] || name] || paths.freetalk}</svg>`;
+  }
+
   let toastTimer = null;
   function toast(msg) {
     const t = document.getElementById('toast');
@@ -138,9 +170,9 @@
           <div class="space-y-2">
             ${MENU.map((m) => `
               <button data-mv="${m.view}" class="row w-full text-left bg-gray-50 rounded-2xl p-3.5 flex items-center gap-3">
-                <div class="text-2xl">${m.emoji}</div>
+                <div class="studio-menu-icon">${icon(m.view)}</div>
                 <div class="flex-1"><div class="font-bold text-gray-800 text-sm">${m.title}</div><div class="text-xs text-gray-500">${m.desc}</div></div>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c4b5fd" stroke-width="2.5"><path d="m9 6 6 6-6 6"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 6 6 6-6 6"/></svg>
               </button>`).join('')}
           </div>
         </div>
@@ -175,6 +207,7 @@
 
   window.App = {
     escapeHtml,
+    icon,
     toast,
     navigate,
     openMenu,
