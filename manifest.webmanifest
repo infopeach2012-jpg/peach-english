@@ -1,13 +1,13 @@
 {
   "name": "Speak Studio — 英会話トレーニング",
   "short_name": "Speak Studio",
-  "description": "スピーク × スピークバディのいいとこ取り英会話アプリ",
+  "description": "聞く、まねる、話す。毎日の英会話トレーニング。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#faf5ff",
-  "theme_color": "#6d28d9",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "lang": "ja",
   "icons": [
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }

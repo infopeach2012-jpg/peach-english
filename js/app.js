@@ -71,9 +71,14 @@
 
     // ナビ状態（非ナビビューではホームを弱く点灯）
     // 上のメニュー（Speak 風）: どの画面がどの見出しに属するか
-    const TOP = { home: 'home', freetalk: 'freetalk', quiz: 'quiz', stats: 'stats' };
+    const TOP = { home: 'home', freetalk: 'freetalk', quiz: 'practice', stats: 'stats', listen: 'listen' };
     const topKey = TOP[name] || 'practice';
-    document.querySelectorAll('.sp-nav [data-top]').forEach((b) => b.classList.toggle('on', b.dataset.top === topKey));
+    document.querySelectorAll('.sp-nav [data-top]').forEach((b) => {
+      b.classList.toggle('on', b.dataset.top === topKey);
+      if (b.dataset.top === topKey) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
+    document.documentElement.dataset.view = name;
     document.documentElement.classList.toggle('sp-fullscreen', name === 'drill');
     document.querySelectorAll('#bottom-nav button').forEach((b) => {
       b.classList.toggle('active', b.dataset.view === name);

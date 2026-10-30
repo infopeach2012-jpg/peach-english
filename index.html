@@ -19,23 +19,26 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/studio.css" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%A3%EF%B8%8F%3C/text%3E%3C/svg%3E" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%A3%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
 </head>
 <body>
   <div class="app-shell">
 
-    <header class="sp-top">
+    <header class="sp-top studio-header">
+      <button id="hdr-home" class="studio-brand" aria-label="Speak Studio ホームへ戻る"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 13v6M10 8v16M16 3v26M22 8v16M28 13v6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Speak Studio</span></button>
       <nav class="sp-nav" aria-label="メインメニュー">
         <button data-top="home">ホーム</button>
-        <button data-top="freetalk">フリートーク</button>
         <button data-top="practice">練習</button>
-        <button data-top="quiz">チャレンジ</button>
-        <button data-top="stats">プロフィール</button>
+        <button data-top="listen">聞き流し</button>
+        <button data-top="freetalk">AI会話</button>
+        <button data-top="stats">学習の記録</button>
       </nav>
-      <div class="hidden-x" aria-hidden="true"><h1 id="hdr-title">ホーム</h1><button id="hdr-home"></button><button id="hdr-menu"></button><span id="hdr-level"></span><span id="hdr-streak"></span><span id="hdr-xp"></span><span id="hdr-xpnext"></span><div id="hdr-xpbar"></div></div>
+      <button id="hdr-menu" class="studio-menu" aria-label="すべてのメニューを開く" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      <div class="hidden-x" aria-hidden="true"><span id="hdr-level"></span><span id="hdr-streak"></span><span id="hdr-xp"></span><span id="hdr-xpnext"></span><div id="hdr-xpbar"></div></div>
     </header>
+    <div class="studio-location"><span id="hdr-title">ホーム</span><span>Speak Studio</span></div>
 
     <!-- ビュー領域 -->
     <main id="app" class="px-4 py-4">

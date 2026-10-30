@@ -1,0 +1,251 @@
+/* Speak Studio — black, silver and light. Shared by every learning view. */
+html.apple.speak {
+  --canvas:#000; --surface:#101113; --line:#292b30; --muted:#a0a3ab;
+  --ink:#f5f5f7; --brand:#8abaff; --brand2:#8abaff; --brand-soft:#142031;
+  color-scheme:dark;
+}
+html.apple.speak body { background:#000!important; color:var(--ink); padding:0; font-weight:400; -webkit-font-smoothing:antialiased; }
+html.speak .app-shell { max-width:1200px; }
+html.speak #app { padding:28px 48px 72px; }
+html.speak .view:not(#view-home) { max-width:820px; margin:0 auto; }
+html.speak .studio-header {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px;
+  min-height:76px; padding:14px 48px; background:rgba(0,0,0,.86); backdrop-filter:blur(24px);
+  border-bottom:1px solid #202124; top:0;
+}
+.studio-brand { display:flex; align-items:center; gap:10px; min-height:44px; font-size:19px; font-weight:650; letter-spacing:-.6px; white-space:nowrap; }
+.studio-brand svg { width:25px; height:25px; color:#d4e0ee; }
+html.speak .sp-nav { background:transparent; gap:22px; border-radius:0; padding:0; margin-left:auto; }
+html.speak .sp-nav button { position:relative; min-height:44px; border-radius:0; padding:8px 0; font-size:12px; font-weight:500; color:#a0a3ab; }
+html.speak .sp-nav button.on { background:none; color:#fff; }
+html.speak .sp-nav button.on:after { content:''; position:absolute; bottom:2px; left:0; right:0; height:2px; background:#e0e6ef; border-radius:3px; }
+.studio-menu { width:44px; height:44px; display:grid; place-items:center; border:1px solid #33353b; border-radius:50%; color:#e0e3e8; }
+.studio-menu svg { width:21px; height:21px; }
+.studio-location { max-width:916px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:30px 48px 0; color:#d3d6dc; font-size:12px; }
+.studio-location>span:last-child { color:#777d87; font-size:10px; letter-spacing:.04em; }
+html[data-view="home"] .studio-location { display:none; }
+html.sp-fullscreen .studio-header { display:flex; }
+button, a, select, summary { touch-action:manipulation; }
+html.apple.speak :is(button,a,input,select,textarea,summary):focus-visible { outline:2px solid #9dcaff; outline-offset:5px; }
+.studio-brand:hover,.studio-text-link:hover { color:#fff; }
+.studio-menu:hover { border-color:#79818c; }
+
+/* Home: a luminous sound sculpture and a single clear starting point. */
+.launch-hero { text-align:center; padding:46px 0 52px; }
+.launch-kicker { color:#9da5b2; font-size:10px; font-weight:600; letter-spacing:2.2px; margin:0 0 26px; }
+.launch-hero h1 { font-size:clamp(48px,6.4vw,78px); font-weight:650; letter-spacing:-.075em; line-height:1.16; margin:0; }
+.launch-hero h1 span { color:#d4dce5; background:linear-gradient(175deg,#fff 10%,#e0e5ef 42%,#909dac 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.launch-lead { color:#a2a6af; font-size:16px; font-weight:500; letter-spacing:.04em; margin:22px 0 0; }
+.voice-sculpture { display:block; width:min(100%,960px); height:auto; margin:8px auto -8px; user-select:none; pointer-events:none; }
+.launch-actions { display:flex; align-items:center; justify-content:center; gap:26px; }
+.studio-primary { display:inline-flex; align-items:center; justify-content:center; gap:22px; min-height:50px; padding:12px 25px; background:#f0f3f8; color:#0b0d12; font-size:14px; border-radius:999px; font-weight:600; box-shadow:0 0 24px #9ab9e00d; transition:background .2s,box-shadow .2s; }
+.studio-primary:hover { background:#fff; box-shadow:0 0 28px #9ab9e033; }
+.studio-primary>span { font-size:18px; }
+.studio-text-link { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:44px; color:#91bdff; font-size:13px; }
+.launch-caption { font-size:11px; color:#8e949e; margin:17px 0 0; }
+.studio-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:30px 0; margin:0 0 80px; border-top:1px solid #24262a; border-bottom:1px solid #24262a; }
+.studio-progress>div,.studio-progress>button { position:relative; padding:0 32px; text-align:left; }
+.studio-progress>:not(:first-child) { border-left:1px solid #292b30; }
+.studio-stat-label { color:#a0a3ab; font-size:11px; }
+.studio-progress p { margin:8px 0 0; }
+.studio-progress strong { font-size:34px; font-weight:500; letter-spacing:-1px; line-height:1; }
+.studio-progress p>span { color:#a0a3ab; font-size:12px; margin-left:5px; }
+.studio-mini-track { width:120px; max-width:100%; height:2px; background:#282b30; position:absolute; bottom:-10px; }
+.studio-mini-track i { display:block; height:100%; background:#c9def6; }
+.studio-stat-more { position:absolute; right:30px; bottom:0; font-size:11px; color:#91bdff; }
+.studio-section-title { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin:0 0 28px; }
+.studio-eyebrow { display:block; font-size:10px; letter-spacing:1.6px; font-weight:600; color:#9aa2ad; }
+.studio-section-title h2 { font-size:clamp(23px,3vw,34px); letter-spacing:-.05em; font-weight:600; margin:12px 0 0; }
+.studio-lesson { position:relative; width:100%; display:flex; align-items:center; justify-content:space-between; overflow:hidden; text-align:left; background:radial-gradient(ellipse at 85% 60%,#1c2634 0,transparent 60%),#101113; border:1px solid #30343c; border-radius:26px; padding:44px 48px; }
+.studio-lesson h3,.studio-feature h3 { font-size:36px; font-weight:600; letter-spacing:-.05em; line-height:1.35; margin:18px 0 14px; }
+.studio-lesson p,.studio-feature p { font-size:13px; line-height:1.9; color:#a3a8b1; }
+.studio-card-link { display:flex; align-items:center; gap:10px; color:#dfe6f1; font-size:13px; font-weight:500; margin-top:28px; }
+.studio-card-link>span { display:grid; place-items:center; width:29px; height:29px; border:1px solid #4d545f; border-radius:50%; font-size:16px; transition:background .2s; }
+.studio-lesson:hover .studio-card-link>span,.studio-feature:hover .studio-card-link>span { background:#424d5f; }
+.lesson-art { flex:0 0 35%; display:flex; flex-direction:column; align-items:center; padding-left:16px; }
+.lesson-art>span { font-size:180px; line-height:1; letter-spacing:-14px; font-weight:650; background:linear-gradient(135deg,#4d5a6e 5%,#eaf2ff 35%,#a7b7cd 48%,#283c54 85%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.lesson-art small { letter-spacing:3px; font-size:8px; color:#9aa9bd; margin-top:17px; }
+.studio-feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0; }
+.studio-feature { display:flex; flex-direction:column; align-items:flex-start; position:relative; padding:36px 40px 30px; background:#101113; border:1px solid #272b31; border-radius:26px; text-align:left; overflow:hidden; }
+.studio-feature h3 { font-size:29px; }
+.studio-feature .studio-card-link { margin-top:auto; padding-top:10px; }
+.mini-wave { display:flex; justify-content:center; align-items:center; gap:7px; width:100%; height:166px; }
+.mini-wave i { display:block; width:5px; height:var(--bar); border-radius:5px; background:linear-gradient(90deg,#495564,#d9e5f7 50%,#3b4c61); }
+.conversation-art { display:flex; flex-direction:column; justify-content:center; width:100%; min-height:166px; padding:16px 0; }
+.conversation-art span { align-self:flex-start; font-size:18px; letter-spacing:-.3px; padding:13px 20px; border-radius:20px 20px 20px 5px; background:linear-gradient(135deg,#303641,#171b22); border:1px solid #484f5a; color:#e9ecf3; }
+.conversation-art span+span { align-self:flex-end; margin-top:10px; border-radius:20px 20px 5px 20px; background:linear-gradient(135deg,#dce7f5,#929faf); color:#101521; border-color:#c2d1e4; }
+.studio-review { width:100%; display:flex; align-items:center; gap:24px; padding:30px 32px; border:1px solid #30343b; border-radius:22px; text-align:left; }
+.review-symbol { display:grid; place-items:center; width:48px; height:48px; border:1px solid #424955; border-radius:50%; color:#b7c7dc; font-size:29px; }
+.studio-review strong { font-size:17px; font-weight:550; }
+.studio-review small { display:block; color:#9fa6b1; font-size:12px; margin-top:7px; }
+.studio-review-arrow { margin-left:auto; font-size:22px; color:#bbc8da; }
+.studio-footer { border-top:1px solid #25282d; margin-top:70px; padding-top:24px; display:flex; justify-content:space-between; align-items:center; gap:20px; color:#858c96; font-size:11px; }
+.studio-footer>div { display:flex; gap:24px; }
+.studio-footer button { min-height:44px; }
+.footer-dot { padding:0 10px; }
+
+/* Shared surfaces and controls: carry the same material into every exercise. */
+html.apple.speak :is(.bg-white,.daily-progress,.practice-card,.continue-card,.listen-player,.bg-white.rounded-2xl,.bg-white.rounded-3xl,.ls-row,#menu-ov>div) { background:#101113!important; border-color:#30333a!important; }
+html.apple.speak :is(.bg-gray-50,.bg-gray-100,.bg-violet-50,.bg-violet-100,.bg-pink-50,.bg-blue-50,.bg-green-50,.bg-amber-50) { background:#202227!important; }
+html.apple.speak :is(.text-brand,.practice-link,.utility-links button) { color:#91bdff!important; }
+html.apple.speak :is(.text-gray-400,.text-gray-500) { color:#9da3ad!important; }
+html.apple.speak .brand-grad { background:#252b34!important; }
+html.apple.speak :is(button.brand-grad.rounded-xl,#set-save,#q-again,#q-next,.feature-action) { background:#1475df!important; color:#fff!important; }
+html.apple.speak :is(.bg-white.text-brand,.bg-white.text-brand.shadow-sm,[data-tab].brand-grad,[data-sit].brand-grad,.chip.brand-grad,.chip.bg-violet-100) { background:#e7edf6!important; color:#10141b!important; }
+html.apple.speak :is(.w-20.h-20.brand-grad,#ls-play,.mic-btn.brand-grad) { background:#e8eef6!important; color:#10151d!important; box-shadow:0 0 32px #b6d7ff15!important; }
+html.apple.speak :is(.h-full.brand-grad,.progress-track span) { background:#bdd7f5!important; }
+html.apple.speak :is(select,input,textarea) { background:#202227!important; border-color:#3c414a!important; border-radius:10px; }
+html.apple.speak .ls-row.ls-now { border-color:#647f9f!important; background:#18212d!important; }
+.sp-page { max-width:820px; }
+.sp-h1 { font-size:42px; font-weight:600; letter-spacing:-.05em; margin:10px 0 26px; }
+.sp-h2 { font-size:23px; font-weight:550; margin:34px 0 16px; letter-spacing:-.03em; }
+.sp-lead,.sp-item-sub,.sp-pct,.sp-greet,.sp-eyebrow,.sp-empty,.sp-sub,.sp-group { color:#a0a7b2; }
+.sp-card { background:#101113; border:1px solid #2c3037; border-radius:22px; padding:24px; margin-bottom:14px; }
+.sp-item-title { font-weight:550; letter-spacing:-.025em; }
+.sp-icon,.sp-tile-icon,.sp-avatar { background:#272e39!important; color:#d4e2f6; }
+.sp-tile-icon { border-radius:50%; }
+.sp-track,.sp-segs span { background:#2a2e35; }
+.sp-track span,.sp-segs span.done { background:#afc9e9; }
+.sp-btn-wide,.sp-btn-ghost,.sp-chip,.sp-note,.sp-round,.sp-pill.muted,.sp-seg2 { background:#23262c; color:#e6eaf0; }
+.sp-next,.sp-pill,.sp-mins button.on,.pattern-mic,.pattern-finish button:first-of-type { background:#1475df; border-color:#1475df; }
+.sp-seg2 button.on { background:#e5ebf4; color:#12151c; }
+.sp-mins button { border-color:#3c424d; color:#b1b9c5; }
+.sp-link,.sp-check,.sp-fb.hint { color:#91bdff; }
+.sp-ring circle.val { stroke:#adc9ed; }
+.sp-hero { background:linear-gradient(150deg,#212b39,#111316)!important; }
+.sp-scenes { gap:20px; }
+.sp-scene { background:#101113; border:1px solid #2a2e36; border-radius:22px; }
+.sp-scene-art { background:radial-gradient(ellipse at 50% 110%,#394d66,transparent 75%),#14181e!important; font-size:60px; }
+.sp-scene-body { padding:24px; }
+.sp-drill { min-height:calc(100svh - 204px); }
+.sp-drill .sp-card { max-width:640px; min-height:350px; background:radial-gradient(ellipse at 50% 100%,#1c283a,transparent 80%),#101113; box-shadow:none; padding:30px; }
+.sp-drill-title { font-weight:500; }
+.sp-en { font-size:38px; font-weight:550; margin:30px 0 20px; }
+.sp-round.huge { background:#e2eaf6; color:#1b283b; }
+.sp-round.big { color:#c9d2df; }
+.sp-segs span.now { background:linear-gradient(90deg,#bcd4f2 50%,#2a2e35 50%); }
+
+/* Focused, one-sentence practice. */
+.pattern-picker { padding:6px 0 24px; }
+.pattern-kicker { color:#9cacc0; font-size:10px; }
+.pattern-picker h2 { font-size:42px; font-weight:600; letter-spacing:-.055em; line-height:1.4; margin:20px 0; }
+.pattern-courses { margin-top:36px; }
+.pattern-courses button { background:#111316; border:1px solid #30353e; padding:24px 28px; gap:26px; }
+.pattern-courses button:hover { background:#19212b; border-color:#647a96; }
+.pattern-courses strong { font-weight:500; }
+.course-number,.pattern-courses b { color:#bdcfe5; }
+.pattern-session { background:transparent; border-radius:0; padding:0; }
+.pattern-top { color:#a8b6ca; }
+.pattern-top>button { background:#20252e; border-radius:50%; color:#e4ecf7; }
+.pattern-segments span { background:#2e343e; height:3px; }
+.pattern-segments .done { background:#91b5e5; }
+.pattern-mode { margin:22px 0 26px; }
+.pattern-mode button { color:#9daec4; }
+.pattern-mode [aria-pressed="true"] { background:#e7edf6; color:#111721; }
+.pattern-context { padding:0 0 22px; }
+.pattern-context p { color:#929fac; }
+.pattern-context strong { font-size:24px; font-weight:500; }
+.pattern-context span { color:#b2bac5; }
+.pattern-focus { background:radial-gradient(ellipse at 50% 100%,#202f44 0,transparent 80%),#101317; border:1px solid #39424f; min-height:340px; border-radius:26px; padding:32px; }
+.pattern-status { color:#a2b6d2; font-size:11px; }
+.pattern-focus #pt-en { font-size:38px; font-weight:550; margin:34px 0 16px; letter-spacing:-1px; }
+.pattern-focus #pt-ja { color:#a8b7cb; margin-bottom:32px; }
+.pattern-controls button { background:#293444; color:#c4d2e7; }
+.pattern-controls #pt-toggle { background:#e4edf9; color:#122034; }
+.pattern-options label { color:#9da7b6; }
+.pattern-options select { border-radius:10px; }
+.pattern-navigation button { color:#becbdd; }
+html.apple.speak .listen-player { padding:30px!important; background:radial-gradient(ellipse at 50% 0,#1c2634,transparent 75%),#101113!important; border:1px solid #343d4a!important; }
+html.apple.speak #ls-en { font-size:34px; font-weight:550; line-height:1.45!important; min-height:130px; display:flex; align-items:center; padding:24px 0; }
+.playback-quick { margin-top:28px; }
+
+@media(min-width:1100px) {
+  .launch-hero { padding-top:58px; }
+  .voice-sculpture { margin-top:0; }
+}
+@media(max-width:850px) {
+  html.speak #app { padding:28px 28px 60px; }
+  html.speak .studio-header { padding:12px 28px; gap:18px; }
+  html.speak .sp-nav { gap:18px; }
+  .studio-brand { font-size:17px; gap:8px; }
+  .studio-location { padding-left:28px; padding-right:28px; }
+  .launch-hero { padding-top:40px; }
+  .studio-stat-more { display:none; }
+  .studio-lesson { padding:36px; }
+  .lesson-art>span { font-size:145px; }
+  .studio-feature { padding:30px; }
+  .studio-section-title h2 { font-size:26px; }
+}
+@media(max-width:620px) {
+  html.speak #app { padding:20px 20px 44px; }
+  html.speak .studio-header { padding:8px 20px 0; gap:0; min-height:102px; }
+  .studio-brand { font-size:18px; }
+  .studio-menu { margin-left:auto; width:40px; height:40px; }
+  html.speak .sp-nav { order:3; width:100%; justify-content:space-between; gap:12px; padding-top:3px; }
+  html.speak .sp-nav button { font-size:11px; min-height:44px; }
+  .studio-location { padding:22px 20px 0; font-size:11px; }
+  .launch-hero { padding:30px 0 34px; }
+  .launch-kicker { font-size:8px; letter-spacing:1.5px; margin-bottom:24px; }
+  .launch-hero h1 { font-size:48px; letter-spacing:-.07em; line-height:1.25; }
+  .launch-lead { font-size:12px; margin-top:20px; }
+  .voice-sculpture { width:calc(100% + 40px); max-width:none; margin:24px -20px 6px; }
+  .launch-actions { gap:10px; flex-direction:column; }
+  .studio-primary { min-height:48px; font-size:13px; padding:11px 23px; }
+  .launch-caption { font-size:10px; margin-top:12px; }
+  .studio-progress { padding:24px 0 28px; margin-bottom:50px; }
+  .studio-progress>div,.studio-progress>button { padding:0 15px; }
+  .studio-progress>div:first-child { padding-left:0; }
+  .studio-progress>button { padding-right:0; }
+  .studio-stat-label { font-size:10px; }
+  .studio-progress strong { font-size:27px; }
+  .studio-progress p>span { font-size:10px; margin-left:1px; }
+  .studio-section-title { display:block; margin-bottom:22px; }
+  .studio-section-title h2 { font-size:25px; margin-top:10px; }
+  .studio-section-title>.studio-text-link { margin-top:6px; }
+  .studio-lesson { padding:28px; align-items:flex-start; border-radius:22px; }
+  .studio-lesson>div:first-child { position:relative; z-index:1; }
+  .studio-lesson h3 { font-size:29px; }
+  .studio-lesson p { max-width:220px; font-size:12px; }
+  .lesson-art { position:absolute; right:16px; top:32px; padding:0; opacity:.24; }
+  .lesson-art>span { font-size:134px; }
+  .lesson-art small { display:none; }
+  .studio-feature-grid { grid-template-columns:1fr; gap:16px; margin:16px 0; }
+  .studio-feature { padding:28px; border-radius:22px; }
+  .studio-feature h3 { font-size:29px; }
+  .studio-feature p { font-size:12px; }
+  .mini-wave,.conversation-art { min-height:156px; height:156px; }
+  .conversation-art span { font-size:18px; }
+  .studio-review { padding:22px 20px; gap:16px; border-radius:20px; }
+  .review-symbol { width:38px; height:38px; flex-shrink:0; font-size:23px; }
+  .studio-review strong { font-size:13px; }
+  .studio-review small { font-size:10px; line-height:1.7; }
+  .studio-review-arrow { font-size:17px; }
+  .studio-footer { flex-direction:column; align-items:flex-start; margin-top:44px; padding-top:24px; gap:4px; font-size:10px; }
+  .studio-footer>div { gap:22px; }
+  .sp-h1 { font-size:32px; margin:10px 0 22px; }
+  .sp-h2 { font-size:21px; }
+  .sp-card { padding:20px; }
+  .sp-item-title { font-size:16px; }
+  .sp-item-sub { font-size:12px; }
+  .sp-drill { min-height:calc(100svh - 220px); }
+  .sp-drill .sp-card { padding:22px; min-height:310px; }
+  .sp-en { font-size:30px; }
+  .pattern-picker h2 { font-size:30px; }
+  .pattern-courses button { padding:20px; gap:18px; }
+  .pattern-courses strong { font-size:23px; }
+  .pattern-session { margin:0; padding:0; }
+  .pattern-context strong { font-size:22px; }
+  .pattern-focus { padding:24px 18px; min-height:310px; border-radius:22px; }
+  .pattern-focus #pt-en { font-size:30px; letter-spacing:-.5px; }
+  .pattern-mode { margin:16px 0 22px; }
+  .pattern-options { gap:10px; }
+  html.apple.speak .listen-player { padding:22px!important; }
+  html.apple.speak #ls-en { font-size:28px; min-height:120px; }
+}
+@media(max-width:360px) {
+  .launch-hero h1 { font-size:42px; }
+  .studio-stat-label { font-size:9px; }
+  .studio-progress>div,.studio-progress>button { padding-left:10px; padding-right:10px; }
+  .studio-section-title h2 { font-size:22px; }
+}
+@media(prefers-reduced-motion:reduce) { .view { animation:none; } }
