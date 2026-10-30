@@ -1,5 +1,5 @@
 /* sw.js — Service Worker（オフライン対応・アプリシェルキャッシュ） */
-const CACHE = 'speak-studio-v32';
+const CACHE = 'speak-studio-v33';
 const ASSETS = [
   './',
   './index.html',
@@ -40,7 +40,7 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()).catch(() => {})
+    caches.open(CACHE).then((c) => c.addAll(ASSETS.map((u) => new Request(u, { cache: 'reload' })))).catch(() => {}).then(() => self.skipWaiting())
   );
 });
 
@@ -56,17 +56,22 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(req.url);
   // 外部（CDN・API）はネットワークのみ
   if (url.origin !== self.location.origin) return;
-  // 同一オリジンは cache-first → ネットワークfallback
-  e.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
-        }
+  // 音声（audio/clips の mp3）は量が多く変わらないので cache-first。
+  // それ以外（画面・プログラム・一覧）は network-first（つながれば必ず新しい版。つながらないときだけ保存した版）。
+  const isClip = url.pathname.includes('/audio/clips/');
+  if (isClip) {
+    e.respondWith(
+      caches.match(req).then((cached) => cached || fetch(req).then((res) => {
+        if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
         return res;
-      }).catch(() => cached);
-    })
+      }))
+    );
+    return;
+  }
+  e.respondWith(
+    fetch(new Request(req, { cache: 'no-store' })).then((res) => {
+      if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+      return res;
+    }).catch(() => caches.match(req, { ignoreSearch: true }))
   );
 });

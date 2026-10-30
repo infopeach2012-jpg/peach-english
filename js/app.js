@@ -230,6 +230,16 @@
     },
   };
 
+  // 画面の左下に版の番号を出す（iPad が新しい版を読んでいるかを、見て確かめられるように）
+  window.APP_VERSION = 'v33';
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.createElement('div');
+    b.id = 'app-version';
+    b.textContent = '版 ' + window.APP_VERSION;
+    b.style.cssText = 'position:fixed;left:8px;bottom:6px;z-index:60;font-size:11px;color:#6e6e73;pointer-events:none;';
+    document.body.appendChild(b);
+  });
+
   // 起動
   document.addEventListener('DOMContentLoaded', async () => {
     await window.Store.init();
