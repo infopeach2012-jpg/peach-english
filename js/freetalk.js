@@ -12,6 +12,19 @@
   let micRef = {};
   let listening = false;
   let busy = false;
+  let viewEpoch = 0;
+  const requests = new Set();
+  function stopSession() {
+    viewEpoch++;
+    requests.forEach(controller => controller.abort());
+    requests.clear();
+    if (micRef.cancel) micRef.cancel();
+    else if (micRef.stop) micRef.stop();
+    micRef = {};
+    listening = false;
+    busy = false;
+    window.Speech.stopSpeaking();
+  }
 
   const SCENARIOS = [
     { key: 'chat', bg: 'linear-gradient(160deg,#5a3d2b,#1a120e)', emoji: '☕', title: '日常の雑談', desc: '天気・週末・趣味など気軽に',
@@ -52,6 +65,7 @@ Rules:
   function saveConvo() { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(convo)); } catch (e) {} }
 
   function render(container) {
+    stopSession();
     SCENARIOS.forEach((sc) => window.Speech.registerText(sc.opener, 'ft_' + sc.key));
     convo = loadConvo();
     if (!convo || !convo.sc) { drawScenarioPicker(container); return; }
@@ -74,6 +88,7 @@ Rules:
         ${getKey() ? '' : `<div class="sp-note">💡 AI 会話には Anthropic の API キーが要ります。会話を始めると入力欄が出ます。</div>`}
       </div>`;
     const start = (sc) => {
+      stopSession();
       convo = { sc, messages: [{ role: 'assistant', en: sc.opener, ja: '' }] };
       saveConvo();
       drawChat(container);
@@ -125,6 +140,7 @@ Rules:
     renderLog(container);
 
     container.querySelector('#ft-reset').onclick = () => {
+      stopSession();
       convo = null; try { localStorage.removeItem(HISTORY_KEY); } catch (e) {}
       drawScenarioPicker(container);
     };
@@ -182,46 +198,55 @@ Rules:
     const mic = container.querySelector('#ft-mic');
     const status = container.querySelector('#ft-status');
     if (listening) { if (micRef.stop) micRef.stop(); return; }
+    const epoch = viewEpoch;
     listening = true;
     mic.classList.add('listening');
     status.textContent = '🎤 聞き取り中…';
     window.Speech.stopSpeaking();
     micRef = {};
     try {
-      const said = await window.Speech.listenOnce({ ref: micRef, onPartial: (t) => { status.textContent = '🎤 ' + (t || '…'); } });
+      const said = await window.Speech.listenOnce({ ref: micRef, onPartial: (t) => { if (epoch === viewEpoch) status.textContent = '🎤 ' + (t || '…'); } });
+      if (epoch !== viewEpoch) return;
       status.textContent = '';
       if (said && said.trim()) sendUser(container, said.trim());
-    } catch (e) { status.textContent = 'もう一度お試しください'; }
-    finally { listening = false; mic.classList.remove('listening'); }
+    } catch (e) { if (epoch === viewEpoch) status.textContent = 'もう一度お試しください'; }
+    finally { if (epoch === viewEpoch) listening = false; mic.classList.remove('listening'); }
   }
 
   async function callAnthropic(messages, system, maxTokens) {
+    const epoch = viewEpoch;
     if (window.__ARTIFACT__) {
       throw new Error('AI会話はこの共有版では利用できません。GitHub/ローカル版でAPIキーを設定してご利用ください。');
     }
     let key = getKey();
     if (!key) {
       key = await promptForKey();
+      if (epoch !== viewEpoch) throw new DOMException('Conversation closed', 'AbortError');
       if (!key) throw new Error('APIキーが必要です');
       setKey(key.trim());
     }
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({ model: MODEL, max_tokens: maxTokens || 300, system, messages }),
-    });
-    if (!res.ok) {
-      const t = await res.text().catch(() => '');
-      if (res.status === 401 || res.status === 403) setKey('');
-      throw new Error(`API ${res.status}: ${t.slice(0, 200)}`);
-    }
-    const data = await res.json();
-    return (data.content || []).map((b) => b.text || '').join('').trim();
+    const controller = new AbortController();
+    requests.add(controller);
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': key,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({ model: MODEL, max_tokens: maxTokens || 300, system, messages }),
+      });
+      if (!res.ok) {
+        const t = await res.text().catch(() => '');
+        if (res.status === 401 || res.status === 403) setKey('');
+        throw new Error(`API ${res.status}: ${t.slice(0, 200)}`);
+      }
+      const data = await res.json();
+      return (data.content || []).map((b) => b.text || '').join('').trim();
+    } finally { requests.delete(controller); }
   }
 
   function apiMessages() {
@@ -229,7 +254,9 @@ Rules:
   }
 
   async function sendUser(container, text) {
-    if (busy) return;
+    if (busy || !convo) return;
+    const epoch = viewEpoch;
+    window.Speech.stopSpeaking();
     convo.messages.push({ role: 'user', en: text });
     saveConvo();
     renderLog(container);
@@ -238,6 +265,7 @@ Rules:
     busy = true;
     try {
       const reply = await callAnthropic(apiMessages(), systemPrompt(convo.sc), 300);
+      if (epoch !== viewEpoch) return;
       convo.messages.push({ role: 'assistant', en: reply, ja: '' });
       saveConvo();
       window.Store.recordActivity(8);
@@ -245,38 +273,43 @@ Rules:
       renderLog(container);
       window.Speech.speak(reply, { rate: 1 });
     } catch (e) {
+      if (epoch !== viewEpoch || e.name === 'AbortError') return;
       window.App.toast(e.message.startsWith('API') ? e.message : 'AI応答に失敗しました');
       const status = container.querySelector('#ft-status');
       if (status) status.textContent = '⚠️ ' + e.message;
     } finally {
-      busy = false;
+      if (epoch === viewEpoch) busy = false;
       if (typing) typing.classList.add('hidden-x');
     }
   }
 
   async function translateMsg(container, i) {
+    const epoch = viewEpoch;
     const m = convo.messages[i];
     if (m.ja) return; // 既に翻訳済み
     try {
       const ja = await callAnthropic(
         [{ role: 'user', content: `Translate this English into natural Japanese. Output ONLY the Japanese, nothing else:\n\n${m.en}` }],
         'You are a precise English-to-Japanese translator.', 200);
+      if (epoch !== viewEpoch) return;
       m.ja = ja;
       saveConvo();
       renderLog(container);
-    } catch (e) { window.App.toast('翻訳に失敗しました'); }
+    } catch (e) { if (epoch === viewEpoch && e.name !== 'AbortError') window.App.toast('翻訳に失敗しました'); }
   }
 
   async function askHint(container) {
+    const epoch = viewEpoch;
     const status = container.querySelector('#ft-status');
     status.textContent = '💭 ヒントを考え中…';
     try {
       const hint = await callAnthropic(
         apiMessages().concat([{ role: 'user', content: '(Coach aside) Suggest ONE natural, simple English sentence I could say next in this conversation. Give the English sentence, then its Japanese translation in parentheses. Keep it to one line.' }]),
         systemPrompt(convo.sc), 150);
+      if (epoch !== viewEpoch) return;
       status.textContent = '';
       showHint(container, hint);
-    } catch (e) { status.textContent = 'ヒント取得に失敗しました'; }
+    } catch (e) { if (epoch === viewEpoch && e.name !== 'AbortError') status.textContent = 'ヒント取得に失敗しました'; }
   }
 
   function showHint(container, hint) {
@@ -319,11 +352,7 @@ Rules:
     if (b) b.onclick = () => window.App.navigate('home');
   }
 
-  function onLeave() {
-    if (micRef.stop) micRef.stop();
-    listening = false;
-    window.Speech.stopSpeaking();
-  }
+  function onLeave() { stopSession(); }
 
   window.FreetalkView = { SCENARIOS, render, onLeave };
 })();

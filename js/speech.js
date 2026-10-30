@@ -70,6 +70,23 @@
   const audioEl = (typeof Audio !== 'undefined') ? new Audio() : null;
   let clipStop = null;
   let clipEpoch = 0;
+  let speechEpoch = 0;
+  let ttsStop = null;
+  let capture = null;
+  function setAudioSession(type) {
+    // Safari/iPad: restore the speaker playback route after microphone capture.
+    try { if (navigator.audioSession) navigator.audioSession.type = type; } catch (_) {}
+  }
+  function stopTts() {
+    if (ttsStop) { const finish = ttsStop; ttsStop = null; finish(); }
+    if (synth) { try { synth.cancel(); } catch (_) {} }
+  }
+  function suspendContext() {
+    if (ctx && ctx.state === 'running') {
+      try { return ctx.suspend().catch(() => {}); } catch (_) {}
+    }
+    return null;
+  }
   function normText(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
   async function loadClips(base) {
     try {
@@ -147,24 +164,33 @@
       try { src.start(0, start, dur); } catch (e) { finish(); }
     })).catch(() => false);
   }
-  // 次に使う場面のファイルを先に読んでおく
+  // Whole MP3 files use the browser's media cache, without opening an AudioContext.
+  const prefetching = new Map();
   function prefetchClip(key) {
     const ent = clipIndex && clipIndex[key];
-    if (ent && ensureCtx()) loadBuffer(typeof ent === 'string' ? ent : ent[0]).catch(() => {});
+    if (!ent) return;
+    const file = typeof ent === 'string' ? ent : ent[0];
+    if (prefetching.has(file)) return;
+    const task = fetch(clipBase + file + '.mp3', { cache: 'force-cache' })
+      .then(r => { if (r.ok) return r.arrayBuffer(); })
+      .catch(() => {}).finally(() => prefetching.delete(file));
+    prefetching.set(file, task);
   }
 
   function playClip(key, opts) {
     opts = opts || {};
-    try { if (ctx && ctx.state === 'suspended') ctx.resume(); } catch (e) { /* noop */ }
     let ent = clipIndex && clipIndex[key];
     if (!ent) return Promise.resolve(false);
+    stopTts();
+    setAudioSession('playback');
     // 索引の値は [ファイル名, 開始秒, 長さ] か、ファイル名だけ（1文1ファイル。Codex などで作った音声向け）
     if (typeof ent === 'string') {
       // Whole clips use the media element to preserve the voice at faster speeds.
       return playClipElement([ent, 0, null], opts);
     }
     stopClip();
-    if (AC) return playClipWebAudio(ent, opts.rate != null ? opts.rate : 1).then((ok) => ok || playClipElement(ent, opts));
+    const epoch = clipEpoch;
+    if (AC) return playClipWebAudio(ent, opts.rate != null ? opts.rate : 1).then((ok) => epoch !== clipEpoch || ok || playClipElement(ent, opts));
     return playClipElement(ent, opts);
   }
   function playClipElement(ent, opts) {
@@ -177,11 +203,12 @@
       const src = clipBase + file + '.mp3';
       const dur = dur0 == null ? 30 : dur0;            // 1文1ファイルのときは ended で終わる
       const end = dur0 == null ? Infinity : start + dur;
-      let finished = false;
+      let finished = false, started = false;
+      let seekGuard = null;
       let poll = null, watchdog = null;
       let lastT = -1, stallSince = 0;
       const cleanup = () => {
-        clearInterval(poll); clearTimeout(watchdog);
+        clearInterval(poll); clearTimeout(watchdog); clearTimeout(seekGuard);
         audioEl.removeEventListener('ended', onEnd);
         audioEl.removeEventListener('error', onErr);
         audioEl.removeEventListener('canplay', onCanPlay);
@@ -200,7 +227,9 @@
 
       // 3) 再生。終わりは「実際の再生位置」で判断する（時計で切ると読み込み待ちの分だけ早く切れる）
       const startPlayback = () => {
-        if (finished) return;
+        if (finished || started) return;
+        started = true;
+        setAudioSession('playback');
         audioEl.preservesPitch = true;
         audioEl.webkitPreservesPitch = true;
         audioEl.playbackRate = rate;
@@ -226,37 +255,34 @@
         audioEl.addEventListener('seeked', onSeeked);
         try { audioEl.currentTime = start; } catch (e) { audioEl.removeEventListener('seeked', onSeeked); startPlayback(); return; }
         // seeked が来ない端末向け
-        setTimeout(() => { if (!finished && poll == null) { audioEl.removeEventListener('seeked', onSeeked); startPlayback(); } }, 1500);
+        seekGuard = setTimeout(() => { if (!finished && poll == null) { audioEl.removeEventListener('seeked', onSeeked); startPlayback(); } }, 1500);
       };
       // 1) ファイルの読み込み（別の場面に移ったときだけ）
       const onCanPlay = () => { audioEl.removeEventListener('canplay', onCanPlay); seekThenPlay(); };
       audioEl.addEventListener('ended', onEnd);
       audioEl.addEventListener('error', onErr);
-      if (audioEl.src !== new URL(src, location.href).href) {
-        audioEl.src = src;
-        audioEl.preload = 'auto';
-        audioEl.load();
+      const changed = audioEl.src !== new URL(src, location.href).href;
+      audioEl.preload = 'auto';
+      if (dur0 == null) {
+        // Call play() in the original tap; do not prime with empty audio or seek waits.
+        if (changed) audioEl.src = src;
+        else { try { audioEl.currentTime = 0; } catch (_) {} }
+        startPlayback();
+      } else if (changed || audioEl.readyState < 3) {
         audioEl.addEventListener('canplay', onCanPlay);
-      } else if (audioEl.readyState < 3) {
-        audioEl.addEventListener('canplay', onCanPlay);
+        if (changed) { audioEl.src = src; audioEl.load(); }
+        watchdog = setTimeout(() => { if (!started) finish(false); }, 15000);
       } else {
         seekThenPlay();
       }
     });
   }
-  // 単一の Audio 要素は、最初のタップで一度 play しておくと iPhone でも続けて鳴らせる
-  // タップの中で呼ぶ。AudioContext を起こし、無音の <audio> をループ再生して
-  // iPhone のサイレントスイッチが入っていても Web Audio が鳴るようにする。
-  // 以前は「無音の WAV をループ再生」して iPhone のサイレントスイッチを回避していたが、
-  // データ長ゼロの WAV をループさせると iPad でパチパチと割れた音が混ざった（2026-10-29）。
-  // 1文1ファイルの音声は <audio> で鳴らすのでサイレントスイッチの影響を受けない。ループはやめる。
-  let silentEl = null;
   function unlockAudio() {
-    ensureCtx();
-    if (!audioEl || audioEl.dataset.unlocked) return;
-    try { audioEl.muted = true; const p = audioEl.play(); if (p && p.catch) p.catch(() => {}); audioEl.pause(); audioEl.muted = false; audioEl.dataset.unlocked = '1'; } catch (e) { /* noop */ }
+    // The actual MP3 play() unlocks media. An unused AudioContext or play/pause of
+    // an empty element can change iPad's audio route while TTS/recognition runs.
+    if (!capture) setAudioSession('playback');
   }
-  function releaseAudio() { try { if (silentEl) silentEl.pause(); } catch (e) { /* noop */ } }
+  function releaseAudio() { suspendContext(); }
 
   // ---- 読み上げ ----
   // opts.lang = 'ja' で日本語音声。onend が来ない端末向けに見積もり時間で打ち切る。
@@ -265,85 +291,123 @@
   function setSource(v) { try { localStorage.setItem(SOURCE_KEY, v); } catch (e) { /* noop */ } }
   function speak(text, opts) {
     opts = opts || {};
-    if (opts.lang !== 'ja' && getSource() === 'device') {
-      return speakTts(text, Object.assign({}, opts, { rate: (opts.rate != null ? opts.rate : 1) * (opts.slow ? 0.75 : 1) }));
-    }
-
-    if (opts.lang !== 'ja') {
-      const key = opts.key || clipKeyFor(text);
-      if (opts.slow) {
-        // ゆっくり版のクリップがあればそれを。無ければ通常クリップを 0.8 倍で
-        if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
-        if (hasClip(key)) return playClip(key, { rate: 1 }).then((ok) => (ok ? undefined : speakTts(text, Object.assign({}, opts, { rate: 0.75 }))));
-        return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
+    stopSpeaking();
+    const epoch = speechEpoch;
+    const fallback = (ok, options) => {
+      if (ok || epoch !== speechEpoch) return;
+      return speakTts(text, options || opts);
+    };
+    const start = () => {
+      if (epoch !== speechEpoch) return Promise.resolve();
+      setAudioSession('playback');
+      if (opts.lang !== 'ja' && getSource() === 'device') {
+        return speakTts(text, Object.assign({}, opts, { rate: opts.slow ? 0.75 : (opts.rate ?? 1) }));
       }
-      // 速さは、あらかじめ作った版（@fast=1.25倍・@faster=1.5倍・@slow=0.75倍）を選ぶ。
-      // 端末の中で引き伸ばすと音が割れたように聞こえるため、引き伸ばしは残りの小さな差だけにする
-      const want = opts.rate != null ? opts.rate : 1;
-      // 端末の中で引き伸ばすと割れて聞こえるので、いちばん近い版をそのまま（1.0 倍で）鳴らす。引き伸ばしはしない
-      const cands = [[1, key], [0.75, key + '@slow'], [1.25, key + '@fast'], [1.5, key + '@faster']].filter((c) => hasClip(c[1]));
-      if (cands.length) {
-        cands.sort((a, b) => Math.abs(a[0] - want) - Math.abs(b[0] - want));
-        return playClip(cands[0][1], Object.assign({}, opts, { rate: 1 })).then((ok) => (ok ? undefined : speakTts(text, opts)));
+      if (opts.lang !== 'ja') {
+        const key = opts.key || clipKeyFor(text);
+        if (opts.slow) {
+          if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: 1 }).then(ok => fallback(ok, Object.assign({}, opts, { rate: 0.75 })));
+          if (hasClip(key)) return playClip(key, { rate: 1 }).then(ok => fallback(ok, Object.assign({}, opts, { rate: 0.75 })));
+          return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
+        }
+        const want = opts.rate ?? 1;
+        const versions = [[1, key], [0.75, key + '@slow'], [1.25, key + '@fast'], [1.5, key + '@faster']].filter(c => hasClip(c[1]));
+        if (versions.length) {
+          versions.sort((a, b) => Math.abs(a[0] - want) - Math.abs(b[0] - want));
+          return playClip(versions[0][1], Object.assign({}, opts, { rate: 1 })).then(ok => fallback(ok));
+        }
       }
+      return speakTts(text, opts);
+    };
+    if (capture) {
+      const previous = capture;
+      previous.cancel();
+      return previous.finished.catch(() => {}).then(start);
     }
-    return speakTts(text, opts);
+    return start();
   }
   function speakTts(text, opts) {
     opts = opts || {};
+    stopClip();
     return new Promise((resolve) => {
       if (!synth || !text) { resolve(); return; }
-      try { synth.cancel(); } catch (e) { /* noop */ }
       const u = new SpeechSynthesisUtterance(text);
-      const rate = opts.rate != null ? opts.rate : 1;
+      const rate = Math.max(0.5, Math.min(2, Number(opts.rate) || 1));
       if (opts.lang === 'ja') {
         const v = pickJaVoice();
         if (v) u.voice = v;
         u.lang = (v && v.lang) || 'ja-JP';
       } else {
+        pickVoice();
         if (preferredVoice) u.voice = preferredVoice;
         u.lang = (preferredVoice && preferredVoice.lang) || 'en-US';
       }
-      // 英語は 1.0 倍で読む（端末の読み上げも、1.0 以外にすると iPad で音がざらつきやすい）
-      u.rate = opts.lang === 'ja' ? rate : 1;
+      u.rate = rate;
       u.pitch = opts.pitch != null ? opts.pitch : 1;
-      // 作った音声用の Web Audio が動いたままだと、iPad で読み上げの音が割れる。読み上げの間は止めておく
-      try { if (ctx && ctx.state === 'running') ctx.suspend(); } catch (e) { /* noop */ }
-      let done = false;
-      const finish = () => { if (done) return; done = true; clearTimeout(guard); resolve(); };
-      u.onend = finish;
-      u.onerror = finish;
-      // 1文字あたり約90ms（日本語は約150ms）+ 2秒を上限の目安にする
-      const perChar = opts.lang === 'ja' ? 150 : 90;
-      const guard = setTimeout(finish, Math.min(60000, (text.length * perChar) / rate + 2000) * 2);
-      synth.speak(u);
+      u.volume = 0.82;
+      let done = false, guard = null;
+      const finish = () => {
+        if (done) return;
+        done = true; clearTimeout(guard);
+        u.onend = u.onerror = null;
+        if (ttsStop === finish) ttsStop = null;
+        resolve();
+      };
+      ttsStop = finish;
+      u.onend = u.onerror = finish;
+      const begin = () => {
+        if (done) return;
+        setAudioSession('playback');
+        const perChar = opts.lang === 'ja' ? 150 : 90;
+        guard = setTimeout(() => { finish(); try { synth.cancel(); } catch (_) {} }, Math.min(60000, text.length * perChar / rate + 2000) * 2);
+        try { if (synth.paused) synth.resume(); synth.speak(u); } catch (_) { finish(); }
+      };
+      const suspended = suspendContext();
+      if (suspended) suspended.then(begin);
+      else begin();
     });
   }
   function stopSpeaking() {
+    speechEpoch++;
     stopClip();
-    if (synth) { try { synth.cancel(); } catch (e) { /* noop */ } }
+    stopTts();
+    suspendContext();
   }
 
   // ---- 音声認識（1回分） ----
   // onPartial(text) で暫定結果を通知。resolve で最終transcript。
   function listenOnce(opts) {
     opts = opts || {};
-    return new Promise((resolve, reject) => {
-      if (!SR) { reject(new Error('unsupported')); return; }
+    if (!SR) return Promise.reject(new Error('unsupported'));
+    if (capture) capture.cancel();
+    stopSpeaking();
+    const owner = { finished: null, cancel: null };
+    const finished = new Promise((resolve, reject) => {
       const rec = new SR();
       rec.lang = opts.lang || 'en-US';
       rec.interimResults = true;
       rec.continuous = false;
       rec.maxAlternatives = 1;
-      let finalText = '';
-      let settled = false;
-      const done = (val, err) => {
+      let finalText = '', settled = false, cancelled = false, failure = null, guard = null;
+      const done = () => {
         if (settled) return;
-        settled = true;
-        try { rec.stop(); } catch (e) { /* noop */ }
-        if (err) reject(err); else resolve(val);
+        settled = true; clearTimeout(guard);
+        rec.onresult = rec.onerror = rec.onend = null;
+        if (capture === owner) { capture = null; setAudioSession('playback'); }
+        if (failure && !cancelled) reject(failure);
+        else resolve(cancelled ? '' : finalText.trim());
       };
+      const requestStop = (abort) => {
+        if (settled) return;
+        clearTimeout(guard);
+        // Some browsers omit onend after permission/error/cancel. Always release.
+        guard = setTimeout(done, 1500);
+        try { if (abort) rec.abort(); else rec.stop(); } catch (_) { done(); }
+      };
+      owner.cancel = () => { cancelled = true; requestStop(true); };
+      capture = owner;
       rec.onresult = (ev) => {
+        if (cancelled) return;
         let interim = '';
         for (let i = ev.resultIndex; i < ev.results.length; i++) {
           const r = ev.results[i];
@@ -352,12 +416,15 @@
         }
         if (opts.onPartial) opts.onPartial((finalText + ' ' + interim).trim());
       };
-      rec.onerror = (ev) => done(null, new Error(ev.error || 'asr-error'));
-      rec.onend = () => done(finalText.trim());
-      // 呼び出し側から停止できるよう ref を渡す
-      if (opts.ref) opts.ref.stop = () => { try { rec.stop(); } catch (e) { /* noop */ } };
-      try { rec.start(); } catch (e) { done(null, e); }
+      rec.onerror = (ev) => { failure = new Error(ev.error || 'asr-error'); requestStop(true); };
+      rec.onend = done;
+      if (opts.ref) { opts.ref.stop = () => requestStop(false); opts.ref.cancel = owner.cancel; }
+      setAudioSession('play-and-record');
+      try { rec.start(); } catch (e) { failure = e; done(); }
     });
+    owner.finished = finished;
+    if (opts.ref) opts.ref.finished = finished;
+    return finished;
   }
 
   // ---- 発音スコアリング ----
@@ -448,17 +515,27 @@
   const recordSupported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
   async function startRecording() {
     if (!recordSupported) throw new Error('unsupported');
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const rec = new MediaRecorder(stream);
+    stopSpeaking();
+    setAudioSession('play-and-record');
+    let stream, rec;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      rec = new MediaRecorder(stream);
+    } catch (error) {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      setAudioSession('playback');
+      throw error;
+    }
     const chunks = [];
     const done = new Promise((resolve) => {
       rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
       rec.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
+        setAudioSession('playback');
         resolve(chunks.length ? URL.createObjectURL(new Blob(chunks, { type: rec.mimeType || 'audio/webm' })) : null);
       };
     });
-    rec.start();
+    try { rec.start(); } catch (error) { stream.getTracks().forEach(t => t.stop()); setAudioSession('playback'); throw error; }
     return { stop: () => { try { rec.stop(); } catch (e) {} }, done };
   }
 
