@@ -51,7 +51,7 @@
     q.addEventListener('input', debounce(() => { query = q.value; limit = 60; redraw(container, q); }, 200));
     // フォーカス維持のため再描画は最小限
     container.querySelectorAll('.dict-say').forEach((b) => {
-      b.onclick = () => window.Speech.speak(b.dataset.en, { rate: 0.9 });
+      b.onclick = () => window.Speech.speak(b.dataset.en, {});
     });
     container.querySelectorAll('.dict-star').forEach((b) => {
       b.onclick = () => {

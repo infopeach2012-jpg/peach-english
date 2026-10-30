@@ -5,8 +5,8 @@ const vm = require('node:vm');
 const code = fs.readFileSync('js/speech.js', 'utf8');
 const tick = () => new Promise(r => setImmediate(r));
 
-function setup({ sessionAPI = true, recording = false } = {}) {
-  const state = { contexts: [], media: [], spoken: [], recognizers: [], fetches: [], mode: 'auto' };
+function setup({ sessionAPI = true, recording = false, storage = new Map() } = {}) {
+  const state = { contexts: [], media: [], spoken: [], recognizers: [], fetches: [], events: [], mode: 'auto' };
   class Audio {
     constructor() { this.events = {}; this.paused = true; this.currentTime = 0; this.readyState = 4; this.dataset = {}; state.media.push(this); }
     set src(v) { this.url = new URL(v, 'https://example.test/').href; this.currentTime = 0; }
@@ -40,11 +40,12 @@ function setup({ sessionAPI = true, recording = false } = {}) {
     cancel() { this.speaking = false; /* iOS may not dispatch an end event on cancel. */ },
     resume() { this.paused = false; },
   };
-  const index = { p1: 'clips/p1', 'p1@slow': 'clips/p1_slow', 'p1@fast': 'clips/p1_fast', legacy: ['legacy', 0, 1] };
+  const index = { p1: 'clips/p1', 'p1@gentle': 'clips/p1_gentle', 'p1@slow': 'clips/p1_slow', 'p1@faster': 'clips/p1_faster', 'p1@fast': 'clips/p1_fast', legacy: ['legacy', 0, 1] };
   const navigator = { userAgent: 'iPad', platform: 'MacIntel', maxTouchPoints: 5 };
   if (sessionAPI) navigator.audioSession = { get type() { return state.mode; }, set type(v) { state.mode = v; } };
   const sandbox = { Audio, SpeechSynthesisUtterance: class { constructor(text) { this.text = text; } }, URL,
-    navigator, location: { href: 'https://example.test/' }, localStorage: { getItem() { return null; }, setItem() {} },
+    navigator, location: { href: 'https://example.test/' }, localStorage: { getItem(k) { return storage.get(k) ?? null; }, setItem(k, v) { storage.set(k, v); } },
+    CustomEvent: class { constructor(type, opts) { this.type = type; this.detail = opts.detail; } },
     fetch: async url => { state.fetches.push(url); return { ok: true, json: async () => index, arrayBuffer: async () => new ArrayBuffer(8) }; },
     setTimeout: (fn, ms) => { const t = setTimeout(fn, ms); t.unref(); return t; }, clearTimeout,
     setInterval: (fn, ms) => { const t = setInterval(fn, ms); t.unref(); return t; }, clearInterval,
@@ -57,7 +58,7 @@ function setup({ sessionAPI = true, recording = false } = {}) {
       stop() { queueMicrotask(() => this.onstop?.()); }
     };
   }
-  sandbox.window = { MediaRecorder: sandbox.MediaRecorder, speechSynthesis: synth, AudioContext: Context, SpeechRecognition: Recognition, dispatchEvent() {} };
+  sandbox.window = { MediaRecorder: sandbox.MediaRecorder, speechSynthesis: synth, AudioContext: Context, SpeechRecognition: Recognition, dispatchEvent(e) { state.events.push(e); } };
   vm.createContext(sandbox); vm.runInContext(code, sandbox);
   return { state, synth, speech: sandbox.window.Speech, sandbox };
 }
@@ -96,7 +97,7 @@ test('cancel settles TTS even when the browser sends no end event', { timeout: 2
 
 test('slow AI replay uses the requested rate and a stable pitch', { timeout: 2000 }, async () => {
   const { speech, state } = setup(); speech.speak('An AI reply', { rate: 0.75, slow: true }); await tick();
-  assert.equal(state.spoken[0].u.rate, 0.75); assert.equal(state.spoken[0].u.pitch, 1);
+  assert.equal(state.spoken[0].u.rate, 0.6); assert.equal(state.spoken[0].u.pitch, 1);
   speech.stopSpeaking();
 });
 
@@ -146,4 +147,41 @@ test('microphone permission denial does not leave the audio route in capture mod
   sandbox.navigator.mediaDevices.getUserMedia = async () => { throw new Error('denied'); };
   await assert.rejects(speech.startRecording(), /denied/);
   assert.equal(state.mode, 'playback');
+});
+
+
+test('default speed and all five choices select pre-rendered files without live stretching', async () => {
+  const { speech, state } = setup(); await speech.loadClips();
+  assert.equal(speech.getRate(), .75);
+  speech.speak('Hello', { key: 'p1' }); await tick();
+  assert.match(state.media[0].src, /p1_slow.mp3$/);
+  for (const [rate, suffix] of [[.6, '_gentle'], [.75, '_slow'], [1, ''], [1.25, '_fast'], [1.5, '_faster']]) {
+    speech.setRate(rate);
+    speech.speak('Hello', { key: 'p1' }); await tick();
+    assert.equal(state.media[0].src, 'https://example.test/audio/clips/p1' + suffix + '.mp3');
+    assert.equal(state.media[0].playbackRate, 1);
+    speech.prefetchClip('p1'); await tick();
+    assert.equal(state.fetches.at(-1), 'audio/clips/p1' + suffix + '.mp3');
+  }
+  speech.stopSpeaking();
+});
+
+test('speed persists across reloads, rejects invalid values, and informs selectors', () => {
+  const storage = new Map(); const { speech, state } = setup({ storage });
+  speech.setRate(.6); assert.equal(state.events.at(-1).type, 'speak:rate');
+  assert.equal(state.events.at(-1).detail, .6);
+  for (const invalid of [0, -1, 99, NaN, 'fast', null]) speech.setRate(invalid);
+  assert.equal(speech.getRate(), .6); assert.equal(setup({ storage }).speech.getRate(), .6);
+  assert.equal(state.events.length, 1);
+  storage.set('speak.playbackRate.v1', 'corrupt');
+  assert.equal(setup({ storage }).speech.getRate(), .75);
+});
+
+test('dynamic AI speech follows the shared speed; slow replay does not change the preference', async () => {
+  const { speech, state } = setup(); speech.setRate(1.25);
+  speech.speak('New AI text'); await tick(); assert.equal(state.spoken.at(-1).u.rate, 1.25);
+  speech.speak('New AI text', { slow: true }); await tick(); assert.equal(state.spoken.at(-1).u.rate, .6);
+  assert.equal(speech.getRate(), 1.25);
+  speech.speak('New AI text'); await tick(); assert.equal(state.spoken.at(-1).u.rate, 1.25);
+  speech.stopSpeaking();
 });

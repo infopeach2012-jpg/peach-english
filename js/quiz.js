@@ -119,7 +119,7 @@
 
     // 英語が出る問題（リスニング・英語→日本語）は、出たときに英語を読む
     if (isListen || q.mode === 'en2ja') {
-      const play = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { rate: 0.95 }); };
+      const play = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, {}); };
       const slow = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { slow: true }); };
       container.querySelector('#q-play').onclick = play;
       const s = container.querySelector('#q-slow');
@@ -149,7 +149,7 @@
     if (correct) window.App.toast('⭕ 正解！');
     // 答えたら、正しい英語を読み上げる（どの形式でも耳に残す）
     window.Speech.unlockAudio();
-    window.Speech.speak(q.item.en, { rate: 0.95 });
+    window.Speech.speak(q.item.en, {});
 
     const bar = document.createElement('div');
     bar.className = 'mt-4';
@@ -163,7 +163,7 @@
       </div>
       <button id="q-next" class="w-full mt-3 bg-gray-800 text-white rounded-xl py-3 font-bold">${state.idx < state.questions.length - 1 ? '次の問題 →' : '結果を見る'}</button>`;
     container.appendChild(bar);
-    container.querySelector('#q-say').onclick = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, { rate: 0.95 }); };
+    container.querySelector('#q-say').onclick = () => { window.Speech.unlockAudio(); window.Speech.speak(q.item.en, {}); };
     container.querySelector('#q-next').onclick = () => { window.Speech.stopSpeaking(); state.idx++; drawQuestion(container); };
   }
 

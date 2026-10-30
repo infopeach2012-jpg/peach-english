@@ -4,7 +4,7 @@
   let root, courses, course = null, index = 0, active = false, epoch = 0, mic = {};
   let completed = new Set(), feedback = '';
   const KEY = 'speak.patterns.v1';
-  let prefs = { mode: 'listen', rate: 1, gap: 0.5, repeat: 2 };
+  let prefs = { mode: 'listen', gap: 0.5, repeat: 2 };
   try { Object.assign(prefs, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
   const esc = (s) => window.App.escapeHtml(s);
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -46,10 +46,10 @@
       <div class="pattern-mode"><button data-mode="listen" aria-pressed="${prefs.mode==='listen'}">聞くだけ</button><button data-mode="speak" aria-pressed="${prefs.mode==='speak'}">声に出す</button></div>
       <div class="pattern-context"><p>${esc(course.title)}</p><strong>${esc(course.pattern)}</strong><span>${esc(course.note)}</span></div>
       <div class="pattern-focus"><div id="pt-status" class="pattern-status" role="status">お手本を聞きましょう</div><p id="pt-en" lang="en">${esc(item.en)}</p><p id="pt-ja">${esc(item.ja)}</p>
-      <div class="pattern-controls"><button id="pt-replay" aria-label="もう一度">↺</button><button id="pt-toggle" aria-label="再生">▶︎</button><button id="pt-slow" aria-label="ゆっくり再生">0.75×</button></div>
+      <div class="pattern-controls"><button id="pt-replay" aria-label="もう一度">↺</button><button id="pt-toggle" aria-label="再生">▶︎</button><button id="pt-slow" aria-label="ゆっくり再生">0.6×</button></div>
       <button id="pt-mic" class="pattern-mic" ${prefs.mode==='listen'?'hidden':''}>マイクで話す</button><p id="pt-feedback" class="pattern-feedback" aria-live="polite">${esc(feedback)}</p></div>
       <div class="pattern-navigation"><button id="pt-prev" ${index===0?'disabled':''}>← 前の文</button><button id="pt-next">${index===course.items.length-1?'練習を終える':'次の文 →'}</button></div>
-      <div class="pattern-options"><label>速さ<select id="pt-rate">${[0.75,1,1.25,1.5].map(v=>`<option value="${v}" ${v===prefs.rate?'selected':''}>${v}倍</option>`).join('')}</select></label><label>文の間<select id="pt-gap">${[0,0.25,0.5,1].map(v=>`<option value="${v}" ${v===prefs.gap?'selected':''}>${v===0?'なし':v+'秒'}</option>`).join('')}</select></label><label>繰り返し<select id="pt-repeat">${[1,2,3].map(v=>`<option value="${v}" ${v===prefs.repeat?'selected':''}>${v}回</option>`).join('')}</select></label></div>
+      <div class="pattern-options"><label>速さ<select id="pt-rate" data-speech-rate>${window.Speech.rateOptions()}</select></label><label>文の間<select id="pt-gap">${[0,0.25,0.5,1].map(v=>`<option value="${v}" ${v===prefs.gap?'selected':''}>${v===0?'なし':v+'秒'}</option>`).join('')}</select></label><label>繰り返し<select id="pt-repeat">${[1,2,3].map(v=>`<option value="${v}" ${v===prefs.repeat?'selected':''}>${v}回</option>`).join('')}</select></label></div>
     </section>`;
     root.querySelector('#pt-exit').onclick=chooser;
     root.querySelector('#pt-toggle').onclick=()=>{if(active){halt();status('一時停止中');}else run();};
@@ -59,7 +59,7 @@
     root.querySelector('#pt-next').onclick=()=>move(1);
     root.querySelector('#pt-mic').onclick=record;
     root.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{halt();prefs.mode=b.dataset.mode;save();feedback='';screen();run();});
-    ['rate','gap','repeat'].forEach(name=>{root.querySelector('#pt-'+name).onchange=e=>{prefs[name]=Number(e.target.value);save();if(active)run();};});
+    ['gap','repeat'].forEach(name=>{root.querySelector('#pt-'+name).onchange=e=>{prefs[name]=Number(e.target.value);save();if(active)run();};});
     updateButton();
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
@@ -79,7 +79,7 @@
         const next=course.items[index+1];if(next)window.Speech.prefetchClip(next.key);
         for(let pass=0;pass<(slow?1:prefs.repeat)&&live();pass++) {
           status(slow?'ゆっくり聞いてみましょう':`お手本 ${pass+1} / ${prefs.repeat}`);
-          await window.Speech.speak(item.en,{key:item.key,rate:slow?1:prefs.rate,slow:!!slow});
+          await window.Speech.speak(item.en,{key:item.key,slow:!!slow});
           if(live()&&pass+1<prefs.repeat&&!slow)await wait(350);
         }
         if(!live())return;
@@ -121,5 +121,5 @@
     root.querySelector('#pt-courses').onclick=chooser;
     root.querySelector('#pt-home').onclick=()=>window.App.navigate('home');
   }
-  window.PatternsView={render,onLeave:halt};
+  window.PatternsView={render,onLeave:halt,onRateChange(){if(active)run();}};
 })();

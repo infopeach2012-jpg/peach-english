@@ -78,16 +78,16 @@
     `;
 
     // A を自動再生
-    window.Speech.speak(d.a, { rate: 0.95 });
+    window.Speech.speak(d.a, {});
 
     if (state.result) renderResult(container, d);
 
-    container.querySelector('#rp-playA').onclick = () => window.Speech.speak(d.a, { rate: 0.95 });
+    container.querySelector('#rp-playA').onclick = () => window.Speech.speak(d.a, {});
     container.querySelector('#rp-restart').onclick = () => { newSession(); draw(container); };
     container.querySelector('#rp-reveal').onclick = () => {
       state.revealed = true;
       draw(container);
-      window.Speech.speak(d.b, { rate: 0.95 });
+      window.Speech.speak(d.b, {});
     };
     container.querySelector('#rp-next').onclick = () => next(container);
     container.querySelector('#rp-mic').onclick = () => toggleMic(container, d);
@@ -144,7 +144,7 @@
         <div class="mt-2 leading-relaxed">${toks}</div>
         <div class="mt-1 text-xs text-gray-400">あなた: 「${window.App.escapeHtml(said) || '(認識なし)'}」</div>
       </div>`;
-    box.querySelector('#rp-cmp').onclick = () => window.Speech.speak(d.b, { rate: 0.9 });
+    box.querySelector('#rp-cmp').onclick = () => window.Speech.speak(d.b, {});
   }
 
   function next(container) {

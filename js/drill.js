@@ -7,7 +7,7 @@
   'use strict';
 
   const SET_KEY = 'speak.drill.v1';
-  let settings = { ja: false, rate: 1, gap: 0.4, muted: false };
+  let settings = { ja: false, gap: 0.4, muted: false };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SET_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SET_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
 
@@ -49,6 +49,7 @@
           <div class="sp-drill-title">${esc(cfg.title || '')}</div>
           <button id="dr-mute" class="sp-round ${settings.muted ? 'off' : ''}" aria-label="音声のオン・オフ">${settings.muted ? '🔇' : '🔊'}</button>
         </div>
+        <label class="speech-rate-control">音声の速さ<select id="dr-rate" data-speech-rate>${window.Speech.rateOptions()}</select></label>
         ${segments()}
         <div class="sp-drill-body">
           <div class="sp-card">
@@ -96,7 +97,7 @@
     if (!it || settings.muted) return;
     window.Speech.unlockAudio();
     window.Speech.stopSpeaking();
-    await window.Speech.speak(it.en, { rate: settings.rate, key: it.key });
+    await window.Speech.speak(it.en, { key: it.key });
   }
 
   // ---- リスニング: 自動で進む ----
@@ -108,9 +109,9 @@
     while (alive()) {
       const it = cfg.items[idx];
       if (!it) { playing = false; drawDone(); return; }
-      if (!settings.muted) await window.Speech.speak(it.en, { rate: settings.rate, key: it.key });
+      if (!settings.muted) await window.Speech.speak(it.en, { key: it.key });
       if (!alive()) return;
-      if (settings.ja && it.ja && !settings.muted) { await sleep(150); await window.Speech.speak(it.ja, { lang: 'ja', rate: 1.1 }); }
+      if (settings.ja && it.ja && !settings.muted) { await sleep(150); if (alive()) await window.Speech.speak(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() }); }
       if (!alive()) return;
       await sleep(settings.gap * 1000);
       if (!alive()) return;
@@ -139,11 +140,13 @@
     const mic = container.querySelector('#dr-mic');
     if (listening) { if (micRef.stop) micRef.stop(); return; }
     window.Speech.stopSpeaking();
+    const my = session;
     listening = true; mic.classList.add('listening'); mic.textContent = '● 聞いています';
     fb.className = 'sp-fb'; fb.textContent = '…';
     micRef = {};
     try {
       const said = await window.Speech.listenOnce({ ref: micRef, onPartial: (t) => { fb.textContent = t || '…'; } });
+      if (my !== session) return;
       const r = window.Speech.score(it.en, said);
       results[it.key] = r.score;
       fb.className = 'sp-fb ' + (r.score >= 80 ? 'good' : r.score >= 60 ? 'ok' : 'bad');
@@ -151,7 +154,7 @@
       window.Store.recordSpeaking(it.key, r.score);
       window.Store.srsReview(it.key, r.score >= 80 ? 5 : r.score >= 60 ? 4 : 2);
       window.App.checkLevelUp();
-      if (r.score >= 80) { await sleep(700); go(1); }
+      if (r.score >= 80) { await sleep(700); if (my === session) go(1); }
     } catch (e) {
       fb.className = 'sp-fb bad'; fb.textContent = '聞き取れませんでした。もう一度「話す」を押してください';
     } finally {
@@ -187,5 +190,5 @@
 
   function onLeave() { stopAll(); }
 
-  window.DrillView = { render, onLeave, settings };
+  window.DrillView = { render, onLeave, settings, onRateChange() { if (playing) { pause(); playLoop(); } else window.Speech.stopSpeaking(); } };
 })();

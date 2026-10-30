@@ -6,6 +6,18 @@
 
   let state = null; // { list, idx, mode }
   let micRef = {};
+  let comparisonEpoch = 0;
+  let comparisonAudio = null;
+  function stopPlayback() {
+    comparisonEpoch++;
+    if (comparisonAudio) { comparisonAudio.pause(); comparisonAudio = null; }
+    window.Speech.stopSpeaking();
+  }
+  function playExample(text, opts) {
+    stopPlayback();
+    window.Speech.unlockAudio();
+    return window.Speech.speak(text, opts);
+  }
 
   function decks() {
     const C = window.Store.content;
@@ -41,6 +53,7 @@
   }
 
   function draw(container) {
+    stopPlayback();
     const d = decks();
     const item = state.list[state.idx];
     if (!item) {
@@ -131,8 +144,8 @@
       window.App.toast(on ? '⭐ お気に入りに追加' : 'お気に入りから削除');
     };
     if (window.Speech.recordSupported) bindRecord(container, item);
-    container.querySelector('#spk-play').onclick = () => (window.Speech.unlockAudio(), window.Speech.speak)(item.en, { rate: 0.95 });
-    container.querySelector('#spk-slow').onclick = () => (window.Speech.unlockAudio(), window.Speech.speak)(item.en, { rate: 0.6 });
+    container.querySelector('#spk-play').onclick = () => playExample(item.en);
+    container.querySelector('#spk-slow').onclick = () => playExample(item.en, { slow: true });
     container.querySelector('#spk-prev').onclick = () => { if (state.idx > 0) { state.idx--; state.result = null; draw(container); } };
     container.querySelector('#spk-next').onclick = () => nextItem(container);
     const micEl = container.querySelector('#spk-mic');
@@ -142,7 +155,7 @@
       // 音声認識非対応（iPhone等）: 自己採点フォールバック
       const replay = container.querySelector('#spk-replay');
       const got = container.querySelector('#spk-got');
-      if (replay) replay.onclick = () => (window.Speech.unlockAudio(), window.Speech.speak)(item.en, { rate: 0.95 });
+      if (replay) replay.onclick = () => playExample(item.en);
       if (got) got.onclick = () => {
         window.Store.recordActivity(5);
         window.App.checkLevelUp();
@@ -169,6 +182,7 @@
       // マイク競合回避のため認識中は不可
       if (listening) { window.App.toast('採点マイクの停止後に録音できます'); return; }
       try {
+        stopPlayback();
         recBtn.textContent = '⏺ 録音中… タップで停止';
         recBtn.classList.add('listening');
         recording = true;
@@ -193,8 +207,13 @@
     playBtn.onclick = async () => {
       if (!myVoiceUrl) return;
       // お手本→自分の声の順で聞き比べ
-      await (window.Speech.unlockAudio(), window.Speech.speak)(item.en, { rate: 0.95 });
-      const a = new Audio(myVoiceUrl);
+      stopPlayback();
+      const epoch = comparisonEpoch;
+      const url = myVoiceUrl;
+      window.Speech.unlockAudio();
+      await window.Speech.speak(item.en);
+      if (epoch !== comparisonEpoch) return;
+      const a = comparisonAudio = new Audio(url);
       a.play().catch(() => {});
     };
   }
@@ -211,7 +230,7 @@
     micBtn.classList.remove('brand-grad');
     micBtn.style.background = 'var(--brand2)';
     hint.textContent = '🎤 聞き取り中… 話し終えたら自動で採点';
-    window.Speech.stopSpeaking();
+    stopPlayback();
 
     micRef = {};
     try {
@@ -262,10 +281,11 @@
         </div>
       </div>`;
     box.querySelector('#spk-retry').onclick = () => toggleMic(container, item);
-    box.querySelector('#spk-cmp').onclick = () => (window.Speech.unlockAudio(), window.Speech.speak)(item.en, { rate: 0.9 });
+    box.querySelector('#spk-cmp').onclick = () => playExample(item.en);
   }
 
   function nextItem(container) {
+    stopPlayback();
     if (state.idx < state.list.length - 1) {
       state.idx++;
       state.result = null;
@@ -284,11 +304,12 @@
   }
 
   function onLeave() {
+    stopPlayback();
     if (micRef.stop) micRef.stop();
     if (recCtl && recording) recCtl.stop();
     listening = false;
     recording = false;
   }
 
-  window.SpeakingView = { render, onLeave };
+  window.SpeakingView = { render, onLeave, onRateChange: stopPlayback };
 })();

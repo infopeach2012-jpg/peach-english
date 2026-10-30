@@ -7,6 +7,11 @@
 
   let micRef = {};
   let listening = false;
+  let autoplayTimer = null;
+  let viewEpoch = 0;
+  function cancelAutoplay() { clearTimeout(autoplayTimer); autoplayTimer = null; }
+  function play(text) { cancelAutoplay(); return window.Speech.speak(text); }
+  function scheduleSpeech(text) { cancelAutoplay(); autoplayTimer = setTimeout(() => play(text), 200); }
   let plan = null;  // 今日の教材（日付固定）
   let st = null;    // 進行状態 { step, i, results }
 
@@ -102,6 +107,9 @@
   }
 
   function drawStep(container) {
+    viewEpoch++;
+    cancelAutoplay();
+    window.Speech.stopSpeaking();
     const s = STEPS[st.step];
     if (s.key === 'warmup') drawWarmup(container);
     else if (s.key === 'speak') drawSpeak(container);
@@ -132,8 +140,8 @@
       </div>
       <button id="l-next" class="w-full mt-5 ${revealed ? 'bg-gray-800' : 'brand-grad'} text-white rounded-2xl py-3.5 font-bold">${revealed ? '次へ →' : '意味を確認'}</button>
     `;
-    container.querySelector('#l-tts').onclick = () => window.Speech.speak(w.en, { rate: 0.9 });
-    setTimeout(() => window.Speech.speak(w.en, { rate: 0.9 }), 200);
+    container.querySelector('#l-tts').onclick = () => play(w.en);
+    scheduleSpeech(w.en);
     container.querySelector('#l-next').onclick = () => {
       if (!revealed) { st.sub = 'r'; drawStep(container); }
       else { window.Store.recordActivity(2); advance(container); }
@@ -158,7 +166,7 @@
       </div>
       <button id="l-skip" class="w-full mt-5 bg-gray-100 text-gray-500 rounded-2xl py-3 font-bold text-sm">${res ? '次へ →' : 'スキップ →'}</button>
     `;
-    container.querySelector('#l-play').onclick = () => window.Speech.speak(item.en, { rate: 0.95 });
+    container.querySelector('#l-play').onclick = () => play(item.en);
     container.querySelector('#l-mic').onclick = () => micScore(container, item.en, 'l', (r) => {
       st.sub = r; st.results.speak.push(r.score);
       renderInlineScore(container.querySelector('#l-res'), r);
@@ -196,12 +204,12 @@
       </div>
       <button id="l-skip" class="w-full mt-5 bg-gray-100 text-gray-500 rounded-2xl py-3 font-bold text-sm">${res ? '次へ →' : '答えを見て次へ →'}</button>
     `;
-    setTimeout(() => window.Speech.speak(d.a, { rate: 0.95 }), 200);
-    container.querySelector('#l-playa').onclick = () => window.Speech.speak(d.a, { rate: 0.95 });
+    scheduleSpeech(d.a);
+    container.querySelector('#l-playa').onclick = () => play(d.a);
     container.querySelector('#l-mic').onclick = () => micScore(container, d.b, 'l', (r) => {
       st.sub = r; st.results.talk.push(r.score);
       drawStep(container);
-      window.Speech.speak(d.b, { rate: 0.9 });
+      play(d.b);
     });
     container.querySelector('#l-skip').onclick = () => advance(container);
     if (res) renderInlineScore(container.querySelector('#l-res'), res);
@@ -220,7 +228,7 @@
       <div id="l-opts" class="space-y-2.5">
         ${q.options.map((o, i) => `<button data-i="${i}" class="l-opt w-full text-left bg-white border border-gray-200 rounded-2xl px-4 py-3.5 font-medium text-gray-800 shadow-sm">${window.App.escapeHtml(o.ja)}</button>`).join('')}
       </div>`;
-    container.querySelector('#l-say').onclick = () => window.Speech.speak(q.item.en, { rate: 0.9 });
+    container.querySelector('#l-say').onclick = () => play(q.item.en);
     container.querySelectorAll('.l-opt').forEach((b) => {
       b.onclick = () => {
         if (q.picked != null) return;
@@ -248,12 +256,15 @@
     const mic = container.querySelector('#' + idPrefix + '-mic');
     const hint = container.querySelector('#' + idPrefix + '-hint');
     if (listening) { if (micRef.stop) micRef.stop(); return; }
+    const epoch = viewEpoch;
+    cancelAutoplay();
     listening = true; mic.classList.add('listening'); mic.style.background = 'var(--brand2)';
     hint.textContent = '🎤 聞き取り中…';
     window.Speech.stopSpeaking();
     micRef = {};
     try {
       const said = await window.Speech.listenOnce({ ref: micRef, onPartial: (t) => { hint.textContent = '🎤 ' + (t || '…'); } });
+      if (epoch !== viewEpoch) return;
       const r = window.Speech.score(target, said);
       r.said = said;
       window.Store.recordSpeaking('lesson', r.score);
@@ -311,10 +322,12 @@
   }
 
   function onLeave() {
+    viewEpoch++;
+    cancelAutoplay();
     if (micRef.stop) micRef.stop();
     listening = false;
     window.Speech.stopSpeaking();
   }
 
-  window.LessonView = { render, onLeave, isDoneToday };
+  window.LessonView = { render, onLeave, isDoneToday, onRateChange() { cancelAutoplay(); window.Speech.stopSpeaking(); } };
 })();

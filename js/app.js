@@ -231,7 +231,7 @@
   };
 
   // 画面の左下に版の番号を出す（iPad が新しい版を読んでいるかを、見て確かめられるように）
-  window.APP_VERSION = 'v34';
+  window.APP_VERSION = 'v35';
   document.addEventListener('DOMContentLoaded', () => {
     const b = document.createElement('div');
     b.id = 'app-version';
@@ -244,6 +244,16 @@
   document.addEventListener('DOMContentLoaded', async () => {
     await window.Store.init();
     applyTheme(getTheme());
+    document.getElementById('global-speed').innerHTML = window.Speech.rateOptions();
+    document.addEventListener('change', e => {
+      if (e.target.matches('[data-speech-rate]')) window.Speech.setRate(e.target.value);
+    });
+    window.addEventListener('speak:rate', () => {
+      document.querySelectorAll('[data-speech-rate]').forEach(select => { select.value = String(window.Speech.getRate()); });
+      const mod = current && VIEWS[current].mod();
+      if (mod && mod.onRateChange) mod.onRateChange();
+      else window.Speech.stopSpeaking();
+    });
     // 「自動」時はOSのテーマ変更に追従
     if (window.matchMedia) {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {

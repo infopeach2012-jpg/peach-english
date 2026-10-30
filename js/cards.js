@@ -96,7 +96,7 @@
       container.querySelector('#card-grades').classList.toggle('opacity-40', !state.flipped);
       container.querySelector('#card-grades').classList.toggle('pointer-events-none', !state.flipped);
     });
-    container.querySelector('#card-tts').onclick = (e) => { e.stopPropagation(); (window.Speech.unlockAudio(), window.Speech.speak)(card.en, { rate: 0.9 }); };
+    container.querySelector('#card-tts').onclick = (e) => { e.stopPropagation(); (window.Speech.unlockAudio(), window.Speech.speak)(card.en, {}); };
     container.querySelectorAll('[data-src]').forEach((b) => {
       b.onclick = () => { startSession(b.dataset.src); draw(container); };
     });

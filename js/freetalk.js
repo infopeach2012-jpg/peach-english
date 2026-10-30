@@ -16,6 +16,7 @@
   const requests = new Set();
   function stopSession() {
     viewEpoch++;
+    replyEpoch++; replyPlaying = false; lastReply = null;
     requests.forEach(controller => controller.abort());
     requests.clear();
     if (micRef.cancel) micRef.cancel();
@@ -24,6 +25,23 @@
     listening = false;
     busy = false;
     window.Speech.stopSpeaking();
+  }
+
+  let replyEpoch = 0, replyPlaying = false, lastReply = null;
+  function playReply(text, options) {
+    lastReply = { text, options: options || {} };
+    const ticket = ++replyEpoch;
+    replyPlaying = true;
+    window.Speech.unlockAudio();
+    Promise.resolve(window.Speech.speak(text, lastReply.options)).catch(() => {
+      if (ticket === replyEpoch) window.App.toast('音声を再生できませんでした');
+    }).finally(() => { if (ticket === replyEpoch) replyPlaying = false; });
+  }
+  function onRateChange() {
+    if (replyPlaying && lastReply) playReply(lastReply.text, Object.assign({}, lastReply.options, { slow: false }));
+  }
+  function speedControl() {
+    return `<label class="speech-rate-control ft-speed-control">音声の速さ<select id="ft-rate" data-speech-rate>${window.Speech.rateOptions()}</select></label>`;
   }
 
   const SCENARIOS = [
@@ -83,6 +101,7 @@ Rules:
       <div class="sp-page">
         <div class="sp-head-row"><h1 class="sp-h1">フリートーク</h1></div>
         <p class="sp-lead">場面を選んで、声に出して会話します。短く返してくれるので、テンポよく続きます。</p>
+        ${speedControl()}
         <div class="sp-scenes">${SCENARIOS.map(card).join('')}${custom.map(card).join('')}</div>
         <button id="ft-custom" class="sp-next">＋ 自分のシナリオを作成</button>
         ${getKey() ? '' : `<div class="sp-note">💡 AI 会話には Anthropic の API キーが要ります。会話を始めると入力欄が出ます。</div>`}
@@ -92,7 +111,7 @@ Rules:
       convo = { sc, messages: [{ role: 'assistant', en: sc.opener, ja: '' }] };
       saveConvo();
       drawChat(container);
-      window.Speech.speak(sc.opener, { rate: 1, key: 'ft_' + sc.key });
+      playReply(sc.opener, { key: 'ft_' + sc.key });
     };
     container.querySelectorAll('[data-sc]').forEach((b) => {
       b.onclick = () => { const sc = SCENARIOS.concat(custom).find((x) => x.key === b.dataset.sc); if (sc) start(sc); };
@@ -121,6 +140,7 @@ Rules:
       <div id="ft-typing" class="text-xs text-gray-400 mb-2 hidden-x">AIが入力中…</div>
 
       <div class="sticky bottom-[84px] bg-white pt-2">
+        ${speedControl()}
         <div class="flex items-end gap-2">
           <button id="ft-mic" class="shrink-0 w-12 h-12 rounded-full brand-grad text-white flex items-center justify-center shadow-md">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
@@ -182,10 +202,10 @@ Rules:
         </div>`;
     }).join('');
     log.querySelectorAll('.ft-say').forEach((b) => {
-      b.onclick = () => { window.Speech.unlockAudio(); window.Speech.stopSpeaking(); window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 1 }); };
+      b.onclick = () => playReply(convo.messages[+b.dataset.i].en);
     });
     log.querySelectorAll('.ft-slow').forEach((b) => {
-      b.onclick = () => { window.Speech.unlockAudio(); window.Speech.stopSpeaking(); window.Speech.speak(convo.messages[+b.dataset.i].en, { rate: 0.75, slow: true }); };
+      b.onclick = () => playReply(convo.messages[+b.dataset.i].en, { slow: true });
     });
     log.querySelectorAll('.ft-tr').forEach((b) => {
       b.onclick = () => translateMsg(container, +b.dataset.i);
@@ -271,7 +291,7 @@ Rules:
       window.Store.recordActivity(8);
       window.App.checkLevelUp();
       renderLog(container);
-      window.Speech.speak(reply, { rate: 1 });
+      playReply(reply);
     } catch (e) {
       if (epoch !== viewEpoch || e.name === 'AbortError') return;
       window.App.toast(e.message.startsWith('API') ? e.message : 'AI応答に失敗しました');
@@ -354,5 +374,5 @@ Rules:
 
   function onLeave() { stopSession(); }
 
-  window.FreetalkView = { SCENARIOS, render, onLeave };
+  window.FreetalkView = { SCENARIOS, render, onLeave, onRateChange };
 })();

@@ -7,6 +7,25 @@
   const synth = window.speechSynthesis || null;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
+  // One speed preference for all English practice. The uploaded Speak clip is
+  // closest on average to 0.75 of the previous recordings (see docs/audio-audit).
+  const SPEED_KEY = 'speak.playbackRate.v1';
+  const RATES = Object.freeze([0.6, 0.75, 1, 1.25, 1.5]);
+  let playbackRate = 0.75;
+  try { const saved = Number(localStorage.getItem(SPEED_KEY)); if (RATES.includes(saved)) playbackRate = saved; } catch (_) {}
+  function getRate() { return playbackRate; }
+  function setRate(value) {
+    const rate = Number(value);
+    if (!RATES.includes(rate) || rate === playbackRate) return;
+    playbackRate = rate;
+    try { localStorage.setItem(SPEED_KEY, String(rate)); } catch (_) {}
+    window.dispatchEvent(new CustomEvent('speak:rate', { detail: rate }));
+  }
+  function rateOptions() {
+    const labels = ['0.6倍 · ゆっくり', '0.75倍 · 標準', '1倍 · 従来の速さ', '1.25倍 · 速め', '1.5倍 · 速い'];
+    return RATES.map((rate, i) => `<option value="${rate}" ${rate === playbackRate ? 'selected' : ''}>${labels[i]}</option>`).join('');
+  }
+
   // ---- 音声(voice)の選定 ----
   // 端末にある英語音声のうち、自然な声（Premium / Enhanced / Natural / Neural / Google）を優先する。
   // ユーザーが選んだ声は localStorage 'speak.voice' に保存して優先する。
@@ -166,8 +185,14 @@
   }
   // Whole MP3 files use the browser's media cache, without opening an AudioContext.
   const prefetching = new Map();
+  function variantKey(key, rate) {
+    const versions = [[0.6, key + '@gentle'], [0.75, key + '@slow'], [1, key], [1.25, key + '@fast'], [1.5, key + '@faster']].filter(c => hasClip(c[1]));
+    versions.sort((a, b) => Math.abs(a[0] - rate) - Math.abs(b[0] - rate));
+    return versions.length ? versions[0][1] : null;
+  }
   function prefetchClip(key) {
-    const ent = clipIndex && clipIndex[key];
+    const selected = variantKey(key, getRate());
+    const ent = selected && clipIndex[selected];
     if (!ent) return;
     const file = typeof ent === 'string' ? ent : ent[0];
     if (prefetching.has(file)) return;
@@ -290,7 +315,7 @@
   function getSource() { try { return localStorage.getItem(SOURCE_KEY) || 'clip'; } catch (e) { return 'clip'; } }
   function setSource(v) { try { localStorage.setItem(SOURCE_KEY, v); } catch (e) { /* noop */ } }
   function speak(text, opts) {
-    opts = opts || {};
+    opts = Object.assign({ rate: getRate() }, opts || {});
     stopSpeaking();
     const epoch = speechEpoch;
     const fallback = (ok, options) => {
@@ -301,21 +326,17 @@
       if (epoch !== speechEpoch) return Promise.resolve();
       setAudioSession('playback');
       if (opts.lang !== 'ja' && getSource() === 'device') {
-        return speakTts(text, Object.assign({}, opts, { rate: opts.slow ? 0.75 : (opts.rate ?? 1) }));
+        return speakTts(text, Object.assign({}, opts, { rate: opts.slow ? 0.6 : opts.rate }));
       }
       if (opts.lang !== 'ja') {
         const key = opts.key || clipKeyFor(text);
         if (opts.slow) {
-          if (hasClip(key + '@slow')) return playClip(key + '@slow', { rate: 1 }).then(ok => fallback(ok, Object.assign({}, opts, { rate: 0.75 })));
-          if (hasClip(key)) return playClip(key, { rate: 1 }).then(ok => fallback(ok, Object.assign({}, opts, { rate: 0.75 })));
-          return speakTts(text, Object.assign({}, opts, { rate: 0.75 }));
+          const gentle = hasClip(key + '@gentle') ? key + '@gentle' : key + '@slow';
+          if (hasClip(gentle)) return playClip(gentle, { rate: 1 }).then(ok => fallback(ok, Object.assign({}, opts, { rate: 0.6 })));
+          return speakTts(text, Object.assign({}, opts, { rate: 0.6 }));
         }
-        const want = opts.rate ?? 1;
-        const versions = [[1, key], [0.75, key + '@slow'], [1.25, key + '@fast'], [1.5, key + '@faster']].filter(c => hasClip(c[1]));
-        if (versions.length) {
-          versions.sort((a, b) => Math.abs(a[0] - want) - Math.abs(b[0] - want));
-          return playClip(versions[0][1], Object.assign({}, opts, { rate: 1 })).then(ok => fallback(ok));
-        }
+        const selected = variantKey(key, opts.rate);
+        if (selected) return playClip(selected, Object.assign({}, opts, { rate: 1 })).then(ok => fallback(ok));
       }
       return speakTts(text, opts);
     };
@@ -558,6 +579,7 @@
 
   window.Speech = {
     listVoices, setVoice, getSource, setSource,
+    RATES, getRate, setRate, rateOptions,
     loadClips, registerText, hasClip, clipKeyFor, playClip, unlockAudio, releaseAudio, prefetchClip,
     get clipsLoaded() { return !!clipIndex; },
     ttsSupported,

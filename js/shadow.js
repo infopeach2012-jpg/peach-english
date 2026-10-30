@@ -7,6 +7,8 @@
   let state = null; // { matKey }
   let micRef = {};
   let listening = false;
+  let playEpoch = 0;
+  function stopPlayback() { playEpoch++; window.Speech.stopSpeaking(); }
 
   function materials() {
     const C = window.Store.content;
@@ -76,7 +78,7 @@
     mat.blocks.forEach((b) => wrap.appendChild(blockEl(b)));
 
     container.querySelectorAll('[data-mat]').forEach((btn) => {
-      btn.onclick = () => { state.matKey = btn.dataset.mat; window.Speech.stopSpeaking(); draw(container); };
+      btn.onclick = () => { state.matKey = btn.dataset.mat; stopPlayback(); draw(container); };
     });
     container.querySelector('#sh-playall').onclick = () => playAll(mat);
   }
@@ -113,7 +115,7 @@
     };
     el.querySelectorAll('.sh-sent').forEach((row) => {
       const en = row.dataset.en;
-      row.querySelector('.sh-play').onclick = () => (window.Speech.unlockAudio(), window.Speech.speak)(en, { rate: 0.9 });
+      row.querySelector('.sh-play').onclick = () => { stopPlayback(); window.Speech.unlockAudio(); window.Speech.speak(en); };
       row.querySelector('.sh-mic').onclick = () => micSentence(row, en);
     });
     return el;
@@ -128,7 +130,7 @@
     micBtn.classList.add('listening');
     fb.style.color = '#9ca3af';
     fb.textContent = '🎤 聞き取り中…';
-    window.Speech.stopSpeaking();
+    stopPlayback();
     micRef = {};
     try {
       const said = await window.Speech.listenOnce({
@@ -157,10 +159,12 @@
   }
 
   async function playAll(mat) {
-    window.Speech.stopSpeaking();
+    stopPlayback();
+    const epoch = playEpoch;
     for (const b of mat.blocks) {
       for (const s of splitSentences(b.en)) {
-        await (window.Speech.unlockAudio(), window.Speech.speak)(s, { rate: 0.95 });
+        if (epoch !== playEpoch) return;
+        await (window.Speech.unlockAudio(), window.Speech.speak)(s, {});
       }
     }
   }
@@ -168,8 +172,8 @@
   function onLeave() {
     if (micRef.stop) micRef.stop();
     listening = false;
-    window.Speech.stopSpeaking();
+    stopPlayback();
   }
 
-  window.ShadowView = { render, onLeave };
+  window.ShadowView = { render, onLeave, onRateChange: stopPlayback };
 })();

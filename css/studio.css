@@ -264,3 +264,12 @@ html.apple.speak #ls-en { font-size:34px; font-weight:550; line-height:1.45!impo
 .studio-chart canvas { max-width:100%; }
 .studio-stat-icon { display:flex; justify-content:center; color:#b9cbe1; margin-bottom:10px; }
 .studio-stat-icon .studio-icon { width:22px; height:22px; }
+
+/* The same playback speed follows the learner between screens. */
+.speech-rate-control { display:flex; align-items:center; gap:12px; color:#b8c4d4; font-size:12px; margin:10px 0 18px; }
+.speech-rate-control select { min-height:44px; padding:8px 30px 8px 12px; color:#e6edf8; font-size:12px; max-width:100%; }
+.global-speed { margin:0; }
+.ft-speed-control { justify-content:space-between; }
+html[data-view="listen"] .global-speed,html[data-view="patterns"] .global-speed,html[data-view="freetalk"] .global-speed,html[data-view="drill"] .global-speed { display:none; }
+@media(max-width:620px) { .global-speed { gap:7px; font-size:10px; }.global-speed select { font-size:10px; padding-left:8px; }.pattern-options { grid-template-columns:minmax(140px,1.5fr) 1fr 1fr; gap:8px; }.pattern-options select { padding:8px 5px; font-size:11px; } }
+@media(max-width:360px) { .pattern-options { grid-template-columns:1fr 1fr; }.pattern-options label:first-child { grid-column:1 / -1; } }

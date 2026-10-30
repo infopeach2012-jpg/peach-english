@@ -65,7 +65,7 @@
         </div>
         <button class="rv-star shrink-0 text-xl" style="color:${fav ? '#f59e0b' : '#d1d5db'}">${fav ? '★' : '☆'}</button>
       </div>`;
-    el.querySelector('.rv-say').onclick = () => window.Speech.speak(it.en, { rate: 0.9 });
+    el.querySelector('.rv-say').onclick = () => window.Speech.speak(it.en, {});
     el.querySelector('.rv-mic').onclick = () => micRow(el, it);
     el.querySelector('.rv-star').onclick = (e) => {
       const on = window.Store.toggleFavorite(it.key);

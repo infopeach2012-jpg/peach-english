@@ -23,7 +23,7 @@
   ];
 
   const SETTINGS_KEY = 'speak.listen.v3';
-  let settings = { tab: 'phrase', sit: 'greet', rate: 1, ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
+  let settings = { tab: 'phrase', sit: 'greet', ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
 
@@ -117,7 +117,7 @@
           <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">${window.App.icon('patterns')}</button>
           <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">${window.App.icon('next')}</button>
         </div>
-        <div class="playback-quick"><label>再生速度<select id="ls-speed">${[0.75,1,1.25,1.5].map(v=>`<option value="${v}" ${settings.rate === v ? 'selected' : ''}>${v}倍${v===1 ? '（自然な速さ）' : ''}</option>`).join('')}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
+        <div class="playback-quick"><label>再生速度<select id="ls-speed" data-speech-rate>${window.Speech.rateOptions()}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
         <details class="listen-options"><summary>再生設定 <span>速度・和訳・繰り返し</span></summary>${extra || ''}</details>
       </div>`;
   }
@@ -174,7 +174,7 @@
     const sel = root.querySelector('#ls-voice');
     if (!sel) return;
     sel.onchange = () => { window.Speech.setVoice(sel.value); window.App.toast('声を変えました'); };
-    root.querySelector('#ls-voicetest').onclick = () => { stop(); window.Speech.speak("Hi! Let's get started. How's your day going?", { rate: settings.rate }); };
+    root.querySelector('#ls-voicetest').onclick = () => { stop(); window.Speech.speak("Hi! Let's get started. How's your day going?", { rate: window.Speech.getRate() }); };
   }
 
   function bindSettings(root, onChange) {
@@ -191,7 +191,6 @@
   }
 
   function bindPlayer(root, buildQueue) {
-    root.querySelector('#ls-speed').onchange = (e) => { settings.rate = Number(e.target.value); saveSettings(); if (playing) { pause(); play(); } };
     root.querySelector('#ls-gap').onchange = (e) => { settings.gap = Number(e.target.value); saveSettings(); };
     root.querySelector('#ls-play').onclick = () => { if (playing) pause(); else play(buildQueue); };
     root.querySelector('#ls-next').onclick = () => jump(1, buildQueue);
@@ -333,21 +332,21 @@
       if (queue[idx + 1] && window.Speech.prefetchClip) window.Speech.prefetchClip(queue[idx + 1].key);
       const alive = () => playing && my === session;
       for (let r = 0; r < settings.repeat && alive(); r++) {
-        await window.Speech.speak(q.en, { rate: settings.rate, key: q.key });
+        await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key });
         if (r + 1 < settings.repeat && alive()) await sleep(100);
       }
       if (settings.pattern === 'study' && alive()) {
         // 学習パターン: 英語 → ゆっくり → 和訳（あれば）→ 英語
         await sleep(150);
-        if (alive()) await window.Speech.speak(q.en, { rate: settings.rate, key: q.key, slow: true });
+        if (alive()) await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key, slow: true });
       }
       if (settings.ja && q.ja && alive()) {
         await sleep(100);
-        await window.Speech.speak(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * settings.rate) });
+        if (alive()) await window.Speech.speak(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
       }
       if (settings.pattern === 'study' && alive()) {
         await sleep(150);
-        if (alive()) await window.Speech.speak(q.en, { rate: settings.rate, key: q.key });
+        if (alive()) await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key });
       }
       if (!(playing && my === session)) break;
       listenedThisRun++;
@@ -381,5 +380,5 @@
 
   function onLeave() { stop(); }
 
-  window.ListenView = { render, onLeave, SITS };
+  window.ListenView = { render, onLeave, SITS, onRateChange() { if (playing) { pause(); play(); } } };
 })();
