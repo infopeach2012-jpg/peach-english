@@ -14,7 +14,7 @@
       .map((p) => ({ key: 'p' + p.id, en: p.en, ja: p.ja, note: p.note, group: label(p.sit) }));
     const { due, fresh } = S.srsDue(pool);
     const items = shuffle(due).concat(shuffle(fresh), shuffle(pool)).filter((x, i, a) => a.indexOf(x) === i).slice(0, 10);
-    window.App.drill = { mode: 'speak', items, title: kind === 'word' ? '語彙' : '表現', back: 'practice' };
+    window.App.drill = { mode: kind === 'sentence' ? 'listen' : 'speak', items, title: kind === 'word' ? '語彙' : '表現', back: 'practice' };
     window.App.navigate('drill');
   }
 
@@ -44,7 +44,7 @@
         <h2 class="sp-h2">クイックレッスン</h2>
         <div class="sp-grid2">
           <button data-quick="word" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff8a3d">${window.App.icon('cards')}</span><div class="sp-item-title">語彙</div></button>
-          <button data-quick="sentence" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff4d6d">${window.App.icon('sentence')}</span><div class="sp-item-title">表現</div></button>
+          <button data-quick="sentence" class="sp-card sp-tile"><span class="sp-tile-icon" style="background:#ff4d6d">${window.App.icon('sentence')}</span><div class="sp-item-title">表現</div><div class="sp-item-sub">音声で自動再生・次の文へ</div></button>
         </div>
 
         <h2 class="sp-h2">復習</h2>

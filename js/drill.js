@@ -73,24 +73,40 @@
           <button id="dr-play" class="sp-round huge" aria-label="再生・一時停止">${playing ? '❚❚' : '▶'}</button>
           <button id="dr-next" class="sp-round big" aria-label="次へ">↻</button>
         </div>
-        ${isSpeak ? '<button id="dr-go" class="sp-next">次に進む</button>' : `<div class="sp-sub">${idx + 1} / ${cfg.items.length}　${settings.ja ? '英語 → 和訳' : '英語のみ'}　<button id="dr-ja-toggle" class="sp-link">${settings.ja ? '和訳を読まない' : '和訳も読む'}</button></div>`}
+        ${isSpeak ? '<button id="dr-go" class="sp-next">次に進む</button>' : `<div class="sp-sub"><span id="dr-status">${playbackStatus()}</span> · ${idx + 1} / ${cfg.items.length}　${settings.ja ? '英語 → 和訳' : '英語のみ'}　<button id="dr-ja-toggle" class="sp-link">${settings.ja ? '和訳を読まない' : '和訳も読む'}</button></div>`}
       </div>`;
     const $ = (s) => container.querySelector(s);
     $('#dr-close').onclick = () => { stopAll(); window.App.navigate(cfg.back || 'practice'); };
-    $('#dr-mute').onclick = () => { settings.muted = !settings.muted; saveSettings(); drawItem(); };
+    $('#dr-mute').onclick = () => {
+      settings.muted = !settings.muted; saveSettings();
+      if (settings.muted) pause();
+      drawItem();
+      if (!settings.muted) replayCurrent();
+    };
     $('#dr-star').onclick = (e) => { const on = window.Store.toggleFavorite(it.key); e.target.textContent = on ? '★' : '☆'; window.App.toast(on ? '保存しました' : '保存を外しました'); };
     $('#dr-flag').onclick = () => { window.Store.recordSpeaking(it.key, 40); window.App.toast('苦手に入れました'); };
-    $('#dr-again').onclick = () => sayCurrent();
+    $('#dr-again').onclick = replayCurrent;
     $('#dr-hint').onclick = () => { const fb = $('#dr-fb'); fb.textContent = it.note ? it.note : (it.ja || ''); fb.className = 'sp-fb hint'; };
     $('#dr-prev').onclick = () => go(-1);
     $('#dr-next').onclick = () => go(1);
-    $('#dr-play').onclick = () => { if (cfg.mode === 'listen') { if (playing) pause(); else playLoop(); } else sayCurrent(); };
+    $('#dr-play').onclick = () => { if (cfg.mode === 'listen' && playing) pause(); else replayCurrent(); };
     const mic = $('#dr-mic'); if (mic) mic.onclick = () => record(it);
     const goBtn = $('#dr-go'); if (goBtn) goBtn.onclick = () => go(1);
     const jt = $('#dr-ja-toggle'); if (jt) jt.onclick = () => { settings.ja = !settings.ja; saveSettings(); drawItem(); };
   }
 
-  function setPlayBtn() { const b = container.querySelector('#dr-play'); if (b) b.textContent = playing ? '❚❚' : '▶'; }
+  function playbackStatus() { return settings.muted ? '音声オフ' : playing ? '自動再生' : '一時停止'; }
+  function setPlayBtn() {
+    const b = container.querySelector('#dr-play');
+    if (b) { b.textContent = playing ? '❚❚' : '▶'; b.setAttribute('aria-label', playing ? '一時停止' : '再生'); }
+    const status = container.querySelector('#dr-status'); if (status) status.textContent = playbackStatus();
+  }
+
+  function replayCurrent() {
+    if (settings.muted) { settings.muted = false; saveSettings(); drawItem(); }
+    if (cfg.mode === 'listen') { pause(); playLoop(); }
+    else sayCurrent();
+  }
 
   async function sayCurrent() {
     const it = cfg.items[idx];
@@ -102,6 +118,7 @@
 
   // ---- リスニング: 自動で進む ----
   async function playLoop() {
+    if (settings.muted) { pause(); return; }
     const my = ++session;
     playing = true; setPlayBtn();
     window.Speech.unlockAudio();
@@ -109,6 +126,7 @@
     while (alive()) {
       const it = cfg.items[idx];
       if (!it) { playing = false; drawDone(); return; }
+      const next = cfg.items[idx + 1]; if (next) window.Speech.prefetchClip(next.key);
       if (!settings.muted) await window.Speech.speak(it.en, { key: it.key });
       if (!alive()) return;
       if (settings.ja && it.ja && !settings.muted) { await sleep(150); if (alive()) await window.Speech.speak(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() }); }
