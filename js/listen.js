@@ -26,6 +26,12 @@
   let settings = { tab: 'phrase', sit: 'greet', ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
+  // Restoring the v37 code alone leaves repeat/study settings in existing browsers.
+  // Restore its playback defaults once, preserving category and learning progress.
+  if (settings.playbackRevision !== 1) {
+    Object.assign(settings, { ja: false, repeat: 1, pattern: 'std', auto: true, gap: 0.1, playbackRevision: 1 });
+    saveSettings();
+  }
 
   // 再生状態
   let queue = [];        // [{en, ja, key, el?}]
