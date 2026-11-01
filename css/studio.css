@@ -282,6 +282,7 @@ html[data-view="listen"] .global-speed,html[data-view="patterns"] .global-speed,
 .notes-heading { margin:12px 0 30px; }.notes-heading h1 { margin:14px 0; font-size:clamp(30px,5vw,48px); line-height:1.3; letter-spacing:-.05em; font-weight:600; }
 .notes-heading>p:last-child,.notes-batch-info p { color:#a4afbe; line-height:1.8; font-size:13px; }
 .notes-filters { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; }.notes-filters label { min-width:0; color:#adb8c6; font-size:12px; }
+.notes-filters .notes-search { grid-column:1 / -1; }
 .notes-filters input,.notes-filters select { display:block; width:100%; min-width:0; margin-top:8px; padding:12px; min-height:46px; border:1px solid #3a414c; border-radius:12px; color:#e9eef6; background:#171b21; font-size:13px; }
 .notes-batch-info { margin:26px 0 18px; }.notes-batch-info h2 { font-size:20px; font-weight:500; }.notes-batch-info p { margin:6px 0; }
 .notes-actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px; }.notes-actions .studio-icon { width:20px; height:20px; }

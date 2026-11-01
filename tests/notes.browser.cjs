@@ -11,7 +11,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
  await context.addInitScript(()=>{window.testMedia=[];const play=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(...args){if(!testMedia.includes(this))testMedia.push(this);return play.apply(this,args);};});
  const p=await context.newPage(),errors=[],bad=[];p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.url().includes('127.0.0.1')&&r.status()>=400)bad.push(r.status()+' '+r.url());});
  const base=process.env.PEACH_BASE_URL||'http://127.0.0.1:8003/';
- await p.goto(base+'#home');await p.locator('.notes-home').click();await p.waitForSelector('#notes-batch');
+ await p.goto(base+'#home');await p.locator('.notes-home').click();await p.waitForSelector('#notes-date');
  const imported=await p.evaluate(()=>Store.content.noteBatches[0]);assert.equal(imported.items.length,46);
  assert.equal(await p.locator('.note-entry').count(),46);assert.equal(await p.locator('#notes-count').textContent(),'46件');
  assert.equal(await p.locator('[data-top="notes"]').getAttribute('aria-current'),'page');
@@ -37,10 +37,10 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
  await p.locator('#dr-close').click();await p.waitForSelector('#notes-q');assert.equal(await p.locator('#notes-q').inputValue(),'remember');assert(await p.evaluate(()=>testMedia.every(a=>a.paused)));
  await p.locator('#notes-practice').click();assert.equal(await p.evaluate(()=>App.drill.mode),'speak');await p.locator('#dr-close').click();
  await p.locator('#notes-q').fill('存在しない表現000');assert(await p.locator('#notes-listen').isDisabled());assert.equal(await p.locator('.note-entry').count(),0);
- await p.locator('#notes-batch').selectOption('all');assert.equal(await p.locator('.note-entry').count(),60);await p.locator('#notes-more').click();assert.equal(await p.locator('.note-entry').count(),120);
+ await p.locator('#notes-q').fill('');await p.locator('#notes-date').selectOption('all');assert.equal(await p.locator('.note-entry').count(),60);await p.locator('#notes-more').click();assert.equal(await p.locator('.note-entry').count(),120);
  await p.locator('#notes-q').fill('bankruptcy');assert(await p.locator('.note-entry').count()>0);
  await p.locator('#hdr-home').click();await p.goBack();await p.waitForSelector('#view-notes.active');
- await p.reload();await p.waitForSelector('#view-notes.active #notes-batch');assert.equal(await p.locator('.note-entry').count(),46);
+ await p.reload();await p.waitForSelector('#view-notes.active #notes-date');assert.equal(await p.locator('#notes-date').inputValue(),'all');assert.equal(await p.locator('.note-entry').count(),60);
  // The same imported note is available from the existing dictionary and note flashcards.
  await p.evaluate(()=>App.navigate('dict'));await p.locator('#dict-q').fill('custody');await p.waitForTimeout(300);assert.equal(await p.locator('#dict-list .dict-say').count(),2);
  for(const route of ['home','practice','listen','notes']){
