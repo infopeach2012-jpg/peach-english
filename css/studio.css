@@ -291,3 +291,13 @@ html[data-view="listen"] .global-speed,html[data-view="patterns"] .global-speed,
 .note-en { font-size:clamp(18px,2.5vw,24px); font-weight:500; line-height:1.5; color:#eef3fb; }.note-ja { margin-top:10px; color:#b5bfcd; line-height:1.7; font-size:14px; }.note-explanation { margin-top:14px; padding-top:12px; border-top:1px solid #292f38; color:#96adc9; font-size:12px; line-height:1.8; }
 .note-play { display:grid; place-items:center; flex-shrink:0; width:44px; height:44px; background:#1b2b41; border-radius:50%; color:#9ac4ff; }.note-play .studio-icon { width:21px; height:21px; }.notes-empty { padding:40px 0; color:#a5aeba; }#notes-more { margin-top:16px; }#notes-more[hidden] { display:none; }
 @media(max-width:620px) { .notes-filters { grid-template-columns:1fr; }.note-entry { padding:18px 14px; gap:10px; }.notes-home { padding:18px; }.notes-home strong { font-size:17px; }.notes-actions { gap:8px; }.notes-actions button { font-size:12px; padding:10px 15px; gap:8px; } }
+
+/* Language choice stays visible next to the listening controls. */
+.listen-language { min-width:0; margin:24px 0 0; padding:0; border:0; }
+.listen-language legend { padding:0 0 8px; color:#a6afbb; font-size:12px; }
+.listen-language-buttons { display:grid; grid-template-columns:1fr 1fr; gap:5px; padding:5px; border:1px solid #353d48; border-radius:14px; background:#181c22; }
+.listen-language-buttons button { min-width:0; min-height:46px; padding:10px 6px; border-radius:10px; color:#bbc5d3; font-size:14px; font-weight:600; line-height:1.4; }
+.listen-language-buttons button[aria-pressed="true"] { background:#e7eff9; color:#111820; }
+.listen-language-note { margin:9px 0 0; color:#a4b4c9; font-size:12px; line-height:1.6; }
+.listen-language-note[hidden] { display:none; }
+@media(max-width:380px) { .listen-language-buttons button { font-size:12px; } }

@@ -112,14 +112,24 @@
         <div class="h-1.5 bg-gray-100 rounded-full mb-4 overflow-hidden"><div id="ls-bar" class="h-full brand-grad rounded-full" style="width:0%"></div></div>
         <div id="ls-en" class="text-[22px] font-bold text-gray-800 leading-snug min-h-[64px]" style="text-wrap:balance">再生を押すと順に流れます</div>
         <div id="ls-ja" class="text-sm text-gray-500 mt-2 min-h-[20px]"></div>
+        <fieldset class="listen-language"><legend>音声の言語</legend><div class="listen-language-buttons">
+          <button type="button" data-listen-language="en" aria-pressed="${!settings.ja}">英語のみ</button>
+          <button type="button" data-listen-language="en-ja" aria-pressed="${!!settings.ja}">英語 → 日本語</button>
+        </div></fieldset>
+        ${settings.tab === 'text' ? `<p id="ls-translation-note" class="listen-language-note" ${settings.ja ? '' : 'hidden'}></p>` : ''}
         <div class="flex items-center justify-center gap-5 mt-5">
           <button id="ls-prev" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="前へ">${window.App.icon('prev')}</button>
           <button id="ls-play" class="w-20 h-20 rounded-full brand-grad text-white text-3xl shadow-lg" aria-label="再生">${window.App.icon('patterns')}</button>
           <button id="ls-next" class="w-12 h-12 rounded-full bg-gray-100 text-gray-700 text-xl" aria-label="次へ">${window.App.icon('next')}</button>
         </div>
         <div class="playback-quick"><label>再生速度<select id="ls-speed" data-speech-rate>${window.Speech.rateOptions()}</select></label><label>文と文の間<select id="ls-gap">${[[0,'なし'],[0.1,'0.1秒'],[0.25,'0.25秒'],[0.5,'0.5秒'],[1,'1秒']].map(([v,label])=>`<option value="${v}" ${settings.gap === v ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
-        <details class="listen-options"><summary>再生設定 <span>速度・和訳・繰り返し</span></summary>${extra || ''}</details>
+        <details class="listen-options"><summary>詳細設定 <span>繰り返し・自動再生・声</span></summary>${extra || ''}</details>
       </div>`;
+  }
+
+  function patternLabel(pattern) {
+    if (pattern === 'study') return settings.ja ? '英語 → ゆっくり → 日本語 → 英語' : '英語 → ゆっくり → 英語';
+    return settings.ja ? '英語 → 日本語' : '英語のみ';
   }
 
   function settingsRow() {
@@ -130,10 +140,9 @@
     return `
       <div class="mt-4 text-xs">
         <div class="text-gray-400 mb-1">再生のしかた</div>
-        ${seg('pattern', [{ v: 'std', l: '英語 → 和訳' }, { v: 'study', l: '英語 → ゆっくり → 和訳 → 英語' }], settings.pattern)}
+        ${seg('pattern', [{ v: 'std', l: patternLabel('std') }, { v: 'study', l: patternLabel('study') }], settings.pattern)}
       </div>
       <div class="grid grid-cols-2 gap-2 mt-3 text-xs">
-        <div><div class="text-gray-400 mb-1">和訳の読み上げ</div>${seg('ja', [{ v: true, l: 'あり' }, { v: false, l: 'なし' }], settings.ja)}</div>
         <div><div class="text-gray-400 mb-1">開いたら自動で再生</div>${seg('auto', [{ v: true, l: 'する' }, { v: false, l: 'しない' }], settings.auto)}</div>
         <div><div class="text-gray-400 mb-1">1文の繰り返し</div>${seg('repeat', [{ v: 1, l: '1回' }, { v: 2, l: '2回' }, { v: 3, l: '3回' }], settings.repeat)}</div>
       </div>
@@ -191,6 +200,19 @@
   }
 
   function bindPlayer(root, buildQueue) {
+    root.querySelectorAll('[data-listen-language]').forEach(button => {
+      button.onclick = () => {
+        const japanese = button.dataset.listenLanguage === 'en-ja';
+        if (settings.ja === japanese) return;
+        const resume = playing;
+        pause();
+        settings.ja = japanese; saveSettings();
+        root.querySelectorAll('[data-listen-language]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.listenLanguage === 'en-ja') === japanese)));
+        root.querySelectorAll('[data-set="pattern"]').forEach(b => { b.textContent = patternLabel(b.dataset.val); });
+        const note = root.querySelector('#ls-translation-note'); if (note) note.hidden = !japanese;
+        if (resume) play();
+      };
+    });
     root.querySelector('#ls-gap').onchange = (e) => { settings.gap = Number(e.target.value); saveSettings(); };
     root.querySelector('#ls-play').onclick = () => { if (playing) pause(); else play(buildQueue); };
     root.querySelector('#ls-next').onclick = () => jump(1, buildQueue);
@@ -270,7 +292,14 @@
       b.classList.toggle('bg-gray-100', !on); b.classList.toggle('text-gray-600', !on);
     });
     const sents = splitSentences(mat.en);
-    queue = sents.map((s, i) => ({ en: s, ja: '', key: mat.key + '_' + i }));
+    const translations = (mat.ja || '').match(/[^。！？]+[。！？]*/g) || [];
+    const paired = translations.length === sents.length;
+    // Existing chapter translations sometimes combine sentences. Read those at
+    // the chapter boundary instead of attaching an unrelated translation to a sentence.
+    queue = sents.map((s, i) => ({ en: s, ja: paired ? translations[i].trim() : '',
+      jaAudio: !paired && i === sents.length - 1 ? mat.ja : '', key: mat.key + '_' + i }));
+    const translationNote = body.querySelector('#ls-translation-note');
+    translationNote.textContent = paired ? '1文ずつ、英語の後に日本語訳を読み上げます。' : 'この章は、英語を読み終えてから日本語訳をまとめて読み上げます。';
     idx = 0;
     const tx = body.querySelector('#ls-text');
     tx.innerHTML = sents.map((s, i) => `<span data-i="${i}" class="ls-sent rounded px-0.5">${window.App.escapeHtml(s)}</span>`).join(' ');
@@ -278,7 +307,7 @@
     body.querySelector('#ls-jatext').textContent = mat.ja;
     body.querySelector('#ls-sub').textContent = mat.title;
     body.querySelector('#ls-en').textContent = sents[0] || '';
-    body.querySelector('#ls-ja').textContent = '';
+    body.querySelector('#ls-ja').textContent = queue[0] ? queue[0].ja : '';
     updatePos();
   }
 
@@ -340,9 +369,10 @@
         await sleep(150);
         if (alive()) await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key, slow: true });
       }
-      if (settings.ja && q.ja && alive()) {
+      const translation = q.jaAudio || q.ja;
+      if (settings.ja && translation && alive()) {
         await sleep(100);
-        if (alive()) await window.Speech.speak(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
+        if (alive()) await window.Speech.speak(translation, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
       }
       if (settings.pattern === 'study' && alive()) {
         await sleep(150);
