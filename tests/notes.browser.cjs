@@ -12,11 +12,12 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
  const p=await context.newPage(),errors=[],bad=[];p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.url().includes('127.0.0.1')&&r.status()>=400)bad.push(r.status()+' '+r.url());});
  const base=process.env.PEACH_BASE_URL||'http://127.0.0.1:8003/';
  await p.goto(base+'#home');await p.locator('.notes-home').click();await p.waitForSelector('#notes-date');
- const imported=await p.evaluate(()=>Store.content.noteBatches[0]);assert.equal(imported.items.length,46);
+ await p.locator('#notes-date').selectOption('2026-10-29');
+ const imported=await p.evaluate(()=>Store.content.noteBatches.find(b=>b.id==='2026-10-30-01'));assert.equal(imported.items.length,46);
  assert.equal(await p.locator('.note-entry').count(),46);assert.equal(await p.locator('#notes-count').textContent(),'46件');
  assert.equal(await p.locator('[data-top="notes"]').getAttribute('aria-current'),'page');
  assert.equal(await p.locator('#global-speed').inputValue(),'0.75');
- const missing=await p.evaluate(()=>Store.content.noteBatches[0].items.filter(i=>!Store.resolveKey(i.key)||!['','@gentle','@slow','@fast','@faster'].every(s=>Speech.hasClip(i.key+s))));assert.deepEqual(missing,[]);
+ const missing=await p.evaluate(()=>Store.content.noteBatches.find(b=>b.id==='2026-10-30-01').items.filter(i=>!Store.resolveKey(i.key)||!['','@gentle','@slow','@fast','@faster'].every(s=>Speech.hasClip(i.key+s))));assert.deepEqual(missing,[]);
  for(const width of [320,390,768,1024,1440]){
   await p.setViewportSize({width,height:1000});assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'notes overflow at '+width);
   assert(await p.locator('#hdr-home').isVisible());

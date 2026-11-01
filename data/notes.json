@@ -8234,5 +8234,173 @@
   "ja": "それらは私にはちょっと合いません。",
   "note": "not for me = 自分の好みや性格には合わない。",
   "source_batch": "2026-10-30-01"
+ },
+ {
+  "id": 1171,
+  "date": "2026/11/01",
+  "en": "You should take this after the meeting ends.",
+  "ja": "会議が終わったら、これを飲んでください。",
+  "note": "画像1の英文・和訳を転記。補足: take this は薬などを「飲む・服用する」の意味。should は助言・勧めを表す。after the meeting ends は「会議が終わったら」。未来のことでも、時を表す after 節では現在形 ends を使う。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1172,
+  "date": "2026/11/01",
+  "en": "It's foggy out, so drive slowly.",
+  "ja": "外は霧が出ているから、ゆっくり運転して。",
+  "note": "画像2の英文・和訳を転記。補足: foggy = 霧が出ている。out = 外は・外で。so は「だから」と結果をつなぐ。slowly は動詞 drive を修飾する副詞。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1173,
+  "date": "2026/11/01",
+  "en": "It's noisy out near the construction site.",
+  "ja": "建設現場の近くはうるさいです。",
+  "note": "画像3の英文・和訳を転記。補足: noisy = うるさい。out = 外で。near = ～の近くで。construction site = 建設現場。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1174,
+  "date": "2026/11/01",
+  "en": "It's my coworker on the phone.",
+  "ja": "電話の相手は私の同僚です。",
+  "note": "画像4の英文・和訳を転記。補足: coworker = 同僚。It’s ～ on the phone. は電話の相手が誰かを伝える表現。on the phone は「電話で・電話中で」。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1175,
+  "date": "2026/11/01",
+  "en": "Their vacation is almost ruined.",
+  "ja": "彼らの休暇はほとんど台無しになりかけています。",
+  "note": "画像5の英文・和訳を転記。補足: their = 彼らの。vacation = 休暇。almost = ほとんど・もう少しで。ruined は「台無しになった」状態を表す。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1176,
+  "date": "2026/11/01",
+  "en": "I don't know why the meeting was canceled.",
+  "ja": "なぜ会議がキャンセルされたのか、私には分かりません。",
+  "note": "画像6の英文・和訳を転記。補足: I don’t know why ～ = なぜ～なのか分からない。間接疑問では why の後を主語＋動詞の語順にする。was canceled = キャンセルされた（過去の受け身）。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1177,
+  "date": "2026/11/01",
+  "en": "I don't know how much this costs.",
+  "ja": "これがいくらするのか分かりません。",
+  "note": "画像7の英文・和訳を転記。補足: how much ～ costs = ～がいくらするか。直接の質問 How much does this cost? と違い、間接疑問では how much this costs の語順になり、does を置かない。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1178,
+  "date": "2026/11/01",
+  "en": "Our manager's reviewing the budget.",
+  "ja": "私たちのマネージャーが予算を見直しています。",
+  "note": "画像8の英文・和訳を転記。補足: manager’s は manager is の短縮で、ここでは所有格ではない。is reviewing = 見直している（現在進行形）。budget = 予算。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1179,
+  "date": "2026/11/01",
+  "en": "How many apples did you buy?",
+  "ja": "リンゴをいくつ買いましたか？",
+  "note": "今回の質問で使った例文。補足: 数を尋ねているので、1個も買っていなければ None. と答えられる。リンゴ以外を買っているかどうかは、この答えだけでは分からない。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1180,
+  "date": "2026/11/01",
+  "en": "None.",
+  "ja": "一つもありません。／誰もいません。",
+  "note": "質問「noneとnothingの違いは？」への回答。補足: none は not any に相当し、話題の人・もの・量について「一つも・一人も・全くない」を表す。How many apples did you buy? への None. は「リンゴを一つも買っていません」。物の数だけでなく人や量にも使える。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1181,
+  "date": "2026/11/01",
+  "en": "What did you buy?",
+  "ja": "何を買いましたか？",
+  "note": "今回の質問で使った例文。補足: 買った物を尋ねる質問。何も買っていなければ Nothing. と答える。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1182,
+  "date": "2026/11/01",
+  "en": "Nothing.",
+  "ja": "何もありません。",
+  "note": "質問「noneとnothingの違いは？」への回答。補足: nothing は not anything に相当する「何も～ない」。What did you buy? への Nothing. は「何も買っていません」。人を「誰もいない」と言う場合には使わず、no one / nobody、特定の人たちの中なら none of them などを使う。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1183,
+  "date": "2026/11/01",
+  "en": "None of them came.",
+  "ja": "彼らのうち誰も来ませんでした。",
+  "note": "今回の質問で使った例文。補足: none of ～ = ～のうち一つも・誰も～ない。nothing of them とは言わない。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1184,
+  "date": "2026/11/01",
+  "en": "Nothing happened.",
+  "ja": "何も起こりませんでした。",
+  "note": "今回の質問で使った例文。補足: nothing 自体に否定の意味があるため、ここでは didn’t を重ねない。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1185,
+  "date": "2026/11/01",
+  "en": "You don't want any more?",
+  "ja": "もう要らない？",
+  "note": "質問「もう要らない？を英語で」への回答。補足: 食べ物・飲み物をこれ以上欲しくないか確認する口語表現。any more は追加の量・数を表す。文末を上げると確認の質問になる。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1186,
+  "date": "2026/11/01",
+  "en": "You don't need this anymore?",
+  "ja": "これ、もう要らない？",
+  "note": "質問「もう要らない？を英語で」への回答。補足: 物がもう必要ないか確認する口語表現。anymore は「今はもう～ない」と、以前からの状態の変化を表す。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1187,
+  "date": "2026/11/01",
+  "en": "any more",
+  "ja": "もう少し・これ以上（追加の量や数）",
+  "note": "質問「any moreの意味は？」への回答。補足: 追加の量や数を表す。質問では「もう少し」、否定文では「これ以上は～ない」。例: any more coffee = これ以上の・もう少しのコーヒー。米語では数量の any more を2語、時間の anymore を1語で書く。英語圏によっては時間の意味でも any more と2語で書くため、つづりだけでなく文脈で判断する。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1188,
+  "date": "2026/11/01",
+  "en": "anymore",
+  "ja": "もう～ない・もはや～ない（時間・状態の変化）",
+  "note": "質問「any moreの意味は？」に関連する補足。否定文の anymore は「以前はそうだったが、今はそうではない」。I don’t need this anymore. = これはもう必要ありません。主に米語の表記で、時間の意味を any more と2語で書く英語もある。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1189,
+  "date": "2026/11/01",
+  "en": "Do you want any more coffee?",
+  "ja": "コーヒー、もう少しいる？",
+  "note": "今回の質問で使った例文。補足: any more coffee は追加のコーヒー。おかわりを勧めるときに使える。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1190,
+  "date": "2026/11/01",
+  "en": "I don't want any more.",
+  "ja": "もう要りません。",
+  "note": "今回の質問で使った例文。補足: これ以上の量・数は欲しくないという意味。話題になっている食べ物・飲み物などの名詞を省略している。",
+  "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1191,
+  "date": "2026/11/01",
+  "en": "I don't need this anymore.",
+  "ja": "これはもう必要ありません。",
+  "note": "今回の質問で使った例文。補足: 以前は必要だったが、今はもう必要ないという意味。anymore は時間・状態の変化を表す。",
+  "source_batch": "2026-11-01-01"
  }
 ]
