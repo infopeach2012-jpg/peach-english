@@ -8402,5 +8402,69 @@
   "ja": "これはもう必要ありません。",
   "note": "今回の質問で使った例文。補足: 以前は必要だったが、今はもう必要ないという意味。anymore は時間・状態の変化を表す。",
   "source_batch": "2026-11-01-01"
+ },
+ {
+  "id": 1192,
+  "date": "2026/11/02",
+  "en": "Maya's fixing the leaky faucet.",
+  "ja": "マヤが水漏れしている蛇口を直している。",
+  "note": "画像1の英文・和訳を転記。補足: Maya’s は Maya is の短縮。is fixing は「直している」という現在進行形。leaky = 水漏れする。faucet = 蛇口（主に米語。英語圏によっては tap）。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1193,
+  "date": "2026/11/02",
+  "en": "My brother's cooking dinner tonight.",
+  "ja": "兄（弟）が今夜、夕食を作る予定です。",
+  "note": "画像1下部の次カードから読める英文。和訳は補足。brother は兄・弟のどちらにも使うため、年齢関係は断定しない。brother’s は brother is の短縮。現在進行形は、tonight など未来の時を表す語と合わせて、決まっている予定を表すことがある。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1194,
+  "date": "2026/11/02",
+  "en": "taking a shower",
+  "ja": "シャワーを浴びている",
+  "note": "画像4の英文・和訳を転記。補足: take a shower = シャワーを浴びる。文にすると I’m taking a shower. のように主語と be動詞を置く。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1195,
+  "date": "2026/11/02",
+  "en": "taking a test",
+  "ja": "テストを受けている",
+  "note": "画像5の英文・和訳を転記。補足: take a test = テストを受ける。文にすると I’m taking a test. のように主語と be動詞を置く。take は、後ろの名詞によって意味が変わる。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1196,
+  "date": "2026/11/02",
+  "en": "talking on the phone",
+  "ja": "電話で話している",
+  "note": "画像6の英文と基本の和訳を転記。画像の説明原文:「電話で話している; 実際に通話中でなくても、誰かと『連絡を取り合っている』状況にも使えます」。補足・注意: talking on the phone は通常、実際に電話で会話していることを表す。日頃の電話での会話を文脈で表すことはあるが、単に連絡を取り合う意味なら keep in touch / be in touch のほうが適切。画像の後半の説明を一般的な意味として覚えない。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1197,
+  "date": "2026/11/02",
+  "en": "Thanks for having me.",
+  "ja": "お招きありがとうございます。",
+  "note": "画像3の英文・和訳を転記。補足: 招待や迎え入れてもらったことへのお礼。Thanks for の後ろは名詞または動名詞で、ここでは having を使う。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1198,
+  "date": "2026/11/02",
+  "en": "I booked a meeting room for the customer.",
+  "ja": "お客様のために会議室を予約しました。",
+  "note": "画像2のフリートークの英文を転記。和訳は補足。booked = 予約した（book の過去形）。meeting room = 会議室。for the customer = そのお客様のために。",
+  "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1199,
+  "date": "2026/11/02",
+  "en": "I am going to pick up my overseas visitor at the airport.",
+  "ja": "海外から私を訪ねてくる方を、空港まで迎えに行く予定です。",
+  "note": "画像2・7に重複している訂正文を1件にまとめた。和訳は補足。訂正前の表示:「I pick up my O-NGL client at the airport.」。O-NGL の意味・固有名詞は画像から確認できないので推測しない。画像での訂正: pick up → am going to pick up、O-NGL client → overseas visitor。補足: これから迎えに行く予定には be going to が使える。現在形 I pick up ～ は習慣などなら正しいため、常に誤りというわけではない。pick up = 迎えに行く。visitor = 訪問者。画像には「海外から来る相手なら、client より visitor のほうが自然です」とあるが、相手が実際の顧客なら overseas client も自然。visitor は顧客であることを意味しない。",
+  "source_batch": "2026-11-02-01"
  }
 ]
