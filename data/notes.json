@@ -8466,5 +8466,77 @@
   "ja": "海外から私を訪ねてくる方を、空港まで迎えに行く予定です。",
   "note": "画像2・7に重複している訂正文を1件にまとめた。和訳は補足。訂正前の表示:「I pick up my O-NGL client at the airport.」。O-NGL の意味・固有名詞は画像から確認できないので推測しない。画像での訂正: pick up → am going to pick up、O-NGL client → overseas visitor。補足: これから迎えに行く予定には be going to が使える。現在形 I pick up ～ は習慣などなら正しいため、常に誤りというわけではない。pick up = 迎えに行く。visitor = 訪問者。画像には「海外から来る相手なら、client より visitor のほうが自然です」とあるが、相手が実際の顧客なら overseas client も自然。visitor は顧客であることを意味しない。",
   "source_batch": "2026-11-02-01"
+ },
+ {
+  "id": 1200,
+  "date": "2026/11/02",
+  "en": "She has to pick out a dress for the wedding.",
+  "ja": "彼女は結婚式に着ていくドレスを選ばなければならない。",
+  "note": "画像1の英文・和訳を転記。補足: pick out = いくつかの中から選ぶ。主語が she のため have to ではなく has to。has to の後ろは動詞の原形 pick。for the wedding = 結婚式のために・結婚式に着ていくために。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1201,
+  "date": "2026/11/02",
+  "en": "I have to pick out a few options.",
+  "ja": "いくつかの候補を選ばなきゃいけません。",
+  "note": "画像5の英文・和訳を転記。補足: have to = ～しなければならない。a few = いくつかの。options = 選択肢・候補。pick out は候補の中から選ぶことで、試着する try on とは区別する。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1202,
+  "date": "2026/11/02",
+  "en": "I have to pick out a gift.",
+  "ja": "ギフトを選ばなきゃいけません。",
+  "note": "画像8の英文・和訳を転記。補足: pick out a gift = 贈り物を選ぶ。gift = 贈り物・プレゼント。a gift は1つの贈り物。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1203,
+  "date": "2026/11/02",
+  "en": "Not yet. I have to try on a few options.",
+  "ja": "まだです。いくつかの候補を試着しなきゃいけません。",
+  "note": "画像4の英文・和訳を転記。補足: Not yet. = まだです・まだしていません。try on = 服や靴などを試着する。この場面の options は試着する服などの候補を指す。a few は「いくつかある」という意味。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1204,
+  "date": "2026/11/02",
+  "en": "I have to try on a different size.",
+  "ja": "別のサイズを試着してみなきゃいけません。",
+  "note": "画像6の英文・和訳を転記。補足: a different size = 別のサイズ。different だけでは、大きいサイズか小さいサイズかまでは指定しない。try on は実際に身に着けて試すこと。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1205,
+  "date": "2026/11/02",
+  "en": "I have to try on some new shoes.",
+  "ja": "新しい靴を試着してみなきゃいけません。",
+  "note": "画像7の英文・和訳を転記。補足: 靴にも try on を使い、「試し履きする」と言える。some new shoes = 新しい靴。shoes は通常複数形で表し、一足を明確に数えるなら a pair of shoes を使う。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1206,
+  "date": "2026/11/02",
+  "en": "They have to drop off their luggage.",
+  "ja": "彼らは荷物を預けなければなりません。",
+  "note": "画像2の英文・和訳を転記。補足: drop off は物を目的の場所へ持っていって置く・届けること。この場面では luggage（手荷物）を預けるという意味。luggage は数えられない名詞として扱い、通常 a luggage や luggages とはしない。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1207,
+  "date": "2026/11/02",
+  "en": "We have to drop off the donations.",
+  "ja": "私たちは寄付品を届けに行かなければなりません。",
+  "note": "画像3の英文・和訳を転記。補足: donations は寄付金や寄付品を指し、この場面では持っていく寄付品。drop off the donations = 寄付品を届ける。受け取りに行く pick up とは向きが異なる。",
+  "source_batch": "2026-11-02-02"
+ },
+ {
+  "id": 1208,
+  "date": "2026/11/02",
+  "en": "I have to pick up some groceries.",
+  "ja": "食料品を買わなきゃいけません。",
+  "note": "画像9の英文・和訳を転記。補足: pick up は物を取りに行く・受け取る意味があり、groceries と組み合わせると「食料品を買ってくる」という意味になる。人を目的語にすると「迎えに行く」にもなる。pick out（選ぶ）と区別する。",
+  "source_batch": "2026-11-02-02"
  }
 ]

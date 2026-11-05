@@ -1,0 +1,29 @@
+{
+  "source_text_count": 3119,
+  "index_count": 15595,
+  "file_count": 15595,
+  "decoded_files": 15595,
+  "groups": {
+    "p": 1686,
+    "n": 1208,
+    "d": 86,
+    "r": 69,
+    "s": 24,
+    "patterns": 40,
+    "freetalk": 6
+  },
+  "problems": [],
+  "duration_warnings": [],
+  "edge_warnings": [],
+  "sample_rates": [
+    24000
+  ],
+  "peak_dbfs_max": -3.26557905897491,
+  "engine": "Kokoro v1.0 / kokoro-onnx",
+  "voice": "af_sarah",
+  "generated_on": "2026-11-02",
+  "new_notes": 9,
+  "reused_notes": 0,
+  "new_audio_files": 45,
+  "learning_date": null
+}
