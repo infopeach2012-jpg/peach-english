@@ -1,0 +1,63 @@
+{
+ "id": "2026-11-06-01",
+ "added_on": "2026-11-06",
+ "lesson_date": null,
+ "title": "天気・take・prefer・look・間接疑問の復習",
+ "source": "ユーザー提供のSpeak画面10枚の中央カード。画像3と5の同じ英文・和訳を1項目に統合し、9項目を転記。背景の別カードや穴埋めの文は補完していない。端末の時刻はあるが学習日の記載はないため、追加日2026-11-06と学習日を区別する。",
+ "entries": [
+  {
+   "en": "It's sunny out; let's eat on the patio.",
+   "ja": "外は晴れてるから、パティオで食べよう。",
+   "note": "画像1の英文・和訳を転記。補足: 天気を表す it は特定の物を指さない。sunny out = 外は晴れている。out はここでは outside の意味。let’s + 動詞の原形で「～しよう」と誘う。patio は家などに接した屋外の舗装されたスペース。セミコロン（;）で関連する2つの文をつないでいる。",
+   "section": "11月6日追加 · 天気とout"
+  },
+  {
+   "en": "It's windy out, and the trash cans tipped over.",
+   "ja": "外は風が強くて、ゴミ箱が倒れた。",
+   "note": "画像2の英文・和訳を転記。補足: windy out = 外は風が強い。trash cans = ゴミ箱（複数）。tip over = 倒れる・ひっくり返る。tipped は tip の過去形。現在の天気（It’s windy）と、すでに起きた出来事（tipped over）をつないでいる。",
+   "section": "11月6日追加 · 天気とout"
+  },
+  {
+   "en": "He was taking notes during the lecture.",
+   "ja": "彼は講義中にノートを取っていました。",
+   "note": "画像3・5の同じ英文・和訳を1項目に統合。補足: take notes = メモを取る・ノートを取る。was + 動詞の-ing形は過去進行形で、過去のある時点でしていた動作を表す。during + 名詞（句）で「～の間に」。lecture = 講義。",
+   "section": "11月6日追加 · takeと進行形"
+  },
+  {
+   "en": "She is taking a test today.",
+   "ja": "彼女は今日、テストを受けています。",
+   "note": "画像4の英文・和訳を転記。補足: take a test = テストを受ける。is taking は現在進行形。画像の和訳は現在の動作としているが、today とともに今日の予定を表す読み方も文脈によって可能。",
+   "section": "11月6日追加 · takeと進行形"
+  },
+  {
+   "en": "We prefer staying home instead.",
+   "ja": "私たちは代わりに家にいるほうを好みます。",
+   "note": "画像6の英文・和訳を転記。補足: prefer + 動詞の-ing形で「～するほうを好む」。staying は動名詞で、ここでは進行形ではない。stay home = 家にいる（特にアメリカ英語）。instead = 代わりに。何の代わりかは前後の文脈によるため、この画像だけからは補わない。",
+   "section": "11月6日追加 · preferとinstead"
+  },
+  {
+   "en": "You look confident in that suit.",
+   "ja": "そのスーツを着ると、自信があるように見えます。",
+   "note": "画像7の英文・和訳を転記。補足: look + 形容詞で「～に見える」。confident = 自信がある。in + 衣服で「～を着て」。in that suit はそのスーツを着ている姿について述べている。",
+   "section": "11月6日追加 · lookの使い分け"
+  },
+  {
+   "en": "You look tired; get some rest.",
+   "ja": "疲れて見えるよ。少し休んで。",
+   "note": "画像8の英文・和訳を転記。補足: look tired = 疲れて見える。get some rest = 少し休む。get で始まる命令文は、ここでは相手を気遣う助言。セミコロン（;）で見た様子と助言をつないでいる。",
+   "section": "11月6日追加 · lookの使い分け"
+  },
+  {
+   "en": "Look at that owl!",
+   "ja": "あのフクロウを見て！",
+   "note": "画像9の英文・和訳を転記。補足: look at + 名詞で「～を見る」。look + 形容詞（～に見える）とは文の形も意味も異なる。that owl = あのフクロウ。動詞の原形 Look から始まる命令文で、相手の注意を向けている。",
+   "section": "11月6日追加 · lookの使い分け"
+  },
+  {
+   "en": "Do you know when the meeting starts?",
+   "ja": "会議はいつ始まるか知っていますか？",
+   "note": "画像10の英文・和訳を転記。補足: Do you know + 疑問詞節で「～か知っていますか」。when の後ろは間接疑問なので、the meeting（主語）+ starts（動詞）の語順。直接の疑問文 When does the meeting start? の語順にはしない。予定表などで決まっている開始時刻は現在形 starts で表せる。",
+   "section": "11月6日追加 · 間接疑問の語順"
+  }
+ ]
+}
