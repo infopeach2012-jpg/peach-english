@@ -1,5 +1,5 @@
 /* sw.js — Service Worker（オフライン対応・アプリシェルキャッシュ） */
-const CACHE = 'speak-studio-v51';
+const CACHE = 'speak-studio-v52';
 const ASSETS = [
   './',
   './index.html',
@@ -38,6 +38,7 @@ const ASSETS = [
   './data/reading.json',
   './data/speeches.json',
   './data/situations.json',
+  './audio/ja_index.json',
 ];
 
 self.addEventListener('install', (e) => {
@@ -60,7 +61,7 @@ self.addEventListener('fetch', (e) => {
   if (url.origin !== self.location.origin) return;
   // 音声（audio/clips の mp3）は量が多く変わらないので cache-first。
   // それ以外（画面・プログラム・一覧）は network-first（つながれば必ず新しい版。つながらないときだけ保存した版）。
-  const isClip = url.pathname.includes('/audio/clips/');
+  const isClip = url.pathname.includes('/audio/clips/') || url.pathname.includes('/audio/ja/');
   if (isClip) {
     e.respondWith(
       caches.match(req).then((cached) => cached || fetch(req).then((res) => {

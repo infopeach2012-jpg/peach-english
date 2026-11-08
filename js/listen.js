@@ -355,24 +355,32 @@
       }
       const q = queue[idx];
       showCurrent();
+      if (settings.ja && q.ja) window.Speech.prefetchJapanese(q.ja);
       if (queue[idx + 1] && window.Speech.prefetchClip) window.Speech.prefetchClip(queue[idx + 1].key);
       const alive = () => playing && my === session;
+      const say = async (text, opts) => {
+        const ok = await window.Speech.speak(text, opts);
+        if (ok === false && alive()) {
+          pause();
+          window.App.toast('音声を再生できませんでした。再生ボタンでもう一度お試しください。');
+        }
+      };
       for (let r = 0; r < settings.repeat && alive(); r++) {
-        await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key });
+        await say(q.en, { rate: window.Speech.getRate(), key: q.key });
         if (r + 1 < settings.repeat && alive()) await sleep(100);
       }
       if (settings.pattern === 'study' && alive()) {
         // 学習パターン: 英語 → ゆっくり → 和訳（あれば）→ 英語
         await sleep(150);
-        if (alive()) await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key, slow: true });
+        if (alive()) await say(q.en, { rate: window.Speech.getRate(), key: q.key, slow: true });
       }
       if (settings.ja && q.ja && alive()) {
         await sleep(100);
-        if (alive()) await window.Speech.speak(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
+        if (alive()) await say(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
       }
       if (settings.pattern === 'study' && alive()) {
         await sleep(150);
-        if (alive()) await window.Speech.speak(q.en, { rate: window.Speech.getRate(), key: q.key });
+        if (alive()) await say(q.en, { rate: window.Speech.getRate(), key: q.key });
       }
       if (!(playing && my === session)) break;
       listenedThisRun++;

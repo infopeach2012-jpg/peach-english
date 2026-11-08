@@ -85,6 +85,7 @@
   // index: { key: [file, start, dur] }。key はフレーズ p12・会話 d3a・長文 r1_0 など。
   // 端末の読み上げより自然なので、クリップがあるものはこちらを優先する。
   let clipIndex = null;
+  let japaneseIndex = {};
   const textToKey = {};
   const audioEl = (typeof Audio !== 'undefined') ? new Audio() : null;
   let clipStop = null;
@@ -108,19 +109,27 @@
   }
   function normText(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
   async function loadClips(base) {
+    clipBase = base || 'audio/';
+    // Japanese recordings use the same media element as English. Switching to
+    // device TTS after an async MP3 can be blocked or hang on mobile browsers.
+    const japanese = fetch(clipBase + 'ja_index.json?v=' + Date.now(), { cache: 'no-store' })
+      .then(res => res.ok ? res.json() : {})
+      .then(data => { japaneseIndex = data.clips || {}; })
+      .catch(() => { japaneseIndex = {}; });
     try {
       // 毎回新しい一覧を取る（force-cache だと、iPad が古い一覧を使い続け、新しく作った音声を知らずに端末の声で読んでいた）
       const res = await fetch((base || 'audio/') + 'audio_index.json?v=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) return false;
       clipIndex = await res.json();
-      clipBase = base || 'audio/';
       return true;
     } catch (e) { return false; }
+    finally { await japanese; }
   }
   let clipBase = 'audio/';
   function registerText(text, key) { textToKey[normText(text)] = key; }
   function hasClip(key) { return !!(clipIndex && key && clipIndex[key]); }
   function clipKeyFor(text) { return textToKey[normText(text)] || null; }
+  function japaneseClipFor(text) { return japaneseIndex[normText(text)] || null; }
   function stopClip() {
     clipEpoch++;
     if (clipStop) { const f = clipStop; clipStop = null; f(); }
@@ -195,7 +204,11 @@
     const ent = selected && clipIndex[selected];
     if (!ent) return;
     const file = typeof ent === 'string' ? ent : ent[0];
-    if (prefetching.has(file)) return;
+    prefetchFile(file);
+  }
+  function prefetchJapanese(text) { prefetchFile(japaneseClipFor(text)); }
+  function prefetchFile(file) {
+    if (!file || prefetching.has(file)) return;
     const task = fetch(clipBase + file + '.mp3', { cache: 'force-cache' })
       .then(r => { if (r.ok) return r.arrayBuffer(); })
       .catch(() => {}).finally(() => prefetching.delete(file));
@@ -266,11 +279,11 @@
           const t = audioEl.currentTime;
           if (t >= end - 0.03) { finish(true); return; }
           // 進んでいない（読み込み待ち）時間を数え、長く止まったら諦めて次へ
-          if (t === lastT) { stallSince += 40; if (stallSince > 15000) finish(true); }
+          if (t === lastT) { stallSince += 40; if (stallSince > 15000) finish(false); }
           else { stallSince = 0; lastT = t; }
         }, 40);
         // 念のための上限（本来の長さの3倍＋20秒）
-        watchdog = setTimeout(() => finish(true), (dur / rate) * 3000 + 20000);
+        watchdog = setTimeout(() => finish(false), (dur / rate) * 3000 + 20000);
       };
       // 2) 頭出し。seeked を待ってから再生する（iPhone は読み込み前の seek が無視されることがある）
       const onSeeked = () => { audioEl.removeEventListener('seeked', onSeeked); startPlayback(); };
@@ -319,12 +332,19 @@
     stopSpeaking();
     const epoch = speechEpoch;
     const fallback = (ok, options) => {
-      if (ok || epoch !== speechEpoch) return;
+      if (ok || epoch !== speechEpoch) return true;
       return speakTts(text, options || opts);
     };
     const start = () => {
       if (epoch !== speechEpoch) return Promise.resolve();
       setAudioSession('playback');
+      if (opts.lang === 'ja') {
+        const file = japaneseClipFor(text);
+        // A failed download must be reported, not replaced by a potentially
+        // blocked device voice or treated as a completed translation.
+        if (file) return playClipElement([file, 0, null], { rate: opts.rate });
+        return speakTts(text, opts);
+      }
       if (opts.lang !== 'ja' && getSource() === 'device') {
         return speakTts(text, Object.assign({}, opts, { rate: opts.slow ? 0.6 : opts.rate }));
       }
@@ -351,7 +371,8 @@
     opts = opts || {};
     stopClip();
     return new Promise((resolve) => {
-      if (!synth || !text) { resolve(); return; }
+      if (!text) { resolve(true); return; }
+      if (!synth) { resolve(false); return; }
       const u = new SpeechSynthesisUtterance(text);
       const rate = Math.max(0.5, Math.min(2, Number(opts.rate) || 1));
       if (opts.lang === 'ja') {
@@ -366,22 +387,26 @@
       u.rate = rate;
       u.pitch = opts.pitch != null ? opts.pitch : 1;
       u.volume = 0.82;
-      let done = false, guard = null;
-      const finish = () => {
+      let done = false, guard = null, startGuard = null;
+      const finish = (ok = true) => {
         if (done) return;
-        done = true; clearTimeout(guard);
-        u.onend = u.onerror = null;
+        done = true; clearTimeout(guard); clearTimeout(startGuard);
+        u.onend = u.onerror = u.onstart = u.onboundary = null;
         if (ttsStop === finish) ttsStop = null;
-        resolve();
+        resolve(ok);
       };
+      const fail = () => { if (done) return; finish(false); try { synth.cancel(); } catch (_) {} };
       ttsStop = finish;
-      u.onend = u.onerror = finish;
+      u.onend = () => finish(true);
+      u.onerror = fail;
+      u.onstart = u.onboundary = () => clearTimeout(startGuard);
       const begin = () => {
         if (done) return;
         setAudioSession('playback');
         const perChar = opts.lang === 'ja' ? 150 : 90;
-        guard = setTimeout(() => { finish(); try { synth.cancel(); } catch (_) {} }, Math.min(60000, text.length * perChar / rate + 2000) * 2);
-        try { if (synth.paused) synth.resume(); synth.speak(u); } catch (_) { finish(); }
+        if (opts.lang === 'ja') startGuard = setTimeout(fail, 2500);
+        guard = setTimeout(fail, Math.min(60000, text.length * perChar / rate + 2000) * 2);
+        try { if (synth.paused) synth.resume(); synth.speak(u); } catch (_) { fail(); }
       };
       const suspended = suspendContext();
       if (suspended) suspended.then(begin);
@@ -580,7 +605,7 @@
   window.Speech = {
     listVoices, setVoice, getSource, setSource,
     RATES, getRate, setRate, rateOptions,
-    loadClips, registerText, hasClip, clipKeyFor, playClip, unlockAudio, releaseAudio, prefetchClip,
+    loadClips, registerText, hasClip, clipKeyFor, playClip, unlockAudio, releaseAudio, prefetchClip, japaneseClipFor, prefetchJapanese,
     get clipsLoaded() { return !!clipIndex; },
     ttsSupported,
     asrSupported,

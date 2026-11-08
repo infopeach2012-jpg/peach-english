@@ -65,10 +65,12 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
   // Finish the entire session without pressing Next or replay controls.
   await p.locator('[data-top="practice"]').click(); await p.evaluate(() => { audit.ends = []; });
   await p.locator('[data-quick="sentence"]').click();
-  await p.waitForSelector('.sp-done', {timeout:60000});
+  await p.waitForSelector('.sp-done', {timeout:90000});
   assert.equal(await p.locator('.sp-done h2').textContent(), '10 文を聞きました');
-  assert.equal(await p.evaluate(() => audit.ends.length), 10);
-  assert.equal(await p.evaluate(() => new Set(audit.ends).size), 10);
+  assert.equal(await p.evaluate(() => audit.ends.filter(s=>s.includes('/audio/clips/')).length), 10);
+  assert.equal(await p.evaluate(() => new Set(audit.ends.filter(s=>s.includes('/audio/clips/'))).size), 10);
+  assert.equal(await p.evaluate(() => audit.ends.filter(s=>s.includes('/audio/ja/')).length), 10);
+  assert.equal(await p.evaluate(() => japaneseTts.events.length), 0);
   assert(await p.evaluate(() => audit.media.every(a => a.paused)));
   await p.locator('#dr-back').click(); await p.locator('[data-quick="word"]').click();
   assert.equal(await p.evaluate(() => App.drill.mode), 'speak'); assert(await p.locator('#dr-go').isVisible());

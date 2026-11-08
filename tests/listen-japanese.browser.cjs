@@ -1,4 +1,5 @@
-// PEACH_BASE_URL: locally served app. Japanese TTS is simulated; English uses real MP3s.
+// Native-TTS fallback/migration tests. The Japanese index is deliberately absent.
+// For actual bilingual media playback use listen-recorded-japanese.browser.cjs.
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 const installJapaneseTts = require('./helpers/japanese-tts.cjs');
@@ -9,6 +10,7 @@ const normalized = text => text.replace(/\s+/g, '');
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
   try {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
+    await context.route('**/audio/ja_index.json*', r => r.fulfill({ json: { clips: {} } }));
     await context.addInitScript(installJapaneseTts);
     await context.addInitScript(() => {
       if (!localStorage.getItem('test.ja.seeded')) {

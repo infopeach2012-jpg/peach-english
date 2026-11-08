@@ -5,8 +5,8 @@ const vm = require('node:vm');
 const code = fs.readFileSync('js/speech.js', 'utf8');
 const tick = () => new Promise(r => setImmediate(r));
 
-function setup({ sessionAPI = true, recording = false, storage = new Map() } = {}) {
-  const state = { contexts: [], media: [], spoken: [], recognizers: [], fetches: [], events: [], mode: 'auto' };
+function setup({ sessionAPI = true, recording = false, storage = new Map(), synthesis = true } = {}) {
+  const state = { contexts: [], media: [], spoken: [], recognizers: [], fetches: [], events: [], timers: [], mode: 'auto' };
   class Audio {
     constructor() { this.events = {}; this.paused = true; this.currentTime = 0; this.readyState = 4; this.dataset = {}; state.media.push(this); }
     set src(v) { this.url = new URL(v, 'https://example.test/').href; this.currentTime = 0; }
@@ -46,8 +46,8 @@ function setup({ sessionAPI = true, recording = false, storage = new Map() } = {
   const sandbox = { Audio, SpeechSynthesisUtterance: class { constructor(text) { this.text = text; } }, URL,
     navigator, location: { href: 'https://example.test/' }, localStorage: { getItem(k) { return storage.get(k) ?? null; }, setItem(k, v) { storage.set(k, v); } },
     CustomEvent: class { constructor(type, opts) { this.type = type; this.detail = opts.detail; } },
-    fetch: async url => { state.fetches.push(url); return { ok: true, json: async () => index, arrayBuffer: async () => new ArrayBuffer(8) }; },
-    setTimeout: (fn, ms) => { const t = setTimeout(fn, ms); t.unref(); return t; }, clearTimeout,
+    fetch: async url => { state.fetches.push(url); return { ok: true, json: async () => url.includes('ja_index') ? { clips: { 'こんにちは': 'ja/greeting' } } : index, arrayBuffer: async () => new ArrayBuffer(8) }; },
+    setTimeout: (fn, ms) => { state.timers.push({ fn, ms }); const t = setTimeout(fn, ms); t.unref(); return t; }, clearTimeout,
     setInterval: (fn, ms) => { const t = setInterval(fn, ms); t.unref(); return t; }, clearInterval,
   };
   if (recording) {
@@ -58,7 +58,7 @@ function setup({ sessionAPI = true, recording = false, storage = new Map() } = {
       stop() { queueMicrotask(() => this.onstop?.()); }
     };
   }
-  sandbox.window = { MediaRecorder: sandbox.MediaRecorder, speechSynthesis: synth, AudioContext: Context, SpeechRecognition: Recognition, dispatchEvent(e) { state.events.push(e); } };
+  sandbox.window = { MediaRecorder: sandbox.MediaRecorder, speechSynthesis: synthesis ? synth : null, AudioContext: Context, SpeechRecognition: Recognition, dispatchEvent(e) { state.events.push(e); } };
   vm.createContext(sandbox); vm.runInContext(code, sandbox);
   return { state, synth, speech: sandbox.window.Speech, sandbox };
 }
@@ -184,4 +184,50 @@ test('dynamic AI speech follows the shared speed; slow replay does not change th
   assert.equal(speech.getRate(), 1.25);
   speech.speak('New AI text'); await tick(); assert.equal(state.spoken.at(-1).u.rate, 1.25);
   speech.stopSpeaking();
+});
+
+test('Japanese uses the same recorded-media engine even when device TTS never responds', async () => {
+  const { speech, state } = setup(); await speech.loadClips();
+  const english = speech.speak('Hello', { key: 'p1' }); await tick();
+  state.media[0].emit('ended'); await english;
+  speech.setSource('device'); // Japanese must still use its recording.
+  const japanese = speech.speak('こんにちは', { lang: 'ja', rate: .825 }); await tick();
+  assert.equal(state.media.length, 1);
+  assert.match(state.media[0].src, /audio\/ja\/greeting.mp3$/);
+  assert.equal(state.media[0].playbackRate, .825);
+  assert.equal(state.spoken.length, 0); assert.equal(state.contexts.length, 0);
+  speech.prefetchJapanese('こんにちは'); await tick();
+  assert.equal(state.fetches.at(-1), 'audio/ja/greeting.mp3');
+  state.media[0].emit('ended'); assert.equal(await japanese, true);
+});
+
+test('Japanese recordings also work without any speech synthesis API', async () => {
+  const { speech, state } = setup({ synthesis: false }); await speech.loadClips();
+  const pending = speech.speak('こんにちは', { lang: 'ja' }); await tick();
+  assert.equal(state.media[0].paused, false);
+  state.media[0].emit('ended'); assert.equal(await pending, true);
+});
+
+test('failed Japanese media reports failure without silently falling back to device speech', async () => {
+  const { speech, state } = setup(); await speech.loadClips();
+  const pending = speech.speak('こんにちは', { lang: 'ja' }); await tick();
+  state.media[0].emit('error'); assert.equal(await pending, false);
+  assert.equal(state.spoken.length, 0); assert.equal(state.media[0].paused, true);
+});
+
+test('device TTS that never starts settles within its short start guard', async () => {
+  const { speech, state, synth } = setup();
+  const pending = speech.speak('未収録の日本語', { lang: 'ja' }); await tick();
+  assert.equal(state.spoken.length, 1);
+  const startGuard = state.timers.find(t => t.ms === 2500);
+  assert(startGuard); startGuard.fn();
+  assert.equal(await pending, false); assert.equal(synth.speaking, false);
+  assert.equal(state.spoken[0].u.onend, null);
+});
+
+test('cancelling Japanese playback resolves without starting another voice', async () => {
+  const { speech, state } = setup(); await speech.loadClips();
+  const pending = speech.speak('こんにちは', { lang: 'ja' }); await tick();
+  speech.stopSpeaking(); assert.equal(await pending, true);
+  assert.equal(state.media[0].paused, true); assert.equal(state.spoken.length, 0);
 });

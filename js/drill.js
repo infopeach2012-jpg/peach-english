@@ -132,13 +132,21 @@
     playing = true; setPlayBtn();
     window.Speech.unlockAudio();
     const alive = () => playing && my === session;
+    const say = async (text, opts) => {
+      const ok = await window.Speech.speak(text, opts);
+      if (ok === false && alive()) {
+        pause();
+        window.App.toast('音声を再生できませんでした。再生ボタンでもう一度お試しください。');
+      }
+    };
     while (alive()) {
       const it = cfg.items[idx];
       if (!it) { playing = false; drawDone(); return; }
+      if (settings.ja && it.ja) window.Speech.prefetchJapanese(it.ja);
       const next = cfg.items[idx + 1]; if (next) window.Speech.prefetchClip(next.key);
-      if (!settings.muted) await window.Speech.speak(it.en, { key: it.key });
+      if (!settings.muted) await say(it.en, { key: it.key });
       if (!alive()) return;
-      if (settings.ja && it.ja && !settings.muted) { await sleep(150); if (alive()) await window.Speech.speak(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() }); }
+      if (settings.ja && it.ja && !settings.muted) { await sleep(150); if (alive()) await say(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() }); }
       if (!alive()) return;
       await sleep(settings.gap * 1000);
       if (!alive()) return;

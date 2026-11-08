@@ -1,0 +1,15 @@
+{
+  "engine": "Open JTalk (pyopenjtalk 0.4.1)",
+  "voice": "MMDAgent Mei normal",
+  "generated_on": "2026-11-08",
+  "source_translations": 3151,
+  "index_count": 3151,
+  "file_count": 3151,
+  "decoded_files": 3151,
+  "problems": [],
+  "duration_seconds": 11163.26,
+  "peak_dbfs_max": -3.966060072094264,
+  "sample_rates": [
+    24000
+  ]
+}
