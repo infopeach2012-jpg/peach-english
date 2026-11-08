@@ -23,13 +23,18 @@
   ];
 
   const SETTINGS_KEY = 'speak.listen.v3';
-  let settings = { tab: 'phrase', sit: 'greet', ja: false, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
+  let settings = { tab: 'phrase', sit: 'greet', ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
   // Restoring the v37 code alone leaves repeat/study settings in existing browsers.
   // Restore its playback defaults once, preserving category and learning progress.
   if (settings.playbackRevision !== 1) {
     Object.assign(settings, { ja: false, repeat: 1, pattern: 'std', auto: true, gap: 0.1, playbackRevision: 1 });
+    saveSettings();
+  }
+  // Enable English → Japanese once for existing browsers, too. Later choices persist.
+  if (settings.translationRevision !== 1) {
+    Object.assign(settings, { ja: true, translationRevision: 1 });
     saveSettings();
   }
 
@@ -72,14 +77,15 @@
   function materials() {
     const C = window.Store.content;
     const mats = [];
-    C.reading.forEach((r) => mats.push({ key: 'r' + r.id, group: '🚗 東北旅行', title: r.section, en: r.en, ja: r.ja }));
+    C.reading.forEach((r) => mats.push({ key: 'r' + r.id, group: '🚗 東北旅行', title: r.section, en: r.en, ja: r.ja, parts: [r] }));
     // スピーチは同じセクション名のものを1章にまとめる
     const groups = {};
     C.speeches.forEach((s) => {
       const g = s.section || 'スピーチ';
-      if (!groups[g]) { groups[g] = { key: 's' + s.id, group: '🎤 スピーチ', title: g, en: '', ja: '' }; mats.push(groups[g]); }
+      if (!groups[g]) { groups[g] = { key: 's' + s.id, group: '🎤 スピーチ', title: g, en: '', ja: '', parts: [] }; mats.push(groups[g]); }
       groups[g].en += (groups[g].en ? ' ' : '') + s.en;
       groups[g].ja += (groups[g].ja ? ' ' : '') + s.ja;
+      groups[g].parts.push(s);
     });
     return mats;
   }
@@ -250,6 +256,7 @@
         </div>`).join('')}
       <div class="mt-2">${player(settingsRow())}</div>
       <div class="text-xs text-gray-400 mb-2">最後まで読むと、次の章へ自動で進みます</div>
+      <div id="ls-translation-note" class="text-xs text-gray-400 mb-2" hidden>一部の和訳は、対応する段落の英語のあとにまとめて読み上げます。</div>
       <div id="ls-text" class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm leading-relaxed text-[15px] text-gray-800"></div>
       <button id="ls-jatoggle" class="text-xs text-gray-400 underline mt-3">和訳を表示</button>
       <div id="ls-jatext" class="hidden-x text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2 mt-2"></div>
@@ -275,8 +282,21 @@
       b.classList.toggle('brand-grad', on); b.classList.toggle('text-white', on);
       b.classList.toggle('bg-gray-100', !on); b.classList.toggle('text-gray-600', !on);
     });
-    const sents = splitSentences(mat.en);
-    queue = sents.map((s, i) => ({ en: s, ja: '', key: mat.key + '_' + i }));
+    // Keep the existing sentence/audio IDs. Some translations combine sentences
+    // (and the original clip boundaries split "Mr."). Read those at the end of
+    // their source paragraph, rather than shifting translations onto wrong lines.
+    queue = [];
+    let groupedTranslation = false;
+    mat.parts.forEach((part) => {
+      const sents = splitSentences(part.en);
+      const translations = (part.ja || '').match(/[^。！？!?]+[。！？!?]*/g) || [];
+      const paired = sents.length === translations.length;
+      if (!paired && part.ja) groupedTranslation = true;
+      sents.forEach((en, i) => queue.push({ en, key: mat.key + '_' + queue.length,
+        ja: paired ? translations[i].trim() : (i === sents.length - 1 ? part.ja : '') }));
+    });
+    const sents = queue.map((q) => q.en);
+    body.querySelector('#ls-translation-note').hidden = !settings.ja || !groupedTranslation;
     idx = 0;
     const tx = body.querySelector('#ls-text');
     tx.innerHTML = sents.map((s, i) => `<span data-i="${i}" class="ls-sent rounded px-0.5">${window.App.escapeHtml(s)}</span>`).join(' ');
@@ -284,7 +304,7 @@
     body.querySelector('#ls-jatext').textContent = mat.ja;
     body.querySelector('#ls-sub').textContent = mat.title;
     body.querySelector('#ls-en').textContent = sents[0] || '';
-    body.querySelector('#ls-ja').textContent = '';
+    body.querySelector('#ls-ja').textContent = queue[0] ? queue[0].ja : '';
     updatePos();
   }
 

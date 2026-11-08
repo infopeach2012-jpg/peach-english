@@ -2,9 +2,11 @@
 // PEACH_BASE_URL and PEACH_TEST_ASSETS override the server and optional CDN fixtures.
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
+const installJapaneseTts = require('./helpers/japanese-tts.cjs');
 (async () => {
   const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
   const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block',reducedMotion:'reduce'});
+  await context.addInitScript(installJapaneseTts);
   if (process.env.PEACH_TEST_ASSETS) {
     await context.route('https://cdn.tailwindcss.com/**', r => r.fulfill({path:process.env.PEACH_TEST_ASSETS+'/tailwind.js',contentType:'text/javascript'}));
     await context.route('https://cdn.jsdelivr.net/**', r => r.fulfill({path:process.env.PEACH_TEST_ASSETS+'/chart.js',contentType:'text/javascript'}));

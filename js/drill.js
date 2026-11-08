@@ -7,9 +7,14 @@
   'use strict';
 
   const SET_KEY = 'speak.drill.v1';
-  let settings = { ja: false, gap: 0.4, muted: false };
+  let settings = { ja: true, gap: 0.4, muted: false };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SET_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SET_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
+  // Apply the requested bilingual default once without changing mute or spacing.
+  if (settings.translationRevision !== 1) {
+    Object.assign(settings, { ja: true, translationRevision: 1 });
+    saveSettings();
+  }
 
   let container = null;
   let cfg = null;
@@ -92,7 +97,11 @@
     $('#dr-play').onclick = () => { if (cfg.mode === 'listen' && playing) pause(); else replayCurrent(); };
     const mic = $('#dr-mic'); if (mic) mic.onclick = () => record(it);
     const goBtn = $('#dr-go'); if (goBtn) goBtn.onclick = () => go(1);
-    const jt = $('#dr-ja-toggle'); if (jt) jt.onclick = () => { settings.ja = !settings.ja; saveSettings(); drawItem(); };
+    const jt = $('#dr-ja-toggle'); if (jt) jt.onclick = () => {
+      const resume = playing;
+      pause(); settings.ja = !settings.ja; saveSettings(); drawItem();
+      if (resume) playLoop();
+    };
   }
 
   function playbackStatus() { return settings.muted ? '音声オフ' : playing ? '自動再生' : '一時停止'; }

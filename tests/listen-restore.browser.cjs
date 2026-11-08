@@ -2,10 +2,12 @@
 // Serve the app on port 8005; PEACH_BASE_URL and PEACH_TEST_ASSETS are optional.
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
+const installJapaneseTts = require('./helpers/japanese-tts.cjs');
 (async () => {
   const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
   try {
     const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
+    await context.addInitScript(installJapaneseTts);
     if (process.env.PEACH_TEST_ASSETS) {
       await context.route('https://cdn.tailwindcss.com/**', r => r.fulfill({path:process.env.PEACH_TEST_ASSETS+'/tailwind.js',contentType:'text/javascript'}));
       await context.route('https://cdn.jsdelivr.net/**', r => r.fulfill({path:process.env.PEACH_TEST_ASSETS+'/chart.js',contentType:'text/javascript'}));
@@ -36,7 +38,7 @@ const assert = require('node:assert/strict');
     const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('speak.listen.v3')));
     assert.equal(saved.repeat,1,'Old stored repeat must be restored to one playback');
     assert.equal(saved.pattern,'std','Old study mode must no longer repeat the same sentence');
-    assert.equal(saved.ja,false); assert.equal(saved.auto,true); assert.equal(saved.gap,0.1);
+    assert.equal(saved.ja,true); assert.equal(saved.translationRevision,1); assert.equal(saved.auto,true); assert.equal(saved.gap,0.1);
     assert.equal(saved.sit,'shop'); assert.equal(saved.kind,'sentence'); assert.equal(saved.matKey,'r2');
     assert.equal(await page.evaluate(() => Speech.getRate()),0.75);
     const progress = await page.evaluate(() => Store.progress);
@@ -54,7 +56,12 @@ const assert = require('node:assert/strict');
     const audit = await page.evaluate(() => ({ends:audit.ends,starts:audit.starts,calls:audit.calls}));
     assert.deepEqual(audit.ends.map(s=>s.split('/').pop()),['p492_slow.mp3','p523_slow.mp3','p530_slow.mp3']);
     assert.deepEqual(audit.starts.map(s=>s.split('/').pop()),['p492_slow.mp3','p523_slow.mp3','p530_slow.mp3','p534_slow.mp3']);
-    assert.equal(audit.calls.length,4); assert(audit.calls.every(c=>!c.opts.slow && c.opts.lang!=='ja'));
+    assert.equal(audit.calls.length,7);
+    assert.deepEqual(audit.calls.map(c=>c.opts.lang||'en'),['en','ja','en','ja','en','ja','en']);
+    assert(audit.calls.every(c=>!c.opts.slow));
+    const japanese = await page.evaluate(() => japaneseTts.events.filter(e=>e.event==='start'));
+    assert.deepEqual(japanese.map(e=>e.text),audit.calls.filter(c=>c.opts.lang==='ja').map(c=>c.text));
+    assert(japanese.every(e=>e.lang==='ja-JP'&&e.voice==='Kyoko'));
     assert.equal(await page.locator('#ls-pos').textContent(),'4 / 4');
     assert.equal(await page.locator('[data-listen-language]').count(),0,'Keep the original player layout');
     await page.waitForTimeout(700);
@@ -69,6 +76,6 @@ const assert = require('node:assert/strict');
     await page.locator('[data-set="repeat"][data-val="1"]').click();
     await page.locator('#hdr-home').click();
     assert.deepEqual(errors,[]); assert.deepEqual(failedAudio,[]);
-    console.log('PASS: existing repeat/study/Japanese settings restored once; real MP3s play once each and advance; pause, speed, selected category, learning progress and later preferences preserved.');
+    console.log('PASS: legacy settings restored once with Japanese enabled; three real MP3s alternate with Japanese TTS; pause, speed, category, progress and later preferences preserved.');
   } finally { await browser.close(); }
 })().catch(e=>{console.error(e);process.exit(1);});
