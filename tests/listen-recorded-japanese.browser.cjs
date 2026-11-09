@@ -14,19 +14,26 @@ const base = process.env.PEACH_BASE_URL || 'http://127.0.0.1:8017/';
       // Reproduce the failure: no Japanese voices and speak never calls any event.
       window.nativeCalls = 0;
       Object.defineProperty(window, 'speechSynthesis', { value: { getVoices: () => [], speak() { nativeCalls++; }, cancel() {}, resume() {} } });
-      window.audit = { media: [], starts: [], ends: [] };
+      window.audit = { media: [], starts: [], ends: [], timings: [] };
       const play = HTMLMediaElement.prototype.play;
       HTMLMediaElement.prototype.play = function (...args) {
         if (!audit.media.includes(this)) {
           audit.media.push(this);
-          this.addEventListener('ended', () => audit.ends.push(this.src));
+          // Observe completion before the app's handler switches this shared element.
+          this.addEventListener('ended', () => {
+            audit.ends.push(this.src);
+            audit.timings.push({ type: 'ended', src: this.src, at: performance.now() });
+          }, { capture: true });
+          this.addEventListener('playing', () => audit.timings.push({ type: 'playing', src: this.src, at: performance.now() }));
         }
         audit.starts.push(this.src);
+        audit.timings.push({ type: 'play', src: this.src, at: performance.now() });
         return play.apply(this, args);
       };
       if (!localStorage.getItem('test.recorded.seeded')) {
         localStorage.setItem('test.recorded.seeded', 'yes');
         localStorage.setItem('speak.listen.v3', JSON.stringify({ playbackRevision: 1, translationRevision: 1, ja: true, repeat: 1, pattern: 'std', gap: .1, auto: false, sit: 'shop' }));
+        localStorage.setItem('speak.drill.v1', JSON.stringify({ translationRevision: 1, ja: true, gap: .4, muted: false }));
       }
     });
     const page = await context.newPage(), errors = [];
@@ -44,6 +51,15 @@ const base = process.env.PEACH_BASE_URL || 'http://127.0.0.1:8017/';
     assert.deepEqual(await page.evaluate(() => audit.ends.slice(0, 6).map(s => s.split('/audio/')[1])), expected.map(s => s.slice(6)));
     assert.equal(await page.evaluate(() => nativeCalls), 0);
     assert.equal(await page.evaluate(() => audit.media.length), 1);
+    const transitions = await page.evaluate(() => audit.timings.filter(e => e.type === 'ended').slice(0, 5).map(end => ({
+      request: audit.timings.find(e => e.type === 'play' && e.at >= end.at).at - end.at,
+      playback: audit.timings.find(e => e.type === 'playing' && e.at >= end.at).at - end.at,
+    })));
+    assert(transitions.every(t => t.request < 90), JSON.stringify(transitions));
+    assert(transitions.every(t => t.playback < 300), JSON.stringify(transitions));
+    console.log('Main player transition milliseconds:', JSON.stringify(transitions));
+    const migrated = await page.evaluate(() => ['speak.listen.v3', 'speak.drill.v1'].map(k => JSON.parse(localStorage.getItem(k))));
+    assert(migrated.every(s => s.gap === 0 && s.timingRevision === 1 && s.ja === true));
     // Pause while Japanese is actually audible; no next English starts afterwards.
     await page.locator('#ls-play').click();
     await page.waitForFunction(() => audit.media.some(a => a.src.includes('/audio/ja/') && !a.paused && a.currentTime > .05));
@@ -87,7 +103,21 @@ const base = process.env.PEACH_BASE_URL || 'http://127.0.0.1:8017/';
     const failed = await page.evaluate(() => Speech.speak('未収録のテスト用和訳', { lang: 'ja' }));
     assert.equal(failed, false);
     assert.equal(await page.evaluate(() => nativeCalls), 1);
+    // A deliberate spacing choice after migration survives reload and is honored.
+    await page.locator('#hdr-home').click(); await page.locator('[data-top="listen"]').click();
+    await page.locator('#ls-gap').selectOption('0.25');
+    await page.reload(); await page.waitForSelector('#ls-gap');
+    assert.equal(await page.locator('#ls-gap').inputValue(), '0.25');
+    await page.evaluate(() => { audit.timings = []; });
+    await page.locator('#ls-play').click();
+    await page.waitForFunction(() => audit.timings.filter(e => e.type === 'playing').length >= 3, {}, { timeout: 15000 });
+    await page.locator('#ls-play').click();
+    const chosenGap = await page.evaluate(() => {
+      const end = audit.timings.filter(e => e.type === 'ended')[1];
+      return audit.timings.find(e => e.type === 'play' && e.at >= end.at).at - end.at;
+    });
+    assert(chosenGap >= 240 && chosenGap < 500, 'Explicit gap: ' + chosenGap);
     assert.deepEqual(errors, []);
-    console.log('PASS: real English/Japanese MP3 sequence with permanently silent native TTS; notes completion; pause/leave; failed media and retry; bounded missing-translation fallback.');
+    console.log('PASS: real English/Japanese MP3 sequence and faster transitions with permanently silent native TTS; saved gap migration and later choices; notes completion; pause/leave; failed media and retry; bounded missing-translation fallback.');
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exit(1); });

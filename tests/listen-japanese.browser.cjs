@@ -24,7 +24,7 @@ const normalized = text => text.replace(/\s+/g, '');
       HTMLMediaElement.prototype.play = function (...args) {
         if (!audit.media.includes(this)) {
           audit.media.push(this);
-          this.addEventListener('ended', () => audit.events.push('ended:' + this.src.split('/').pop()));
+          this.addEventListener('ended', () => audit.events.push('ended:' + this.src.split('/').pop()), {capture:true});
         }
         audit.events.push('play:' + this.src.split('/').pop());
         return play.apply(this, args);
@@ -41,8 +41,8 @@ const normalized = text => text.replace(/\s+/g, '');
     await page.waitForSelector('.launch-hero');
     const settings = await page.evaluate(() => ({ listen: JSON.parse(localStorage.getItem('speak.listen.v3')), drill: JSON.parse(localStorage.getItem('speak.drill.v1')), progress: Store.progress }));
     assert.equal(settings.listen.ja, true); assert.equal(settings.drill.ja, true);
-    assert.equal(settings.listen.auto, false); assert.equal(settings.listen.gap, 0.25);
-    assert.equal(settings.drill.muted, true); assert.equal(settings.drill.gap, 0.25);
+    assert.equal(settings.listen.auto, false); assert.equal(settings.listen.gap, 0);
+    assert.equal(settings.drill.muted, true); assert.equal(settings.drill.gap, 0);
     assert.equal(settings.progress.xp, 120); assert.equal(settings.progress.favorites.p492, true);
     await page.evaluate(() => {
       japaneseTts.automatic = false;

@@ -7,12 +7,17 @@
   'use strict';
 
   const SET_KEY = 'speak.drill.v1';
-  let settings = { ja: true, gap: 0.4, muted: false };
+  let settings = { ja: true, gap: 0, muted: false };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SET_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SET_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
   // Apply the requested bilingual default once without changing mute or spacing.
   if (settings.translationRevision !== 1) {
     Object.assign(settings, { ja: true, translationRevision: 1 });
+    saveSettings();
+  }
+  // Apply the faster transitions once without resetting language or mute choices.
+  if (settings.timingRevision !== 1) {
+    Object.assign(settings, { gap: 0, timingRevision: 1 });
     saveSettings();
   }
 
@@ -146,9 +151,9 @@
       const next = cfg.items[idx + 1]; if (next) window.Speech.prefetchClip(next.key);
       if (!settings.muted) await say(it.en, { key: it.key });
       if (!alive()) return;
-      if (settings.ja && it.ja && !settings.muted) { await sleep(150); if (alive()) await say(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() }); }
+      if (settings.ja && it.ja && !settings.muted) await say(it.ja, { lang: 'ja', rate: 1.1 * window.Speech.getRate() });
       if (!alive()) return;
-      await sleep(settings.gap * 1000);
+      if (settings.gap > 0) await sleep(settings.gap * 1000);
       if (!alive()) return;
       results[it.key] = 100;
       window.Store.srsReview(it.key, 4);

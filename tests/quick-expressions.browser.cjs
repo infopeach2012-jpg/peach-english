@@ -12,13 +12,19 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
     await context.route('https://cdn.jsdelivr.net/**', r => r.fulfill({path:process.env.PEACH_TEST_ASSETS+'/chart.js',contentType:'text/javascript'}));
   }
   await context.addInitScript(() => {
-    window.audit = {media:[],ends:[],plays:0};
+    window.audit = {media:[],ends:[],plays:0,timings:[]};
     const play = HTMLMediaElement.prototype.play;
     HTMLMediaElement.prototype.play = function (...args) {
       if (!audit.media.includes(this)) {
         audit.media.push(this);
-        this.addEventListener('ended', () => audit.ends.push(this.src));
+        // Observe completion before the app's handler switches this shared element.
+        this.addEventListener('ended', () => {
+          audit.ends.push(this.src);
+          audit.timings.push({type:'ended',at:performance.now()});
+        }, {capture:true});
+        this.addEventListener('playing', () => audit.timings.push({type:'playing',at:performance.now()}));
       }
+      audit.timings.push({type:'play',at:performance.now()});
       audit.plays++; return play.apply(this,args);
     };
   });
@@ -28,7 +34,7 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
   await p.goto((process.env.PEACH_BASE_URL || 'http://127.0.0.1:8004/')+'#practice');
   await p.waitForSelector('[data-quick="sentence"]');
   // Bound the duration using ten actual recorded sentences. The real selection,
-  // media engine, ended events, 0.4-second gap, and controls remain unmodified.
+  // media engine, ended events, transition timing, and controls remain unmodified.
   await p.evaluate(() => {
     const ids = [492, 523, 530, 534, 535, 537, 542, 543, 633, 639];
     const sentences = Store.content.phrases.filter(p => ids.includes(p.id));
@@ -63,7 +69,7 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
   await p.locator('#hdr-home').click(); const plays = await p.evaluate(() => audit.plays); await p.waitForTimeout(700);
   assert.equal(await p.evaluate(() => audit.plays), plays); assert(await p.evaluate(() => audit.media.every(a => a.paused)));
   // Finish the entire session without pressing Next or replay controls.
-  await p.locator('[data-top="practice"]').click(); await p.evaluate(() => { audit.ends = []; });
+  await p.locator('[data-top="practice"]').click(); await p.evaluate(() => { audit.ends = []; audit.timings = []; });
   await p.locator('[data-quick="sentence"]').click();
   await p.waitForSelector('.sp-done', {timeout:90000});
   assert.equal(await p.locator('.sp-done h2').textContent(), '10 文を聞きました');
@@ -71,6 +77,14 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
   assert.equal(await p.evaluate(() => new Set(audit.ends.filter(s=>s.includes('/audio/clips/'))).size), 10);
   assert.equal(await p.evaluate(() => audit.ends.filter(s=>s.includes('/audio/ja/')).length), 10);
   assert.equal(await p.evaluate(() => japaneseTts.events.length), 0);
+  const transitions = await p.evaluate(() => audit.timings.filter(e=>e.type==='ended').slice(0,-1).map(end=>({
+    request:audit.timings.find(e=>e.type==='play' && e.at>=end.at).at-end.at,
+    playback:audit.timings.find(e=>e.type==='playing' && e.at>=end.at).at-end.at,
+  })));
+  assert.equal(transitions.length,19);
+  assert(transitions.every(t=>t.request<90),JSON.stringify(transitions));
+  assert(transitions.every(t=>t.playback<300),JSON.stringify(transitions));
+  console.log('Drill maximum transition milliseconds:', JSON.stringify({request:Math.max(...transitions.map(t=>t.request)),playback:Math.max(...transitions.map(t=>t.playback))}));
   assert(await p.evaluate(() => audit.media.every(a => a.paused)));
   await p.locator('#dr-back').click(); await p.locator('[data-quick="word"]').click();
   assert.equal(await p.evaluate(() => App.drill.mode), 'speak'); assert(await p.locator('#dr-go').isVisible());

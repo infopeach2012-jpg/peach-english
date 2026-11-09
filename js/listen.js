@@ -23,7 +23,7 @@
   ];
 
   const SETTINGS_KEY = 'speak.listen.v3';
-  let settings = { tab: 'phrase', sit: 'greet', ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0.1, pattern: 'std', auto: true };
+  let settings = { tab: 'phrase', sit: 'greet', ja: true, repeat: 1, kind: 'all', matKey: null, gap: 0, pattern: 'std', auto: true };
   try { Object.assign(settings, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); } catch (e) { /* noop */ }
   function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) { /* noop */ } }
   // Restoring the v37 code alone leaves repeat/study settings in existing browsers.
@@ -35,6 +35,11 @@
   // Enable English → Japanese once for existing browsers, too. Later choices persist.
   if (settings.translationRevision !== 1) {
     Object.assign(settings, { ja: true, translationRevision: 1 });
+    saveSettings();
+  }
+  // Shorten the pauses for existing listeners once; later gap choices persist.
+  if (settings.timingRevision !== 1) {
+    Object.assign(settings, { gap: 0, timingRevision: 1 });
     saveSettings();
   }
 
@@ -375,8 +380,7 @@
         if (alive()) await say(q.en, { rate: window.Speech.getRate(), key: q.key, slow: true });
       }
       if (settings.ja && q.ja && alive()) {
-        await sleep(100);
-        if (alive()) await say(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
+        await say(q.ja, { lang: 'ja', rate: Math.min(2, 1.1 * window.Speech.getRate()) });
       }
       if (settings.pattern === 'study' && alive()) {
         await sleep(150);
@@ -385,7 +389,7 @@
       if (!(playing && my === session)) break;
       listenedThisRun++;
       if (listenedThisRun % 5 === 0) { window.Store.recordActivity(1); window.App.refreshHeader(); }
-      await sleep(settings.gap * 1000);
+      if (settings.gap > 0) await sleep(settings.gap * 1000);
       if (!(playing && my === session)) break;
       idx++;
     }

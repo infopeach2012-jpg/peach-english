@@ -24,7 +24,7 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
       HTMLMediaElement.prototype.play = function(...args) {
         if (!audit.media.includes(this)) {
           audit.media.push(this);
-          this.addEventListener('ended', () => audit.ends.push(this.src));
+          this.addEventListener('ended', () => audit.ends.push(this.src), {capture:true});
         }
         audit.starts.push(this.src);
         return play.apply(this,args);
@@ -38,7 +38,8 @@ const installJapaneseTts = require('./helpers/japanese-tts.cjs');
     const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('speak.listen.v3')));
     assert.equal(saved.repeat,1,'Old stored repeat must be restored to one playback');
     assert.equal(saved.pattern,'std','Old study mode must no longer repeat the same sentence');
-    assert.equal(saved.ja,true); assert.equal(saved.translationRevision,1); assert.equal(saved.auto,true); assert.equal(saved.gap,0.1);
+    assert.equal(saved.ja,true); assert.equal(saved.translationRevision,1); assert.equal(saved.auto,true); assert.equal(saved.gap,0);
+    assert.equal(saved.timingRevision,1);
     assert.equal(saved.sit,'shop'); assert.equal(saved.kind,'sentence'); assert.equal(saved.matKey,'r2');
     assert.equal(await page.evaluate(() => Speech.getRate()),0.75);
     const progress = await page.evaluate(() => Store.progress);
