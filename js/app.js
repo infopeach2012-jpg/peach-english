@@ -233,7 +233,7 @@
   };
 
   // 画面の左下に版の番号を出す（iPad が新しい版を読んでいるかを、見て確かめられるように）
-  window.APP_VERSION = 'v52';
+  window.APP_VERSION = 'v53';
   document.addEventListener('DOMContentLoaded', () => {
     const b = document.createElement('div');
     b.id = 'app-version';
