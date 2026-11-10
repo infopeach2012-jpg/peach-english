@@ -27,6 +27,20 @@ class NoteImportTests(unittest.TestCase):
         self.run_import(); before = self.notes_path.read_bytes()
         result = self.run_import(); self.assertTrue(result['unchanged']); self.assertEqual(self.notes_path.read_bytes(), before)
         self.assertEqual(len(json.loads((self.root / 'data/note_batches.json').read_text())), 1)
+    def test_existing_phrase_keeps_its_key_and_batch_translation_without_duplicate_note(self):
+        phrases_path = self.root / 'data/phrases.json'
+        phrases_path.write_text(json.dumps([
+            {'id': 7, 'en': "I'll call you.", 'ja': '電話します。'},
+            {'id': 8, 'en': 'See you tomorrow.', 'ja': '明日会いましょう。', 'note': '既存フレーズのメモ'}]))
+        before_notes = self.notes_path.read_bytes(); before_phrases = phrases_path.read_bytes()
+        result = self.run_import()
+        self.assertEqual((result['added'], result['reused']), (0, 2))
+        self.assertEqual(json.loads(self.notes_path.read_text()), json.loads(before_notes))
+        self.assertEqual(phrases_path.read_bytes(), before_phrases)
+        batch = json.loads((self.root / 'data/note_batches.json').read_text())[0]
+        self.assertEqual([item['key'] for item in batch['items']], ['n42', 'p8'])
+        self.assertEqual(batch['items'][1]['ja'], 'また明日。')
+        self.assertTrue(self.run_import()['unchanged'])
     def test_changed_batch_is_rejected_without_overwriting_existing_notes(self):
         self.run_import(); before = self.notes_path.read_bytes(); self.batch['entries'][0]['ja'] = '訂正'
         with self.assertRaisesRegex(ValueError, 'already exists'): self.run_import()
