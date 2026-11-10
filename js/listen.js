@@ -50,6 +50,12 @@
   let session = 0;       // 再生ループの世代（停止・切替で無効化する）
   let container = null;
   let listenedThisRun = 0;
+  let initialSituation = new URLSearchParams(location.search).get('listen');
+
+  function recoveryItems() {
+    return [1555, 1520, 1524, 1525].map(id => window.Store.content.phrases.find(p => p.id === id))
+      .filter(Boolean).map(p => ({ en: p.en, ja: p.ja, key: 'p' + p.id, note: p.note, group: '体調が良くなったとき' }));
+  }
 
   function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
@@ -98,6 +104,15 @@
   // ---- 描画 ----
   function render(c) {
     container = c;
+    // A shared category link must also work after visiting long texts or words.
+    if (SITS.some(s => s.key === initialSituation)) {
+      Object.assign(settings, { tab: 'phrase', sit: initialSituation, kind: 'all' });
+      saveSettings();
+      const url = new URL(location.href);
+      url.searchParams.delete('listen');
+      history.replaceState(history.state, '', url.href);
+    }
+    initialSituation = null;
     draw();
     // Navigation from a tap can unlock audio on iPad; fresh loads need a play tap.
     if (settings.auto && navigator.userActivation && navigator.userActivation.hasBeenActive) play();
@@ -111,11 +126,20 @@
         <button data-tab="phrase" class="flex-1 rounded-xl py-2.5 text-sm font-bold ${isPhrase ? 'brand-grad text-white' : 'bg-gray-100 text-gray-600'}">💬 フレーズ・単語</button>
         <button data-tab="text" class="flex-1 rounded-xl py-2.5 text-sm font-bold ${!isPhrase ? 'brand-grad text-white' : 'bg-gray-100 text-gray-600'}">📖 長文</button>
       </div>
+      <div class="listen-shortcuts">
+        <button id="ls-health" class="notes-secondary" aria-pressed="${isPhrase && settings.sit === 'health'}">🩺 健康・体調</button>
+      </div>
       <div id="ls-body"></div>
     `;
     container.querySelectorAll('[data-tab]').forEach((b) => {
       b.onclick = () => { settings.tab = b.dataset.tab; saveSettings(); draw(); };
     });
+    container.querySelector('#ls-health').onclick = () => {
+      const resume = playing;
+      Object.assign(settings, { tab: 'phrase', sit: 'health', kind: 'all' });
+      saveSettings(); draw();
+      if (resume) play();
+    };
     if (isPhrase) drawPhrase(container.querySelector('#ls-body'));
     else drawText(container.querySelector('#ls-body'));
   }
@@ -217,18 +241,29 @@
   // ---- フレーズ画面 ----
   function drawPhrase(body) {
     const all = sitCount('all');
+    const recovery = settings.sit === 'health' ? recoveryItems() : [];
     body.innerHTML = `
       <label class="situation-label" for="ls-situation">練習する場面</label>
       <select id="ls-situation" class="situation-select"><option value="all" ${settings.sit === 'all' ? 'selected' : ''}>すべての場面 · ${all}件</option>${SITS.map(s=>`<option value="${s.key}" ${settings.sit === s.key ? 'selected' : ''}>${s.label} · ${sitCount(s.key)}件</option>`).join('')}</select>
       <div class="flex gap-2 mb-4">
         ${[['all', '文も単語も'], ['sentence', '文だけ'], ['word', '単語だけ']].map(([v, l]) => `<button data-kind="${v}" class="chip ${settings.kind === v ? 'bg-violet-100 text-brand' : 'bg-gray-50 text-gray-500'}">${l}</button>`).join('')}
       </div>
+      ${recovery.length ? `<section class="listen-recovery" aria-labelledby="ls-recovery-title">
+        <h2 id="ls-recovery-title">体調が良くなったとき</h2>
+        <p>I'm on the mend. など、回復を伝える${recovery.length}つの表現。</p>
+        <button id="ls-recovery-play" class="studio-primary">回復の${recovery.length}文を聞く</button>
+      </section>` : ''}
       ${player(settingsRow())}
       <div id="ls-list" class="space-y-1"></div>
     `;
     body.querySelector('#ls-situation').onchange = (e) => { const resume = playing; settings.sit = e.target.value; saveSettings(); draw(); if (resume) play(); };
     body.querySelectorAll('[data-sit]').forEach((b) => { b.onclick = () => { settings.sit = b.dataset.sit; saveSettings(); draw(); }; });
     body.querySelectorAll('[data-kind]').forEach((b) => { b.onclick = () => { settings.kind = b.dataset.kind; saveSettings(); draw(); }; });
+    const recoveryButton = body.querySelector('#ls-recovery-play');
+    if (recoveryButton) recoveryButton.onclick = () => {
+      window.App.drill = { mode: 'listen', title: '体調が良くなったとき', back: 'listen', items: recovery };
+      window.App.navigate('drill');
+    };
     bindSettings(body, () => drawPhrase(body));
 
     queue = phraseItems(settings.sit);
