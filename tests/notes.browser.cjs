@@ -43,7 +43,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
  await p.locator('#hdr-home').click();await p.goBack();await p.waitForSelector('#view-notes.active');
  await p.reload();await p.waitForSelector('#view-notes.active #notes-date');assert.equal(await p.locator('#notes-date').inputValue(),'all');assert.equal(await p.locator('.note-entry').count(),60);
  // The same imported note is available from the existing dictionary and note flashcards.
- await p.evaluate(()=>App.navigate('dict'));await p.locator('#dict-q').fill('custody');await p.waitForTimeout(300);assert.equal(await p.locator('#dict-list .dict-say').count(),2);
+ await p.evaluate(()=>App.navigate('dict'));await p.locator('#dict-q').fill('custody');await p.locator('#dict-kind').selectOption('notes');assert.equal(await p.locator('#dict-list [data-say]').count(),2);
  for(const route of ['home','practice','listen','notes']){
   await p.evaluate(route=>App.navigate(route),route);
   for(const width of [320,390,768,1024]){

@@ -20,6 +20,7 @@
         <div class="launch-actions">
           <button data-go="patterns" class="studio-primary">練習をはじめる <span aria-hidden="true">→</span></button>
           <button data-go="listen" class="studio-text-link">聞き流しを開く <span aria-hidden="true">›</span></button>
+          <button data-go="dict" class="studio-text-link">全教材・原資料を探す <span aria-hidden="true">›</span></button>
         </div>
         <p class="launch-caption">1レッスン8文。自然なアメリカ英語で。</p>
       </section>
@@ -51,7 +52,10 @@
         <button data-go="smart" class="studio-review"><span class="review-symbol" aria-hidden="true">↺</span><span><strong>覚えた英語を、使える英語に。</strong><small>スマートレビューで、今日の復習。</small></span><span class="studio-review-arrow" aria-hidden="true">${window.App.icon('arrow')}</span></button>
       </section>
       <footer class="studio-footer"><span>Speak Studio <span class="footer-dot">·</span> Every word opens a door.</span><div><button data-go="stats">学習の記録</button><button id="home-settings">設定</button></div></footer>`;
-    container.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => window.App.navigate(b.dataset.go)));
+    container.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.go === 'notes' && latestNotes) window.NotesView.selectBatch(latestNotes.id);
+      window.App.navigate(b.dataset.go);
+    }));
     container.querySelector('#home-settings').addEventListener('click', openSettings);
   }
 

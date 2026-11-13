@@ -9,6 +9,7 @@
 3. `python for_chatgpt/generate_missing_audio.py --model-dir work/models`。Python環境にはkokoro-onnx、onnxruntime、numpy、soundfile、システムにはFFmpegが必要。モデルはkokoro-v1.0.onnxとvoices-v1.0.bin。失敗した音声を無音で埋めない。
    続けて `python for_chatgpt/generate_japanese_audio.py` で和訳の音声も追加し、全件の対応・復号・無音・音量を検査する。pyopenjtalkと公式辞書が必要。日本語の音声は `audio/ja/`、索引は `audio/ja_index.json`。既存の音声を保持し、新しい和訳にも必ず音声ファイルを用意する。
 4. `python for_chatgpt/audit_audio.py --report /tmp/peach-audio-audit.json`。音声の欠落・復号・音量・速度別の長さを検査。警告も確認する。機械検査を「全件試聴した」と表現しない。
+   音声追加後に `python for_chatgpt/build_catalog.py` を実行し、全教材・原資料の検索用 `data/catalog.json` と `docs/catalog/` の全件CSV・文章一覧・照合結果を更新する。確認日も更新する。元データ・提出記録・未確認OCR原文を省略しない。OCRの欠落を推測で補完しない。
 5. `python -m unittest discover -s tests -p 'test_*.py'`、`node --test tests/speech.test.cjs`。UIを変更したらPlaywrightでも確認。今回追加したノートとその音声をブラウザで開いて確かめる。
 6. `sw.js` のCACHEと `js/app.js` のAPP_VERSIONを1つ上げ、READMEの最新件数・エンジン・声・更新日を更新。ノートへの入口はホーム・上部メニュー・練習画面にある。
 7. 必要なファイルだけをコミット。push前に `git fetch origin main` で他の変更を確認し、必要なら統合。`git push origin HEAD:main`。強制pushはしない。

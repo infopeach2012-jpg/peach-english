@@ -43,6 +43,8 @@ def source_translations():
         add(row['aJa']); add(row['bJa'])
     for batch in read('note_batches.json'):
         for item in batch['items']: add(item.get('ja', ''))
+    for course in read('patterns.json'):
+        for item in course['items']: add(item.get('ja', ''))
     return texts
 
 

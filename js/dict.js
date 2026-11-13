@@ -1,102 +1,98 @@
-/* dict.js — フレーズ辞書（全フレーズ・ノートの検索/ブラウズ）。window.DictView */
+/* Complete catalog: lessons, submission history and labeled source records. */
 (function () {
   'use strict';
-
-  let all = null;
-  let query = '';
-  let limit = 60;
-
-  function buildIndex() {
-    const C = window.Store.content;
-    all = []
-      .concat(C.phrases.map((p) => ({ key: 'p' + p.id, en: p.en, ja: p.ja, note: p.note, tag: 'フレーズ' })))
-      .concat(C.notes.map((n) => ({ key: 'n' + n.id, en: n.en, ja: n.ja, note: n.note, tag: 'ノート' })));
+  let catalog = null, query = '', kind = 'all', limit = 60, epoch = 0;
+  const esc = value => window.App.escapeHtml(String(value || ''));
+  const norm = text => String(text || '').normalize('NFKC').replace(/’/g, "'").toLowerCase();
+  function stop() { epoch++; window.Speech.stopSpeaking(); }
+  async function render(container) {
+    stop();
+    const ticket = epoch, params = new URLSearchParams(location.search);
+    if (params.has('q')) { query = params.get('q'); kind = 'all'; limit = 60; }
+    container.innerHTML = '<p class="catalog-loading">全教材を読み込んでいます…</p>';
+    try {
+      if (!catalog) {
+        const response = await fetch('data/catalog.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('load');
+        catalog = await response.json();
+      }
+      if (ticket !== epoch) return;
+      draw(container);
+    } catch (_) {
+      if (ticket !== epoch) return;
+      container.innerHTML = '<p>全教材を読み込めませんでした。</p><button class="notes-secondary" id="dict-retry">再読み込み</button>';
+      container.querySelector('#dict-retry').onclick = () => render(container);
+    }
   }
-
-  function render(container) {
-    if (!all) buildIndex();
-    draw(container);
-  }
-
   function filtered() {
-    const q = query.trim().toLowerCase();
-    if (!q) return all;
-    return all.filter((x) =>
-      (x.en && x.en.toLowerCase().includes(q)) ||
-      (x.ja && x.ja.includes(query.trim())) ||
-      (x.note && x.note.toLowerCase().includes(q))
-    );
+    const q = norm(query.trim());
+    return catalog.items.filter(row => (kind === 'all' || row.kind === kind) &&
+      (!q || norm([row.en,row.ja,row.note,row.tags,row.section,row.sourceLabel,row.date,row.added_on,row.id].join(' ')).includes(q)));
   }
-
+  function rowHtml(row) {
+    const source = row.kind === 'documents', unverified = ['ocr','legacy'].includes(row.kind);
+    return `<article class="catalog-entry ${unverified ? 'catalog-unverified' : ''}" data-catalog-id="${esc(row.id)}">
+      <div class="catalog-meta">${esc(catalog.labels[row.kind])}${row.date ? ' · '+esc(row.date) : ''}${row.added_on ? ' · 追加 '+esc(row.added_on) : ''}</div>
+      ${row.en ? `<p class="catalog-en" lang="en">${esc(row.en)}</p>` : ''}
+      ${row.ja ? `<p class="catalog-ja">${esc(row.ja)}</p>` : ''}
+      ${row.note ? source ? `<details><summary>${esc(row.sourceLabel)} · 全文を読む</summary><pre class="catalog-source">${esc(row.note)}</pre></details>` : `<p class="catalog-note">${esc(row.note)}</p>` : ''}
+      <p class="catalog-origin">${esc(row.section || row.sourceLabel)}</p>
+      <div class="catalog-controls">
+        ${row.parts && row.parts.length ? `<button data-say="${esc(row.id)}" class="notes-secondary">英語を聞く</button>${row.ja ? `<button data-ja="${esc(row.id)}" class="notes-secondary">和訳を聞く</button>` : ''}` : ''}
+        ${row.favoriteKey ? `<button data-star="${esc(row.favoriteKey)}" class="notes-secondary" aria-pressed="${window.Store.isFavorite(row.favoriteKey)}">${window.Store.isFavorite(row.favoriteKey) ? '★' : '☆'} お気に入り</button>` : ''}
+        <a href="${esc(row.source)}" class="catalog-source-link">出典を見る</a>
+      </div></article>`;
+  }
   function draw(container) {
-    const list = filtered();
-    const shown = list.slice(0, limit);
-    container.innerHTML = `
-      <button class="text-sm text-gray-400 mb-3 back-home">← ホーム</button>
-      <div class="sticky top-[calc(env(safe-area-inset-top))] z-10 bg-white pb-2">
-        <div class="relative">
-          <input id="dict-q" value="${window.App.escapeHtml(query)}" placeholder="英語・日本語・キーワードで検索" class="w-full border border-gray-200 rounded-full pl-10 pr-4 py-2.5 text-sm" />
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#9ca3af" stroke-width="2" class="absolute left-3.5 top-3"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
-        </div>
-        <div class="text-xs text-gray-400 mt-2 px-1">${list.length} 件${query ? '（検索中）' : '（全フレーズ）'}</div>
-      </div>
-      <div id="dict-list" class="space-y-2 mt-2">
-        ${shown.map(rowHtml).join('') || '<div class="text-center text-gray-400 py-10 text-sm">見つかりませんでした</div>'}
-      </div>
-      ${list.length > limit ? `<button id="dict-more" class="w-full mt-3 bg-gray-100 text-gray-600 rounded-xl py-2.5 font-semibold text-sm">さらに表示（残り ${list.length - limit} 件）</button>` : ''}
-    `;
-    bindBack(container);
-
-    const q = container.querySelector('#dict-q');
-    q.addEventListener('input', debounce(() => { query = q.value; limit = 60; redraw(container, q); }, 200));
-    // フォーカス維持のため再描画は最小限
-    container.querySelectorAll('.dict-say').forEach((b) => {
-      b.onclick = () => window.Speech.speak(b.dataset.en, {});
-    });
-    container.querySelectorAll('.dict-star').forEach((b) => {
-      b.onclick = () => {
-        const on = window.Store.toggleFavorite(b.dataset.key);
-        b.textContent = on ? '★' : '☆';
-        b.style.color = on ? '#f59e0b' : '#d1d5db';
-      };
-    });
-    const more = container.querySelector('#dict-more');
-    if (more) more.onclick = () => { limit += 60; draw(container); container.querySelector('#dict-q').focus(); };
+    const audit = catalog.audit;
+    container.innerHTML = `<section class="catalog-page">
+      <button class="studio-text-link" id="dict-home">← ホーム</button>
+      <header class="notes-heading"><p class="studio-eyebrow">ALL YOUR MATERIALS</p><h1>全教材・原資料</h1><p>英語・和訳・説明を、すべての教材から検索できます。</p></header>
+      <p class="catalog-summary">教材 ${audit.teaching_records.toLocaleString()}件 · 提出記録 ${audit.batch_occurrences}件 · OCR原文 ${audit.counts.ocr}件 · 旧版の原文 ${audit.counts.legacy}件 · 原資料 ${audit.counts.documents}件</p>
+      <div class="catalog-tools"><a href="docs/catalog/all-data.csv" download>全件をCSVで保存</a><a href="docs/catalog/all-data.md" download>全件を文章で保存</a><button id="dict-stop" class="notes-secondary">音声を停止</button></div>
+      <div class="catalog-shortcuts"><button id="dict-health" class="notes-secondary">健康・体調を探す</button><button id="dict-recovery" class="notes-secondary">体調が良くなった</button></div>
+      <div class="notes-filters"><label class="notes-search">英語・日本語・説明で検索<input id="dict-q" type="search" value="${esc(query)}" placeholder="例：回復、caffeine、11月12日追加" /></label><label>表示する資料<select id="dict-kind"><option value="all">すべて（${catalog.items.length}件）</option>${Object.entries(catalog.labels).map(([key,label])=>`<option value="${key}" ${kind===key?'selected':''}>${esc(label)}（${audit.counts[key] || 0}件）</option>`).join('')}</select></label></div>
+      <p id="dict-count" role="status"></p><div id="dict-list"></div><button id="dict-more" class="notes-secondary" hidden>さらに60件表示</button>
+      <details class="catalog-scope"><summary>収録範囲と確認状況</summary><p>${esc(audit.scope)}</p><p>提出記録は同じ表現の再提出も別々に残しています。OCR原文は誤認識を含む可能性があり、読み上げの対象にしていません。</p><a href="docs/catalog/audit.json">照合結果を見る</a></details>
+    </section>`;
+    function list() {
+      const rows = filtered();
+      container.querySelector('#dict-count').textContent = `${rows.length.toLocaleString()}件 / 全${catalog.items.length.toLocaleString()}記録`;
+      container.querySelector('#dict-list').innerHTML = rows.slice(0,limit).map(rowHtml).join('') || '<p class="notes-empty">一致する記録はありません。</p>';
+      container.querySelector('#dict-more').hidden = rows.length <= limit;
+      container.querySelectorAll('[data-say]').forEach(button => button.onclick = async () => {
+        stop(); const ticket = epoch;
+        const row = rows.find(r => r.id === button.dataset.say);
+        window.Speech.unlockAudio();
+        for (const part of row.parts) {
+          if (ticket !== epoch) return;
+          const ok = await window.Speech.speak(part.en, { key: part.key });
+          if (ticket !== epoch) return;
+          if (ok === false) { window.App.toast('音声を再生できませんでした'); return; }
+        }
+      });
+      container.querySelectorAll('[data-ja]').forEach(button => button.onclick = () => {
+        stop(); const row = rows.find(r => r.id === button.dataset.ja);
+        window.Speech.unlockAudio(); window.Speech.speak(row.ja, { lang: 'ja', rate: 1.1 });
+      });
+      container.querySelectorAll('[data-star]').forEach(button => button.onclick = () => { window.Store.toggleFavorite(button.dataset.star); list(); });
+    }
+    function search(value) {
+      stop(); query=value; limit=60;
+      const url=new URL(location.href);
+      if (query) url.searchParams.set('q',query); else url.searchParams.delete('q');
+      history.replaceState(history.state,'',url);
+      list();
+    }
+    container.querySelector('#dict-q').oninput = e => search(e.target.value);
+    container.querySelector('#dict-kind').onchange = e => { stop(); kind=e.target.value; limit=60; list(); };
+    container.querySelector('#dict-more').onclick = () => { limit+=60; list(); };
+    container.querySelector('#dict-stop').onclick = stop;
+    container.querySelector('#dict-home').onclick = () => window.App.navigate('home');
+    for (const [id,value] of [['dict-health','健康・体調'],['dict-recovery','体調が良くなった']]) {
+      container.querySelector('#'+id).onclick = () => { kind='all'; container.querySelector('#dict-kind').value='all'; container.querySelector('#dict-q').value=value; search(value); };
+    }
+    list();
   }
-
-  function redraw(container, qEl) {
-    const pos = qEl.selectionStart;
-    draw(container);
-    const nq = container.querySelector('#dict-q');
-    nq.focus();
-    try { nq.setSelectionRange(pos, pos); } catch (e) {}
-  }
-
-  function rowHtml(x) {
-    return `
-      <div class="bg-white border border-gray-100 rounded-2xl p-3.5 shadow-sm flex items-start gap-2">
-        <button class="dict-say shrink-0 w-8 h-8 rounded-full bg-violet-50 text-brand flex items-center justify-center text-sm" data-en="${window.App.escapeHtml(x.en)}">🔊</button>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-2">
-            <span class="chip ${x.tag === 'フレーズ' ? 'bg-violet-50 text-brand' : 'bg-blue-50 text-blue-600'}" style="font-size:10px;padding:1px 7px">${x.tag}</span>
-          </div>
-          <div class="font-semibold text-gray-800 mt-1">${window.App.escapeHtml(x.en)}</div>
-          <div class="text-sm text-gray-500">${window.App.escapeHtml(x.ja)}</div>
-          ${x.note ? `<div class="text-xs text-gray-400 mt-1">${window.App.escapeHtml(x.note)}</div>` : ''}
-        </div>
-        <button class="dict-star shrink-0 text-xl leading-none" data-key="${x.key}" style="color:${window.Store.isFavorite(x.key) ? '#f59e0b' : '#d1d5db'}">${window.Store.isFavorite(x.key) ? '★' : '☆'}</button>
-      </div>`;
-  }
-
-  function debounce(fn, ms) {
-    let t;
-    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
-  }
-
-  function bindBack(container) {
-    const b = container.querySelector('.back-home');
-    if (b) b.onclick = () => window.App.navigate('home');
-  }
-
-  window.DictView = { render };
+  window.DictView = { render, onLeave: stop };
 })();

@@ -14,7 +14,7 @@
     freetalk: { el: 'view-freetalk', title: 'AI会話', mod: () => window.FreetalkView },
     quiz: { el: 'view-quiz', title: 'クイズ', mod: () => window.QuizView },
     stats: { el: 'view-stats', title: '統計・進捗', mod: () => window.StatsView },
-    dict: { el: 'view-dict', title: 'フレーズ辞書', mod: () => window.DictView },
+    dict: { el: 'view-dict', title: '全教材・原資料', mod: () => window.DictView },
     review: { el: 'view-review', title: '保存した表現・苦手', mod: () => window.ReviewView },
     practice: { el: 'view-practice', title: '練習', mod: () => window.PracticeView },
     patterns: { el: 'view-patterns', title: 'パターン練習', mod: () => window.PatternsView },
@@ -155,7 +155,7 @@
     { view: 'quiz', emoji: '🧩', title: 'クイズ', desc: '4択で力だめし' },
     { view: 'review', emoji: '⭐', title: '復習ボックス', desc: 'お気に入りと苦手を克服' },
     { view: 'stats', emoji: '📊', title: '統計・進捗', desc: '学習の記録を見る' },
-    { view: 'dict', emoji: '📚', title: 'フレーズ辞書', desc: '全フレーズを検索' },
+    { view: 'dict', emoji: '📚', title: '全教材・原資料', desc: '英語・和訳・提出記録をすべて検索' },
   ];
   function openMenu() {
     if (document.getElementById('menu-ov')) return;
@@ -233,7 +233,7 @@
   };
 
   // 画面の左下に版の番号を出す（iPad が新しい版を読んでいるかを、見て確かめられるように）
-  window.APP_VERSION = 'v56';
+  window.APP_VERSION = 'v57';
   document.addEventListener('DOMContentLoaded', () => {
     const b = document.createElement('div');
     b.id = 'app-version';

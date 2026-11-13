@@ -1,0 +1,282 @@
+{
+ "id": "2026-11-12-01",
+ "added_on": "2026-11-12",
+ "lesson_date": null,
+ "title": "Speak画像：所要時間・道案内・習慣・家事の依頼・経済の添削・街の様子",
+ "source": "2026-11-12受領の画像32枚（A1–A10、B1–B10、C1–C10、D1–D2）。教材画面31枚から30項目を転記。A2/A4の再起動、C6/C8の切手は同文のため各1項目にまとめ、両方の出典を記録。A1の会話相手の文も収録。C9/C10の修正前・別の発話は添削メモに全文保存。D2は利用制限を示すチャット画面で、新規教材はなく、サムネイルも既出画像。隠れている英文や途中までしか見えない背景カードは復元しない。教材に日付の記載がなく学習日は未記録。表示された和訳を保持し、未表示の和訳・文法説明は補足と明記。",
+ "entries": [
+  {
+   "en": "It's not far.",
+   "ja": "遠くないですよ。",
+   "note": "画像A1。日本語は画面の出題文。補足: far は距離が遠いこと。",
+   "section": "11月12日追加 · ウォーミングアップ",
+   "screenshots": [
+    "A1"
+   ]
+  },
+  {
+   "en": "Thanks so much! I really appreciate your help.",
+   "ja": "本当にありがとうございます！助けていただいて、とても感謝しています。",
+   "note": "画像A1。画面の会話相手の英文。和訳は補足。appreciate your help は手助けへの感謝を表す。",
+   "section": "11月12日追加 · ウォーミングアップ",
+   "screenshots": [
+    "A1"
+   ]
+  },
+  {
+   "en": "It will take about ten minutes to reboot.",
+   "ja": "再起動には約10分かかります。",
+   "note": "画像A2・A4。画面の型: It will take about ___ minutes. 補足: It will take + 時間 + to do で所要時間を伝える。reboot は再起動する。",
+   "section": "11月12日追加 · 所要時間",
+   "screenshots": [
+    "A2",
+    "A4"
+   ]
+  },
+  {
+   "en": "It will take about 20 minutes to bake.",
+   "ja": "焼くのに20分ほどかかります。",
+   "note": "画像A3。画面の型: It will take about ___ minutes. 補足: about は約、bake はオーブンなどで焼くこと。",
+   "section": "11月12日追加 · 所要時間",
+   "screenshots": [
+    "A3"
+   ]
+  },
+  {
+   "en": "It will bake about five minutes at this temperature.",
+   "ja": "この温度なら、焼くのに約5分かかります。",
+   "note": "画像A5。画面の型: It will ___ about five minutes. 補足: bake はここでは焼けるという自動詞。期間を示す for を入れて bake for about five minutes とも言う。英文は画面のまま保持。",
+   "section": "11月12日追加 · 所要時間",
+   "screenshots": [
+    "A5"
+   ]
+  },
+  {
+   "en": "It will run about five minutes, then shut off.",
+   "ja": "それは5分ほど動いてから、電源が切れます。",
+   "note": "画像A6。画面の型: It will ___ about five minutes. 補足: run は機械が動く、shut off は停止する・電源が切れる。",
+   "section": "11月12日追加 · 所要時間",
+   "screenshots": [
+    "A6"
+   ]
+  },
+  {
+   "en": "It's the right way.",
+   "ja": "それが正しい方法です。",
+   "note": "画像A7。画面の型: It's ___ way. 補足: right はここでは正しい。道案内なら正しい道の意味にもなる。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "A7"
+   ]
+  },
+  {
+   "en": "It's the quickest way.",
+   "ja": "それが一番早い方法です。",
+   "note": "画像A8。画面の型: It's ___ way. 補足: quickest は quick の最上級。最も時間がかからない方法・道を指す。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "A8"
+   ]
+  },
+  {
+   "en": "Can I take you there?",
+   "ja": "そこまで連れて行きましょうか？",
+   "note": "画像A9。画面の題: 助けを申し出る。補足: Can I ...? で申し出る。take 人 there でそこへ人を連れて行く。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "A9"
+   ]
+  },
+  {
+   "en": "Go straight.",
+   "ja": "まっすぐ行ってください。",
+   "note": "画像A10。補足: straight はまっすぐに。道案内の短い表現。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "A10"
+   ]
+  },
+  {
+   "en": "Turn right at the corner.",
+   "ja": "角で右に曲がってください。",
+   "note": "画像B1。画面の題: 目印で場所を伝える。補足: at the corner はその角で。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "B1"
+   ]
+  },
+  {
+   "en": "Turn left at the light.",
+   "ja": "信号で左に曲がってください。",
+   "note": "画像B2。画面の題: 目印で場所を伝える。補足: the light はここでは交通信号。",
+   "section": "11月12日追加 · 方法・道案内",
+   "screenshots": [
+    "B2"
+   ]
+  },
+  {
+   "en": "Sure thing!",
+   "ja": "もちろんです！",
+   "note": "画像B3。補足: 快く同意・承諾するくだけた返事。",
+   "section": "11月12日追加 · 遊びに誘う",
+   "screenshots": [
+    "B3"
+   ]
+  },
+  {
+   "en": "Can’t wait!",
+   "ja": "待ちきれません！",
+   "note": "画像B4。補足: I can’t wait! の I を省いた会話表現で、とても楽しみにしている気持ち。",
+   "section": "11月12日追加 · 遊びに誘う",
+   "screenshots": [
+    "B4"
+   ]
+  },
+  {
+   "en": "Actually, how about getting a drink?",
+   "ja": "それより、一杯飲むのはどうですか？",
+   "note": "画像B5。補足: how about + 動名詞で提案する。actually はここでは別の案を持ち出す言葉。",
+   "section": "11月12日追加 · 遊びに誘う",
+   "screenshots": [
+    "B5"
+   ]
+  },
+  {
+   "en": "caffeine fix",
+   "ja": "カフェイン補給",
+   "note": "画像B6。補足: fix はここでは欲しくなるものを摂ること。カフェイン補給をくだけて言う。",
+   "section": "11月12日追加 · 日々の習慣",
+   "screenshots": [
+    "B6"
+   ]
+  },
+  {
+   "en": "I get my caffeine fix in the morning.",
+   "ja": "私は午前にカフェインを補給します。",
+   "note": "画像B7。補足: get my caffeine fix でコーヒーなどからカフェインを摂ること。",
+   "section": "11月12日追加 · 日々の習慣",
+   "screenshots": [
+    "B7"
+   ]
+  },
+  {
+   "en": "I go out on the weekend.",
+   "ja": "私は週末、出かけます。",
+   "note": "画像B8。補足: go out は外出する。on the weekend は米国英語で週末に。",
+   "section": "11月12日追加 · 日々の習慣",
+   "screenshots": [
+    "B8"
+   ]
+  },
+  {
+   "en": "I run errands in the morning.",
+   "ja": "私は午前に用事を済ませます。",
+   "note": "画像B9。画面の題: 午前のルーティン。補足: run errands は買い物や郵便局など外出して用事を済ませる。",
+   "section": "11月12日追加 · 日々の習慣",
+   "screenshots": [
+    "B9"
+   ]
+  },
+  {
+   "en": "I wind down in the evening.",
+   "ja": "私は夕方・夜にくつろぎます。",
+   "note": "画像B10。画面の題: 午後や夕方・夜のルーティン。補足: wind down は活動を終えてゆったりする。wind の発音は /waɪnd/。",
+   "section": "11月12日追加 · 日々の習慣",
+   "screenshots": [
+    "B10"
+   ]
+  },
+  {
+   "en": "Let’s reorganize the closet together!",
+   "ja": "クローゼットを一緒に再整理しましょう！",
+   "note": "画像C1。画面の型: Let’s ___ together! 補足: reorganize は整理し直す。together は一緒に。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C1"
+   ]
+  },
+  {
+   "en": "Will you fold the laundry?",
+   "ja": "あなたは洗濯物を畳んでくれますか？",
+   "note": "画像C2。画面の型: I’ll ___. Will you ___? 補足: Will you ...? で相手に頼む。fold the laundry は洗濯物を畳む。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C2"
+   ]
+  },
+  {
+   "en": "We’re running out of toilet paper.",
+   "ja": "私たちはトイレットペーパーがなくなりかけています。",
+   "note": "画像C3。画面の型: We’re running out of ___. 補足: run out of は使い果たす、進行形はなくなりつつあること。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C3"
+   ]
+  },
+  {
+   "en": "Can you swing by the post office on your way home?",
+   "ja": "家に帰る途中で郵便局に寄ってもらえますか？",
+   "note": "画像C4。画面の型: We’re running out of ___. 補足: swing by はちょっと立ち寄る。on your way home は帰宅途中に。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C4"
+   ]
+  },
+  {
+   "en": "Yes, we’re running out of milk. Can you swing by the grocery store on your way home?",
+   "ja": "はい、私たちは牛乳がなくなりかけています。家に帰る途中でスーパーに寄ってもらえますか？",
+   "note": "画像C5。画面の型: We’re running out of ___. 補足: grocery store は食料品店・スーパー。画面の2文をひとまとまりで保持。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C5"
+   ]
+  },
+  {
+   "en": "We're low on stamps; can you pick some up at the post office?",
+   "ja": "切手が少なくなってきたから、郵便局でいくつか買ってきてくれる？",
+   "note": "画像C6・C8。画面の型: Can you pick some up ___? 補足: be low on は残りが少ない。pick some up はここではいくつか買ってくる。C8は追加の練習2/2で同じ文。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C6",
+    "C8"
+   ]
+  },
+  {
+   "en": "I forgot batteries; can you pick some up at the pharmacy?",
+   "ja": "電池を買い忘れたんだけど、薬局でいくつか買ってきてくれる？",
+   "note": "画像C7。画面の型: Can you pick some up ___? 補足: batteries は電池。米国の pharmacy は日用品を扱うドラッグストアの場合もある。",
+   "section": "11月12日追加 · 家事・買い物のお願い",
+   "screenshots": [
+    "C7"
+   ]
+  },
+  {
+   "en": "I live in Japan, so the Japanese economy is declining.",
+   "ja": "私は日本に住んでいるので、日本経済は衰退しています。",
+   "note": "画像C9・C10上部。画面C9の修正前: I live in Japan, so the Japanese economy is reducing. 修正後の英文を本文に保存。C10上部の別の発話: I live in Japan, so the Japanese economy is decreasing. 画面の説明: 経済には declining（悪化している、縮小している）を使います。reducing はふつう「減らしている」という意味です。和訳は補足で、so の因果関係もそのまま訳したもの。補足: この so は「日本に住んでいるから経済が衰退している」という不自然な因果関係になる。単に2つのことを述べるなら I live in Japan, and the Japanese economy is declining.（私は日本に住んでいて、日本経済は衰退しています。）とする。経済規模の縮小なら shrinking も使える。実際の経済状況を断定する記述ではなく、画像の発話の記録。",
+   "section": "11月12日追加 · フリートークの添削",
+   "screenshots": [
+    "C9",
+    "C10上部"
+   ]
+  },
+  {
+   "en": "My business is shrinking.",
+   "ja": "私の事業は縮小しています。",
+   "note": "画像C10。画面の修正前: My business is reducing. 修正後: My business is shrinking. 画面の説明: 会社や景気の大きさが小さくなるときは shrinking を使います。reducing はここでは不自然です。和訳は補足。補足: shrink は規模が縮むこと。reduce は reduce costs（費用を減らす）のように目的語を伴う使い方が多いが、常に他動詞というわけではない。",
+   "section": "11月12日追加 · フリートークの添削",
+   "screenshots": [
+    "C10"
+   ]
+  },
+  {
+   "en": "It's a sprawling city.",
+   "ja": "広大な都市です。",
+   "note": "画像D1。補足: sprawling は市街地などが広い範囲に広がった様子。単に人口が多いという意味ではない。",
+   "section": "11月12日追加 · 街の様子",
+   "screenshots": [
+    "D1"
+   ]
+  }
+ ]
+}
