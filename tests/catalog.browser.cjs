@@ -4,6 +4,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const base = process.env.PEACH_BASE_URL || 'http://127.0.0.1:8022/';
 const catalog = JSON.parse(fs.readFileSync('data/catalog.json'));
+const total = catalog.items.length.toLocaleString();
+const latest = JSON.parse(fs.readFileSync('data/note_batches.json'))[0];
 (async () => {
   const browser = await chromium.launch({ headless:true, args:['--no-sandbox'] });
   try {
@@ -21,7 +23,7 @@ const catalog = JSON.parse(fs.readFileSync('data/catalog.json'));
     let first=true;
     await page.route('**/data/catalog.json',route=>{if(first){first=false;return route.fulfill({status:503,body:'retry'});}return route.continue();});
     await page.goto(base+'#dict');await page.locator('#dict-retry').click();await page.waitForSelector('#dict-kind');
-    assert.equal(await page.locator('#dict-count').textContent(), '3,970件 / 全3,970記録');
+    assert.equal(await page.locator('#dict-count').textContent(), `${total}件 / 全${total}記録`);
     // Enumerate every page of every source family: no records dropped or repeated.
     for(const kind of Object.keys(catalog.labels)){
       await page.locator('#dict-kind').selectOption(kind);
@@ -36,7 +38,7 @@ const catalog = JSON.parse(fs.readFileSync('data/catalog.json'));
       await page.locator('#dict-q').fill(term);
       const norm=s=>String(s||'').normalize('NFKC').replace(/’/g,"'").toLowerCase();
       const expected=catalog.items.filter(r=>norm([r.en,r.ja,r.note,r.tags,r.section,r.sourceLabel,r.date,r.added_on,r.id].join(' ')).includes(norm(term)));
-      assert.equal(await page.locator('#dict-count').textContent(),`${expected.length.toLocaleString()}件 / 全3,970記録`);
+      assert.equal(await page.locator('#dict-count').textContent(),`${expected.length.toLocaleString()}件 / 全${total}記録`);
     }
     await page.locator('#dict-recovery').click();
     assert.deepEqual(await page.locator('[data-catalog-id]').evaluateAll(nodes=>nodes.map(n=>n.dataset.catalogId)),['p1520','p1524','p1525','p1555']);
@@ -78,11 +80,11 @@ const catalog = JSON.parse(fs.readFileSync('data/catalog.json'));
     await page.locator('#notes-batch').selectOption('all');await page.locator('#notes-q').fill('Sure thing!');
     assert((await page.locator('.note-entry').count())>=2);
     await page.locator('#hdr-home').click();await page.locator('[data-go="notes"]').click();
-    assert.equal(await page.locator('#notes-batch').inputValue(),'2026-11-12-01');
-    assert.equal(await page.locator('.note-entry').count(),30);
+    assert.equal(await page.locator('#notes-batch').inputValue(),latest.id);
+    assert.equal(await page.locator('.note-entry').count(),Math.min(60,latest.items.length));
     await page.reload();await page.waitForSelector('#notes-batch');
-    assert.equal(await page.locator('#notes-batch').inputValue(),'2026-11-12-01');
-    assert.equal(await page.locator('.note-entry').count(),30);
-    console.log('PASS: all 3,970 records paginated; every source family; OCR separated; corrections searchable; recovery links; real bilingual and long-text audio; stop/leave; preserved favorites; 320–1024px layout; repeated submissions and latest notes.');
+    assert.equal(await page.locator('#notes-batch').inputValue(),latest.id);
+    assert.equal(await page.locator('.note-entry').count(),Math.min(60,latest.items.length));
+    console.log(`PASS: all ${total} records paginated; every source family; OCR separated; corrections searchable; recovery links; real bilingual and long-text audio; stop/leave; preserved favorites; 320–1024px layout; repeated submissions and latest notes.`);
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

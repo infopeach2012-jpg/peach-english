@@ -13,24 +13,24 @@
   "documents": "教材の原資料"
  },
  "audit": {
-  "checked_on": "2026-11-13",
-  "catalog_records": 3970,
-  "teaching_records": 3189,
+  "checked_on": "2026-11-16",
+  "catalog_records": 4004,
+  "teaching_records": 3205,
   "counts": {
    "phrases": 1686,
-   "notes": 1352,
+   "notes": 1368,
    "dialogues": 86,
    "reading": 12,
    "speeches": 7,
    "patterns": 40,
    "freetalk": 6,
-   "batches": 243,
+   "batches": 260,
    "ocr": 512,
    "legacy": 12,
-   "documents": 14
+   "documents": 15
   },
-  "manifests_checked": 13,
-  "batch_occurrences": 243,
+  "manifests_checked": 14,
+  "batch_occurrences": 260,
   "legacy_counts": {
    "dialogues": 43,
    "notes": 1124,
@@ -40,7 +40,7 @@
   },
   "legacy_differences": 12,
   "problems": [],
-  "scope": "保存中の教材JSON・全提出記録・教材文書・旧単一ファイル版・未確認OCR原文を照合。現在の会話の追加画像32枚も転記。過去の元画像・Excel・PDFファイル自体はこの環境にないため、保存済みの転記との照合であり、元画像全点の再読取ではない。端末内の学習履歴とAI生成会話は個人のブラウザ内にあり、この公開教材一覧には含めない。件数は表現の重複を含む記録数。"
+  "scope": "保存中の教材JSON・全提出記録・教材文書・旧単一ファイル版・未確認OCR原文を照合。追加画像は提出ごとの記録に枚数・転記範囲を保存。過去の元画像・Excel・PDFファイル自体はこの環境にないため、保存済みの転記との照合であり、元画像全点の再読取ではない。端末内の学習履歴とAI生成会話は個人のブラウザ内にあり、この公開教材一覧には含めない。件数は表現の重複を含む記録数。"
  },
  "items": [
   {
@@ -26944,7 +26944,7 @@
    "source": "data/phrases.json",
    "sourceLabel": "スクショ IMG_5337",
    "date": "",
-   "tags": "健康・体調",
+   "tags": "健康・体調 健康・体調",
    "favoriteKey": "p1495",
    "parts": [
     {
@@ -49048,7 +49048,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "2026/5/14",
-   "tags": "",
+   "tags": "健康・体調",
    "favoriteKey": "n1037",
    "parts": [
     {
@@ -54728,6 +54728,294 @@
    ]
   },
   {
+   "id": "n1353",
+   "kind": "notes",
+   "en": "Shall we call it a night?",
+   "ja": "そろそろお開きにしようか？",
+   "note": "画像1の英文・和訳。画面の型: Shall we ___? 補足: Shall we + 動詞の原形? は「一緒に～しましょうか」。call it a night は夜の活動や集まりを切り上げるという慣用表現。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1353",
+   "parts": [
+    {
+     "key": "n1353",
+     "en": "Shall we call it a night?"
+    }
+   ]
+  },
+  {
+   "id": "n1354",
+   "kind": "notes",
+   "en": "Who do you recommend?",
+   "ja": "誰がおすすめですか？",
+   "note": "画像2の英文・和訳。補足: who はここでは recommend の目的語で「誰をすすめますか」。相手がすすめる人を尋ねる。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1354",
+   "parts": [
+    {
+     "key": "n1354",
+     "en": "Who do you recommend?"
+    }
+   ]
+  },
+  {
+   "id": "n1355",
+   "kind": "notes",
+   "en": "I can take you there!",
+   "ja": "そこまでお連れできますよ！",
+   "note": "画像3の英文・和訳。画面の題: 声かけ・申し出・返事。補足: take + 人 + there は人をそこへ連れて行く。Can I take you there?（連れて行きましょうか）と語順・形が異なる。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1355",
+   "parts": [
+    {
+     "key": "n1355",
+     "en": "I can take you there!"
+    }
+   ]
+  },
+  {
+   "id": "n1356",
+   "kind": "notes",
+   "en": "My phone got soaked in the rain.",
+   "ja": "私の携帯電話が雨でびしょ濡れになった。",
+   "note": "画像4の英文・和訳。補足: get + 過去分詞でその状態になることを表す。soaked はびしょ濡れの。got は get の過去形。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1356",
+   "parts": [
+    {
+     "key": "n1356",
+     "en": "My phone got soaked in the rain."
+    }
+   ]
+  },
+  {
+   "id": "n1357",
+   "kind": "notes",
+   "en": "My passport got misplaced during check-in.",
+   "ja": "チェックイン中に私のパスポートを紛失してしまいました。",
+   "note": "画像5の英文・和訳。補足: misplaced は置き場所が分からなくなった・誤った場所に置かれた。盗まれたことや永久に失ったことまでは意味しない。during check-in はチェックインの間に。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1357",
+   "parts": [
+    {
+     "key": "n1357",
+     "en": "My passport got misplaced during check-in."
+    }
+   ]
+  },
+  {
+   "id": "n1358",
+   "kind": "notes",
+   "en": "Do you have any cash on you?",
+   "ja": "あなたは現金を持っていますか？",
+   "note": "画像6の英文・和訳。補足: on you は「今、身につけて・手元に」。現金を所有しているか一般論でなく、現在持ち合わせているかを尋ねる。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1358",
+   "parts": [
+    {
+     "key": "n1358",
+     "en": "Do you have any cash on you?"
+    }
+   ]
+  },
+  {
+   "id": "n1359",
+   "kind": "notes",
+   "en": "Do you have any spare batteries?",
+   "ja": "予備の電池はありますか？",
+   "note": "画像7の英文・和訳。補足: spare は予備の。batteries は battery の複数形。疑問文の any で何か・いくつかあるかを尋ねる。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1359",
+   "parts": [
+    {
+     "key": "n1359",
+     "en": "Do you have any spare batteries?"
+    }
+   ]
+  },
+  {
+   "id": "n1360",
+   "kind": "notes",
+   "en": "Do you have any allergies?",
+   "ja": "何かアレルギーはありますか？",
+   "note": "画像8の英文・和訳。補足: allergy の複数形が allergies。食べ物・薬などに対するアレルギーの有無を尋ねる。対象は文脈による。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "健康・体調",
+   "favoriteKey": "n1360",
+   "parts": [
+    {
+     "key": "n1360",
+     "en": "Do you have any allergies?"
+    }
+   ]
+  },
+  {
+   "id": "n1361",
+   "kind": "notes",
+   "en": "They have to try on helmets for the ride.",
+   "ja": "彼らは乗る前にヘルメットを試着しなければなりません。",
+   "note": "画像9の英文・和訳。補足: have to + 動詞の原形で必要・義務を表す。try on は試着する。for the ride は乗るために・乗車に備えてという意味。画面の和訳は「乗る前に」と表現している。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1361",
+   "parts": [
+    {
+     "key": "n1361",
+     "en": "They have to try on helmets for the ride."
+    }
+   ]
+  },
+  {
+   "id": "n1362",
+   "kind": "notes",
+   "en": "I am your neighbor from across the street.",
+   "ja": "私は通りの向かいに住んでいるあなたの隣人です。",
+   "note": "画像11の英文・和訳。補足: across the street は通りの向かい側に。neighbor は隣の家に限らず近所の人。from across the street が neighbor を説明する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1362",
+   "parts": [
+    {
+     "key": "n1362",
+     "en": "I am your neighbor from across the street."
+    }
+   ]
+  },
+  {
+   "id": "n1363",
+   "kind": "notes",
+   "en": "They're incredibly helpful during emergencies.",
+   "ja": "彼らは緊急時にとても役立ちます。",
+   "note": "画像12の英文・和訳。補足: incredibly は非常に・驚くほど。helpful は役に立つ、emergencies は emergency（緊急事態）の複数形。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1363",
+   "parts": [
+    {
+     "key": "n1363",
+     "en": "They're incredibly helpful during emergencies."
+    }
+   ]
+  },
+  {
+   "id": "n1364",
+   "kind": "notes",
+   "en": "Mine is slightly scratched.",
+   "ja": "私のものは少し傷がついています。",
+   "note": "画像13の英文・和訳。補足: mine は my + 名詞に相当する「私のもの」。slightly は少し、scratched はひっかき傷などが付いた状態。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1364",
+   "parts": [
+    {
+     "key": "n1364",
+     "en": "Mine is slightly scratched."
+    }
+   ]
+  },
+  {
+   "id": "n1365",
+   "kind": "notes",
+   "en": "It's cold out; grab a jacket.",
+   "ja": "外は寒いから、ジャケットを取ってきて。",
+   "note": "画像14の英文・和訳。補足: out は屋外で。grab はここではさっと取る・持ってくるというくだけた表現。画像14の灰色表示でも中央の英文・和訳は全文読めるため収録。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1365",
+   "parts": [
+    {
+     "key": "n1365",
+     "en": "It's cold out; grab a jacket."
+    }
+   ]
+  },
+  {
+   "id": "n1366",
+   "kind": "notes",
+   "en": "It's sunny out, so wear sunscreen.",
+   "ja": "外は晴れているから、日焼け止めを塗って。",
+   "note": "画像15の英文・和訳。補足: so はだから。wear sunscreen は日焼け止めを肌に付けている状態・使用すること。画像14の下部にも同じ英文が一部見えるが、全文・和訳が読める画像15を基準に収録。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1366",
+   "parts": [
+    {
+     "key": "n1366",
+     "en": "It's sunny out, so wear sunscreen."
+    }
+   ]
+  },
+  {
+   "id": "n1367",
+   "kind": "notes",
+   "en": "It's 72 degrees out today, so let's walk.",
+   "ja": "今日は外が72度だから、歩いて行こう。",
+   "note": "画像16の英文・和訳。補足: degrees は温度の度。画像に単位は明記されていないが、米国の日常的な気温としては華氏72°F（約22.2°C）と考えられる。摂氏72°Cという意味で覚えない。out は外で、let’s walk は歩いて行こうという提案。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1367",
+   "parts": [
+    {
+     "key": "n1367",
+     "en": "It's 72 degrees out today, so let's walk."
+    }
+   ]
+  },
+  {
+   "id": "n1368",
+   "kind": "notes",
+   "en": "What do you recommend we do?",
+   "ja": "私たちに何をするのをおすすめしますか？",
+   "note": "画像17の英文・和訳。補足: recommend (that) we do の that が省かれた形で、私たちがすることについておすすめを尋ねる。自然な和訳の例は「私たちは何をするのがおすすめですか？」。原文の和訳は画面どおり保持。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "",
+   "favoriteKey": "n1368",
+   "parts": [
+    {
+     "key": "n1368",
+     "en": "What do you recommend we do?"
+    }
+   ]
+  },
+  {
    "id": "d1a",
    "kind": "dialogues",
    "en": "Are there any tickets left?",
@@ -57414,6 +57702,346 @@
     {
      "key": "ft_meat",
      "en": "Hello! I run a restaurant and I'm looking for a new meat supplier. What kind of products do you offer?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:0",
+   "kind": "batches",
+   "en": "Shall we call it a night?",
+   "ja": "そろそろお開きにしようか？",
+   "note": "画像1の英文・和訳。画面の型: Shall we ___? 補足: Shall we + 動詞の原形? は「一緒に～しましょうか」。call it a night は夜の活動や集まりを切り上げるという慣用表現。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 提案・おすすめ・申し出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1353",
+   "parts": [
+    {
+     "key": "n1353",
+     "en": "Shall we call it a night?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:1",
+   "kind": "batches",
+   "en": "Who do you recommend?",
+   "ja": "誰がおすすめですか？",
+   "note": "画像2の英文・和訳。補足: who はここでは recommend の目的語で「誰をすすめますか」。相手がすすめる人を尋ねる。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 提案・おすすめ・申し出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1354",
+   "parts": [
+    {
+     "key": "n1354",
+     "en": "Who do you recommend?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:2",
+   "kind": "batches",
+   "en": "I can take you there!",
+   "ja": "そこまでお連れできますよ！",
+   "note": "画像3の英文・和訳。画面の題: 声かけ・申し出・返事。補足: take + 人 + there は人をそこへ連れて行く。Can I take you there?（連れて行きましょうか）と語順・形が異なる。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 提案・おすすめ・申し出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1355",
+   "parts": [
+    {
+     "key": "n1355",
+     "en": "I can take you there!"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:3",
+   "kind": "batches",
+   "en": "My phone got soaked in the rain.",
+   "ja": "私の携帯電話が雨でびしょ濡れになった。",
+   "note": "画像4の英文・和訳。補足: get + 過去分詞でその状態になることを表す。soaked はびしょ濡れの。got は get の過去形。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 出来事・トラブル",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1356",
+   "parts": [
+    {
+     "key": "n1356",
+     "en": "My phone got soaked in the rain."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:4",
+   "kind": "batches",
+   "en": "My passport got misplaced during check-in.",
+   "ja": "チェックイン中に私のパスポートを紛失してしまいました。",
+   "note": "画像5の英文・和訳。補足: misplaced は置き場所が分からなくなった・誤った場所に置かれた。盗まれたことや永久に失ったことまでは意味しない。during check-in はチェックインの間に。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 出来事・トラブル",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1357",
+   "parts": [
+    {
+     "key": "n1357",
+     "en": "My passport got misplaced during check-in."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:5",
+   "kind": "batches",
+   "en": "Do you have any cash on you?",
+   "ja": "あなたは現金を持っていますか？",
+   "note": "画像6の英文・和訳。補足: on you は「今、身につけて・手元に」。現金を所有しているか一般論でなく、現在持ち合わせているかを尋ねる。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 持ち物・体調を尋ねる",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1358",
+   "parts": [
+    {
+     "key": "n1358",
+     "en": "Do you have any cash on you?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:6",
+   "kind": "batches",
+   "en": "Do you have any spare batteries?",
+   "ja": "予備の電池はありますか？",
+   "note": "画像7の英文・和訳。補足: spare は予備の。batteries は battery の複数形。疑問文の any で何か・いくつかあるかを尋ねる。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 持ち物・体調を尋ねる",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1359",
+   "parts": [
+    {
+     "key": "n1359",
+     "en": "Do you have any spare batteries?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:7",
+   "kind": "batches",
+   "en": "Do you have any allergies?",
+   "ja": "何かアレルギーはありますか？",
+   "note": "画像8の英文・和訳。補足: allergy の複数形が allergies。食べ物・薬などに対するアレルギーの有無を尋ねる。対象は文脈による。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 持ち物・体調を尋ねる",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "健康・体調",
+   "favoriteKey": "n1360",
+   "parts": [
+    {
+     "key": "n1360",
+     "en": "Do you have any allergies?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:8",
+   "kind": "batches",
+   "en": "They have to try on helmets for the ride.",
+   "ja": "彼らは乗る前にヘルメットを試着しなければなりません。",
+   "note": "画像9の英文・和訳。補足: have to + 動詞の原形で必要・義務を表す。try on は試着する。for the ride は乗るために・乗車に備えてという意味。画面の和訳は「乗る前に」と表現している。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 試着・必要なこと",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1361",
+   "parts": [
+    {
+     "key": "n1361",
+     "en": "They have to try on helmets for the ride."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:9",
+   "kind": "batches",
+   "en": "I have to try on a different size.",
+   "ja": "別のサイズを試着しなければなりません。",
+   "note": "画像10の英文・和訳。補足: a different size は別のサイズ。try on の目的語が代名詞なら try it on のように間に置く。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 試着・必要なこと",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1204",
+   "parts": [
+    {
+     "key": "n1204",
+     "en": "I have to try on a different size."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:10",
+   "kind": "batches",
+   "en": "I am your neighbor from across the street.",
+   "ja": "私は通りの向かいに住んでいるあなたの隣人です。",
+   "note": "画像11の英文・和訳。補足: across the street は通りの向かい側に。neighbor は隣の家に限らず近所の人。from across the street が neighbor を説明する。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 人・物の説明",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1362",
+   "parts": [
+    {
+     "key": "n1362",
+     "en": "I am your neighbor from across the street."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:11",
+   "kind": "batches",
+   "en": "They're incredibly helpful during emergencies.",
+   "ja": "彼らは緊急時にとても役立ちます。",
+   "note": "画像12の英文・和訳。補足: incredibly は非常に・驚くほど。helpful は役に立つ、emergencies は emergency（緊急事態）の複数形。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 人・物の説明",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1363",
+   "parts": [
+    {
+     "key": "n1363",
+     "en": "They're incredibly helpful during emergencies."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:12",
+   "kind": "batches",
+   "en": "Mine is slightly scratched.",
+   "ja": "私のものは少し傷がついています。",
+   "note": "画像13の英文・和訳。補足: mine は my + 名詞に相当する「私のもの」。slightly は少し、scratched はひっかき傷などが付いた状態。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 人・物の説明",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1364",
+   "parts": [
+    {
+     "key": "n1364",
+     "en": "Mine is slightly scratched."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:13",
+   "kind": "batches",
+   "en": "It's cold out; grab a jacket.",
+   "ja": "外は寒いから、ジャケットを取ってきて。",
+   "note": "画像14の英文・和訳。補足: out は屋外で。grab はここではさっと取る・持ってくるというくだけた表現。画像14の灰色表示でも中央の英文・和訳は全文読めるため収録。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 天気・外出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1365",
+   "parts": [
+    {
+     "key": "n1365",
+     "en": "It's cold out; grab a jacket."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:14",
+   "kind": "batches",
+   "en": "It's sunny out, so wear sunscreen.",
+   "ja": "外は晴れているから、日焼け止めを塗って。",
+   "note": "画像15の英文・和訳。補足: so はだから。wear sunscreen は日焼け止めを肌に付けている状態・使用すること。画像14の下部にも同じ英文が一部見えるが、全文・和訳が読める画像15を基準に収録。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 天気・外出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1366",
+   "parts": [
+    {
+     "key": "n1366",
+     "en": "It's sunny out, so wear sunscreen."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:15",
+   "kind": "batches",
+   "en": "It's 72 degrees out today, so let's walk.",
+   "ja": "今日は外が72度だから、歩いて行こう。",
+   "note": "画像16の英文・和訳。補足: degrees は温度の度。画像に単位は明記されていないが、米国の日常的な気温としては華氏72°F（約22.2°C）と考えられる。摂氏72°Cという意味で覚えない。out は外で、let’s walk は歩いて行こうという提案。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 天気・外出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1367",
+   "parts": [
+    {
+     "key": "n1367",
+     "en": "It's 72 degrees out today, so let's walk."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-16-01:16",
+   "kind": "batches",
+   "en": "What do you recommend we do?",
+   "ja": "私たちに何をするのをおすすめしますか？",
+   "note": "画像17の英文・和訳。補足: recommend (that) we do の that が省かれた形で、私たちがすることについておすすめを尋ねる。自然な和訳の例は「私たちは何をするのがおすすめですか？」。原文の和訳は画面どおり保持。",
+   "source": "data/imports/2026-11-16-01.json",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気",
+   "section": "11月16日追加 · 提案・おすすめ・申し出",
+   "date": "",
+   "added_on": "2026-11-16",
+   "tags": "",
+   "favoriteKey": "n1368",
+   "parts": [
+    {
+     "key": "n1368",
+     "en": "What do you recommend we do?"
     }
    ]
   },
@@ -67118,6 +67746,15 @@
    "note": "# Speak画像：所要時間・道案内・習慣・家事の依頼・経済の添削・街の様子\n\n追加日: 2026-11-12 / 教材の日付: 記載なし\n\n出典: 2026-11-12受領の画像32枚（A1–A10、B1–B10、C1–C10、D1–D2）。教材画面31枚から30項目を転記。A2/A4の再起動、C6/C8の切手は同文のため各1項目にまとめ、両方の出典を記録。A1の会話相手の文も収録。C9/C10の修正前・別の発話は添削メモに全文保存。D2は利用制限を示すチャット画面で、新規教材はなく、サムネイルも既出画像。隠れている英文や途中までしか見えない背景カードは復元しない。教材に日付の記載がなく学習日は未記録。表示された和訳を保持し、未表示の和訳・文法説明は補足と明記。\n\n英文は画像から転記。和訳・説明は画像の内容を基に、未記載部分を補っています。\n\n## 11月12日追加 · ウォーミングアップ\n\n- **It's not far.**\n  - 和訳: 遠くないですよ。\n  - メモ: 画像A1。日本語は画面の出題文。補足: far は距離が遠いこと。\n\n- **Thanks so much! I really appreciate your help.**\n  - 和訳: 本当にありがとうございます！助けていただいて、とても感謝しています。\n  - メモ: 画像A1。画面の会話相手の英文。和訳は補足。appreciate your help は手助けへの感謝を表す。\n\n## 11月12日追加 · 所要時間\n\n- **It will take about ten minutes to reboot.**\n  - 和訳: 再起動には約10分かかります。\n  - メモ: 画像A2・A4。画面の型: It will take about ___ minutes. 補足: It will take + 時間 + to do で所要時間を伝える。reboot は再起動する。\n\n- **It will take about 20 minutes to bake.**\n  - 和訳: 焼くのに20分ほどかかります。\n  - メモ: 画像A3。画面の型: It will take about ___ minutes. 補足: about は約、bake はオーブンなどで焼くこと。\n\n- **It will bake about five minutes at this temperature.**\n  - 和訳: この温度なら、焼くのに約5分かかります。\n  - メモ: 画像A5。画面の型: It will ___ about five minutes. 補足: bake はここでは焼けるという自動詞。期間を示す for を入れて bake for about five minutes とも言う。英文は画面のまま保持。\n\n- **It will run about five minutes, then shut off.**\n  - 和訳: それは5分ほど動いてから、電源が切れます。\n  - メモ: 画像A6。画面の型: It will ___ about five minutes. 補足: run は機械が動く、shut off は停止する・電源が切れる。\n\n## 11月12日追加 · 方法・道案内\n\n- **It's the right way.**\n  - 和訳: それが正しい方法です。\n  - メモ: 画像A7。画面の型: It's ___ way. 補足: right はここでは正しい。道案内なら正しい道の意味にもなる。\n\n- **It's the quickest way.**\n  - 和訳: それが一番早い方法です。\n  - メモ: 画像A8。画面の型: It's ___ way. 補足: quickest は quick の最上級。最も時間がかからない方法・道を指す。\n\n- **Can I take you there?**\n  - 和訳: そこまで連れて行きましょうか？\n  - メモ: 画像A9。画面の題: 助けを申し出る。補足: Can I ...? で申し出る。take 人 there でそこへ人を連れて行く。\n\n- **Go straight.**\n  - 和訳: まっすぐ行ってください。\n  - メモ: 画像A10。補足: straight はまっすぐに。道案内の短い表現。\n\n- **Turn right at the corner.**\n  - 和訳: 角で右に曲がってください。\n  - メモ: 画像B1。画面の題: 目印で場所を伝える。補足: at the corner はその角で。\n\n- **Turn left at the light.**\n  - 和訳: 信号で左に曲がってください。\n  - メモ: 画像B2。画面の題: 目印で場所を伝える。補足: the light はここでは交通信号。\n\n## 11月12日追加 · 遊びに誘う\n\n- **Sure thing!**\n  - 和訳: もちろんです！\n  - メモ: 画像B3。補足: 快く同意・承諾するくだけた返事。\n\n- **Can’t wait!**\n  - 和訳: 待ちきれません！\n  - メモ: 画像B4。補足: I can’t wait! の I を省いた会話表現で、とても楽しみにしている気持ち。\n\n- **Actually, how about getting a drink?**\n  - 和訳: それより、一杯飲むのはどうですか？\n  - メモ: 画像B5。補足: how about + 動名詞で提案する。actually はここでは別の案を持ち出す言葉。\n\n## 11月12日追加 · 日々の習慣\n\n- **caffeine fix**\n  - 和訳: カフェイン補給\n  - メモ: 画像B6。補足: fix はここでは欲しくなるものを摂ること。カフェイン補給をくだけて言う。\n\n- **I get my caffeine fix in the morning.**\n  - 和訳: 私は午前にカフェインを補給します。\n  - メモ: 画像B7。補足: get my caffeine fix でコーヒーなどからカフェインを摂ること。\n\n- **I go out on the weekend.**\n  - 和訳: 私は週末、出かけます。\n  - メモ: 画像B8。補足: go out は外出する。on the weekend は米国英語で週末に。\n\n- **I run errands in the morning.**\n  - 和訳: 私は午前に用事を済ませます。\n  - メモ: 画像B9。画面の題: 午前のルーティン。補足: run errands は買い物や郵便局など外出して用事を済ませる。\n\n- **I wind down in the evening.**\n  - 和訳: 私は夕方・夜にくつろぎます。\n  - メモ: 画像B10。画面の題: 午後や夕方・夜のルーティン。補足: wind down は活動を終えてゆったりする。wind の発音は /waɪnd/。\n\n## 11月12日追加 · 家事・買い物のお願い\n\n- **Let’s reorganize the closet together!**\n  - 和訳: クローゼットを一緒に再整理しましょう！\n  - メモ: 画像C1。画面の型: Let’s ___ together! 補足: reorganize は整理し直す。together は一緒に。\n\n- **Will you fold the laundry?**\n  - 和訳: あなたは洗濯物を畳んでくれますか？\n  - メモ: 画像C2。画面の型: I’ll ___. Will you ___? 補足: Will you ...? で相手に頼む。fold the laundry は洗濯物を畳む。\n\n- **We’re running out of toilet paper.**\n  - 和訳: 私たちはトイレットペーパーがなくなりかけています。\n  - メモ: 画像C3。画面の型: We’re running out of ___. 補足: run out of は使い果たす、進行形はなくなりつつあること。\n\n- **Can you swing by the post office on your way home?**\n  - 和訳: 家に帰る途中で郵便局に寄ってもらえますか？\n  - メモ: 画像C4。画面の型: We’re running out of ___. 補足: swing by はちょっと立ち寄る。on your way home は帰宅途中に。\n\n- **Yes, we’re running out of milk. Can you swing by the grocery store on your way home?**\n  - 和訳: はい、私たちは牛乳がなくなりかけています。家に帰る途中でスーパーに寄ってもらえますか？\n  - メモ: 画像C5。画面の型: We’re running out of ___. 補足: grocery store は食料品店・スーパー。画面の2文をひとまとまりで保持。\n\n- **We're low on stamps; can you pick some up at the post office?**\n  - 和訳: 切手が少なくなってきたから、郵便局でいくつか買ってきてくれる？\n  - メモ: 画像C6・C8。画面の型: Can you pick some up ___? 補足: be low on は残りが少ない。pick some up はここではいくつか買ってくる。C8は追加の練習2/2で同じ文。\n\n- **I forgot batteries; can you pick some up at the pharmacy?**\n  - 和訳: 電池を買い忘れたんだけど、薬局でいくつか買ってきてくれる？\n  - メモ: 画像C7。画面の型: Can you pick some up ___? 補足: batteries は電池。米国の pharmacy は日用品を扱うドラッグストアの場合もある。\n\n## 11月12日追加 · フリートークの添削\n\n- **I live in Japan, so the Japanese economy is declining.**\n  - 和訳: 私は日本に住んでいるので、日本経済は衰退しています。\n  - メモ: 画像C9・C10上部。画面C9の修正前: I live in Japan, so the Japanese economy is reducing. 修正後の英文を本文に保存。C10上部の別の発話: I live in Japan, so the Japanese economy is decreasing. 画面の説明: 経済には declining（悪化している、縮小している）を使います。reducing はふつう「減らしている」という意味です。和訳は補足で、so の因果関係もそのまま訳したもの。補足: この so は「日本に住んでいるから経済が衰退している」という不自然な因果関係になる。単に2つのことを述べるなら I live in Japan, and the Japanese economy is declining.（私は日本に住んでいて、日本経済は衰退しています。）とする。経済規模の縮小なら shrinking も使える。実際の経済状況を断定する記述ではなく、画像の発話の記録。\n\n- **My business is shrinking.**\n  - 和訳: 私の事業は縮小しています。\n  - メモ: 画像C10。画面の修正前: My business is reducing. 修正後: My business is shrinking. 画面の説明: 会社や景気の大きさが小さくなるときは shrinking を使います。reducing はここでは不自然です。和訳は補足。補足: shrink は規模が縮むこと。reduce は reduce costs（費用を減らす）のように目的語を伴う使い方が多いが、常に他動詞というわけではない。\n\n## 11月12日追加 · 街の様子\n\n- **It's a sprawling city.**\n  - 和訳: 広大な都市です。\n  - メモ: 画像D1。補足: sprawling は市街地などが広い範囲に広がった様子。単に人口が多いという意味ではない。\n",
    "source": "docs/lesson-notes/2026-11-12-01.md",
    "sourceLabel": "Speak画像：所要時間・道案内・習慣・家事の依頼・経済の添削・街の様子"
+  },
+  {
+   "id": "doc:2026-11-16-01",
+   "kind": "documents",
+   "en": "",
+   "ja": "",
+   "note": "# Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気\n\n追加日: 2026-11-16 / 教材の日付: 記載なし\n\n出典: 2026-11-16受領のSpeak画像17枚。中央カードの全文と和訳17項目を転記。画像14は灰色表示でも全文が明瞭なため収録。画像14下部に見える日焼け止めの英文は画像15と同一のため、画像15を完全な出典として1項目に整理。画面上部の薄い別カード、隠れた見出しや穴埋めの背景は推測で復元しない。学習日の記載はないため追加日と区別する。文法・語彙の説明と華氏・摂氏の換算は補足と明記。\n\n英文は画像から転記。和訳・説明は画像の内容を基に、未記載部分を補っています。\n\n## 11月16日追加 · 提案・おすすめ・申し出\n\n- **Shall we call it a night?**\n  - 和訳: そろそろお開きにしようか？\n  - メモ: 画像1の英文・和訳。画面の型: Shall we ___? 補足: Shall we + 動詞の原形? は「一緒に～しましょうか」。call it a night は夜の活動や集まりを切り上げるという慣用表現。\n\n- **Who do you recommend?**\n  - 和訳: 誰がおすすめですか？\n  - メモ: 画像2の英文・和訳。補足: who はここでは recommend の目的語で「誰をすすめますか」。相手がすすめる人を尋ねる。\n\n- **I can take you there!**\n  - 和訳: そこまでお連れできますよ！\n  - メモ: 画像3の英文・和訳。画面の題: 声かけ・申し出・返事。補足: take + 人 + there は人をそこへ連れて行く。Can I take you there?（連れて行きましょうか）と語順・形が異なる。\n\n## 11月16日追加 · 出来事・トラブル\n\n- **My phone got soaked in the rain.**\n  - 和訳: 私の携帯電話が雨でびしょ濡れになった。\n  - メモ: 画像4の英文・和訳。補足: get + 過去分詞でその状態になることを表す。soaked はびしょ濡れの。got は get の過去形。\n\n- **My passport got misplaced during check-in.**\n  - 和訳: チェックイン中に私のパスポートを紛失してしまいました。\n  - メモ: 画像5の英文・和訳。補足: misplaced は置き場所が分からなくなった・誤った場所に置かれた。盗まれたことや永久に失ったことまでは意味しない。during check-in はチェックインの間に。\n\n## 11月16日追加 · 持ち物・体調を尋ねる\n\n- **Do you have any cash on you?**\n  - 和訳: あなたは現金を持っていますか？\n  - メモ: 画像6の英文・和訳。補足: on you は「今、身につけて・手元に」。現金を所有しているか一般論でなく、現在持ち合わせているかを尋ねる。\n\n- **Do you have any spare batteries?**\n  - 和訳: 予備の電池はありますか？\n  - メモ: 画像7の英文・和訳。補足: spare は予備の。batteries は battery の複数形。疑問文の any で何か・いくつかあるかを尋ねる。\n\n- **Do you have any allergies?**\n  - 和訳: 何かアレルギーはありますか？\n  - メモ: 画像8の英文・和訳。補足: allergy の複数形が allergies。食べ物・薬などに対するアレルギーの有無を尋ねる。対象は文脈による。\n\n## 11月16日追加 · 試着・必要なこと\n\n- **They have to try on helmets for the ride.**\n  - 和訳: 彼らは乗る前にヘルメットを試着しなければなりません。\n  - メモ: 画像9の英文・和訳。補足: have to + 動詞の原形で必要・義務を表す。try on は試着する。for the ride は乗るために・乗車に備えてという意味。画面の和訳は「乗る前に」と表現している。\n\n- **I have to try on a different size.**\n  - 和訳: 別のサイズを試着しなければなりません。\n  - メモ: 画像10の英文・和訳。補足: a different size は別のサイズ。try on の目的語が代名詞なら try it on のように間に置く。\n\n## 11月16日追加 · 人・物の説明\n\n- **I am your neighbor from across the street.**\n  - 和訳: 私は通りの向かいに住んでいるあなたの隣人です。\n  - メモ: 画像11の英文・和訳。補足: across the street は通りの向かい側に。neighbor は隣の家に限らず近所の人。from across the street が neighbor を説明する。\n\n- **They're incredibly helpful during emergencies.**\n  - 和訳: 彼らは緊急時にとても役立ちます。\n  - メモ: 画像12の英文・和訳。補足: incredibly は非常に・驚くほど。helpful は役に立つ、emergencies は emergency（緊急事態）の複数形。\n\n- **Mine is slightly scratched.**\n  - 和訳: 私のものは少し傷がついています。\n  - メモ: 画像13の英文・和訳。補足: mine は my + 名詞に相当する「私のもの」。slightly は少し、scratched はひっかき傷などが付いた状態。\n\n## 11月16日追加 · 天気・外出\n\n- **It's cold out; grab a jacket.**\n  - 和訳: 外は寒いから、ジャケットを取ってきて。\n  - メモ: 画像14の英文・和訳。補足: out は屋外で。grab はここではさっと取る・持ってくるというくだけた表現。画像14の灰色表示でも中央の英文・和訳は全文読めるため収録。\n\n- **It's sunny out, so wear sunscreen.**\n  - 和訳: 外は晴れているから、日焼け止めを塗って。\n  - メモ: 画像15の英文・和訳。補足: so はだから。wear sunscreen は日焼け止めを肌に付けている状態・使用すること。画像14の下部にも同じ英文が一部見えるが、全文・和訳が読める画像15を基準に収録。\n\n- **It's 72 degrees out today, so let's walk.**\n  - 和訳: 今日は外が72度だから、歩いて行こう。\n  - メモ: 画像16の英文・和訳。補足: degrees は温度の度。画像に単位は明記されていないが、米国の日常的な気温としては華氏72°F（約22.2°C）と考えられる。摂氏72°Cという意味で覚えない。out は外で、let’s walk は歩いて行こうという提案。\n\n## 11月16日追加 · 提案・おすすめ・申し出\n\n- **What do you recommend we do?**\n  - 和訳: 私たちに何をするのをおすすめしますか？\n  - メモ: 画像17の英文・和訳。補足: recommend (that) we do の that が省かれた形で、私たちがすることについておすすめを尋ねる。自然な和訳の例は「私たちは何をするのがおすすめですか？」。原文の和訳は画面どおり保持。\n",
+   "source": "docs/lesson-notes/2026-11-16-01.md",
+   "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気"
   }
  ]
 }

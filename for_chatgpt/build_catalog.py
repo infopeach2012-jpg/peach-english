@@ -49,7 +49,7 @@ def build(root=ROOT, checked_on=None):
             key = prefix + str(item['id'])
             tags = SITUATIONS.get(data['situations'].get(key), '')
             if key in ['p1555','p1520','p1524','p1525']: tags += ' 回復 体調が良くなった 元気になった'
-            if re.search(r'体調|回復|元気に|調子が', item.get('ja','') + item.get('note','')): tags += ' 健康・体調'
+            if re.search(r'体調|回復|元気に|調子が|アレルギー', item.get('ja','') + item.get('note','')): tags += ' 健康・体調'
             batch = next((b for b in data['note_batches'] if b['id'] == item.get('source_batch')), None)
             date = (batch.get('lesson_date') or '') if batch else item.get('date','')
             canonical[key] = add(key, kind, item.get('en',''), item.get('ja',''), item.get('note',''),
@@ -133,7 +133,7 @@ def build(root=ROOT, checked_on=None):
             'counts':counts,'manifests_checked':manifest_count,'batch_occurrences':counts['batches'],
             'legacy_counts':legacy_counts,'legacy_differences':legacy_differences,
             'source_sha256':sources,'problems':[],
-            'scope':'保存中の教材JSON・全提出記録・教材文書・旧単一ファイル版・未確認OCR原文を照合。現在の会話の追加画像32枚も転記。過去の元画像・Excel・PDFファイル自体はこの環境にないため、保存済みの転記との照合であり、元画像全点の再読取ではない。端末内の学習履歴とAI生成会話は個人のブラウザ内にあり、この公開教材一覧には含めない。件数は表現の重複を含む記録数。'}
+            'scope':'保存中の教材JSON・全提出記録・教材文書・旧単一ファイル版・未確認OCR原文を照合。追加画像は提出ごとの記録に枚数・転記範囲を保存。過去の元画像・Excel・PDFファイル自体はこの環境にないため、保存済みの転記との照合であり、元画像全点の再読取ではない。端末内の学習履歴とAI生成会話は個人のブラウザ内にあり、この公開教材一覧には含めない。件数は表現の重複を含む記録数。'}
     result={'labels':LABELS,'audit':{k:v for k,v in report.items() if k!='source_sha256'},'items':rows}
     (root/'data/catalog.json').write_text(json.dumps(result,ensure_ascii=False,indent=1)+'\n')
     directory=root/'docs/catalog'; directory.mkdir(exist_ok=True)
