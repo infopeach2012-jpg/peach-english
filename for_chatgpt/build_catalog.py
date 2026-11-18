@@ -34,7 +34,8 @@ def build(root=ROOT, checked_on=None):
     data = {name: read('data/' + name + '.json') for name in ['phrases','notes','dialogues','reading','speeches','patterns','note_batches','situations']}
     assert {p.stem for p in (root/'data').glob('*.json')} - {'catalog'} == set(data), 'Unreviewed data file'
     expected_situations={'p'+str(r['id']) for r in data['phrases']} | {'d'+str(r['id']) for r in data['dialogues']}
-    assert set(data['situations']) == expected_situations, 'Missing or orphaned situation key'
+    optional_notes = {'n'+str(r['id']) for r in data['notes']}
+    assert expected_situations <= set(data['situations']) <= expected_situations | optional_notes, 'Missing or orphaned situation key'
     assert set(data['situations'].values()) <= set(SITUATIONS), 'Unknown situation'
     index = read('audio/audio_index.json')
     japanese = read('audio/ja_index.json')['clips']

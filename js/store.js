@@ -12,7 +12,7 @@
     noteBatches: 'data/note_batches.json',
     reading: 'data/reading.json',
     speeches: 'data/speeches.json',
-    situations: 'data/situations.json', // { "p12": "food", "d3": "shop", ... } 聞き流し用の場面分け
+    situations: 'data/situations.json', // { "p12": "food", "d3": "shop", "n1353": "greet", ... }
   };
 
   // ---- 学習コンテンツ（読み取り専用・メモリ内） ----
@@ -232,6 +232,11 @@
       p.sit = sit['p' + p.id] || 'grammar';
     });
     content.dialogues.forEach((d) => { d.sit = sit['d' + d.id] || 'greet'; });
+    // Only explicitly reviewed notes enter the situation-based listening list.
+    content.notes.forEach((n) => {
+      n.kind = (n.en || '').trim().split(/\s+/).length <= 2 ? 'word' : 'sentence';
+      n.sit = sit['n' + n.id] || null;
+    });
     buildKeyIndex();
     // 事前生成の音声（あれば）を読み込み、本文→キーの対応を登録する
     if (window.Speech && window.Speech.loadClips) {

@@ -76,6 +76,14 @@
         out.push({ en: d.b, ja: d.bJa, key: 'd' + d.id + 'b' });
       });
     }
+    // Preserve existing phrase/dialogue order and stable note/audio IDs. Repeated
+    // submissions reuse the same canonical note, so they appear only once here.
+    C.notes.forEach((n) => {
+      if (!SITS.some(s => s.key === n.sit)) return;
+      if (sitKey !== 'all' && n.sit !== sitKey) return;
+      if (settings.kind !== 'all' && n.kind !== settings.kind) return;
+      out.push({ en: n.en, ja: n.ja, key: 'n' + n.id });
+    });
     return out;
   }
   function sitCount(sitKey) { return phraseItems(sitKey).length; }
@@ -270,7 +278,7 @@
     idx = 0;
     const list = body.querySelector('#ls-list');
     list.innerHTML = queue.map((q, i) => `
-      <button data-i="${i}" class="ls-row w-full text-left rounded-xl px-3 py-2 bg-white border border-gray-100">
+      <button data-i="${i}" data-key="${q.key}" class="ls-row w-full text-left rounded-xl px-3 py-2 bg-white border border-gray-100">
         <div class="text-sm font-semibold text-gray-800">${window.App.escapeHtml(q.en)}</div>
         <div class="text-xs text-gray-400">${window.App.escapeHtml(q.ja)}</div>
       </button>`).join('');

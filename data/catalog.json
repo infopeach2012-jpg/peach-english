@@ -13,7 +13,7 @@
   "documents": "教材の原資料"
  },
  "audit": {
-  "checked_on": "2026-11-16",
+  "checked_on": "2026-11-18",
   "catalog_records": 4004,
   "teaching_records": 3205,
   "counts": {
@@ -51388,7 +51388,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "2026-10-29",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1167",
    "parts": [
     {
@@ -51424,7 +51424,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "2026-10-29",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1169",
    "parts": [
     {
@@ -52054,7 +52054,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1204",
    "parts": [
     {
@@ -54088,7 +54088,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1317",
    "parts": [
     {
@@ -54106,7 +54106,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1318",
    "parts": [
     {
@@ -54124,7 +54124,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "予定",
    "favoriteKey": "n1319",
    "parts": [
     {
@@ -54142,7 +54142,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "気持ち",
    "favoriteKey": "n1320",
    "parts": [
     {
@@ -54160,7 +54160,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "趣味",
    "favoriteKey": "n1321",
    "parts": [
     {
@@ -54178,7 +54178,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1322",
    "parts": [
     {
@@ -54196,7 +54196,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1323",
    "parts": [
     {
@@ -54214,7 +54214,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1324",
    "parts": [
     {
@@ -54232,7 +54232,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1325",
    "parts": [
     {
@@ -54250,7 +54250,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1326",
    "parts": [
     {
@@ -54268,7 +54268,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1327",
    "parts": [
     {
@@ -54286,7 +54286,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1328",
    "parts": [
     {
@@ -54304,7 +54304,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1329",
    "parts": [
     {
@@ -54322,7 +54322,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1330",
    "parts": [
     {
@@ -54340,7 +54340,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1331",
    "parts": [
     {
@@ -54358,7 +54358,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1332",
    "parts": [
     {
@@ -54376,7 +54376,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1333",
    "parts": [
     {
@@ -54394,7 +54394,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1334",
    "parts": [
     {
@@ -54412,7 +54412,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1335",
    "parts": [
     {
@@ -54430,7 +54430,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1336",
    "parts": [
     {
@@ -54448,7 +54448,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1337",
    "parts": [
     {
@@ -54466,7 +54466,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "気持ち",
    "favoriteKey": "n1338",
    "parts": [
     {
@@ -54484,7 +54484,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1339",
    "parts": [
     {
@@ -54502,7 +54502,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1340",
    "parts": [
     {
@@ -54520,7 +54520,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "趣味",
    "favoriteKey": "n1341",
    "parts": [
     {
@@ -54538,7 +54538,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1342",
    "parts": [
     {
@@ -54556,7 +54556,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1343",
    "parts": [
     {
@@ -54574,7 +54574,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1344",
    "parts": [
     {
@@ -54592,7 +54592,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1345",
    "parts": [
     {
@@ -54610,7 +54610,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1346",
    "parts": [
     {
@@ -54628,7 +54628,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1347",
    "parts": [
     {
@@ -54646,7 +54646,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1348",
    "parts": [
     {
@@ -54664,7 +54664,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1349",
    "parts": [
     {
@@ -54682,7 +54682,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1350",
    "parts": [
     {
@@ -54700,7 +54700,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1351",
    "parts": [
     {
@@ -54718,7 +54718,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1352",
    "parts": [
     {
@@ -54736,7 +54736,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1353",
    "parts": [
     {
@@ -54754,7 +54754,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1354",
    "parts": [
     {
@@ -54772,7 +54772,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1355",
    "parts": [
     {
@@ -54790,7 +54790,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1356",
    "parts": [
     {
@@ -54808,7 +54808,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1357",
    "parts": [
     {
@@ -54826,7 +54826,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1358",
    "parts": [
     {
@@ -54844,7 +54844,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1359",
    "parts": [
     {
@@ -54862,7 +54862,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "健康・体調",
+   "tags": "健康・体調 健康・体調",
    "favoriteKey": "n1360",
    "parts": [
     {
@@ -54880,7 +54880,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1361",
    "parts": [
     {
@@ -54898,7 +54898,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1362",
    "parts": [
     {
@@ -54916,7 +54916,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1363",
    "parts": [
     {
@@ -54934,7 +54934,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1364",
    "parts": [
     {
@@ -54952,7 +54952,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1365",
    "parts": [
     {
@@ -54970,7 +54970,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "健康・体調",
    "favoriteKey": "n1366",
    "parts": [
     {
@@ -54988,7 +54988,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1367",
    "parts": [
     {
@@ -55006,7 +55006,7 @@
    "source": "data/notes.json",
    "sourceLabel": "ノート",
    "date": "",
-   "tags": "",
+   "tags": "予定",
    "favoriteKey": "n1368",
    "parts": [
     {
@@ -57716,7 +57716,7 @@
    "section": "11月16日追加 · 提案・おすすめ・申し出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1353",
    "parts": [
     {
@@ -57736,7 +57736,7 @@
    "section": "11月16日追加 · 提案・おすすめ・申し出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1354",
    "parts": [
     {
@@ -57756,7 +57756,7 @@
    "section": "11月16日追加 · 提案・おすすめ・申し出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1355",
    "parts": [
     {
@@ -57776,7 +57776,7 @@
    "section": "11月16日追加 · 出来事・トラブル",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1356",
    "parts": [
     {
@@ -57796,7 +57796,7 @@
    "section": "11月16日追加 · 出来事・トラブル",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1357",
    "parts": [
     {
@@ -57816,7 +57816,7 @@
    "section": "11月16日追加 · 持ち物・体調を尋ねる",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1358",
    "parts": [
     {
@@ -57836,7 +57836,7 @@
    "section": "11月16日追加 · 持ち物・体調を尋ねる",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1359",
    "parts": [
     {
@@ -57856,7 +57856,7 @@
    "section": "11月16日追加 · 持ち物・体調を尋ねる",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "健康・体調",
+   "tags": "健康・体調 健康・体調",
    "favoriteKey": "n1360",
    "parts": [
     {
@@ -57876,7 +57876,7 @@
    "section": "11月16日追加 · 試着・必要なこと",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1361",
    "parts": [
     {
@@ -57896,7 +57896,7 @@
    "section": "11月16日追加 · 試着・必要なこと",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1204",
    "parts": [
     {
@@ -57916,7 +57916,7 @@
    "section": "11月16日追加 · 人・物の説明",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1362",
    "parts": [
     {
@@ -57936,7 +57936,7 @@
    "section": "11月16日追加 · 人・物の説明",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "人間関係",
    "favoriteKey": "n1363",
    "parts": [
     {
@@ -57956,7 +57956,7 @@
    "section": "11月16日追加 · 人・物の説明",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1364",
    "parts": [
     {
@@ -57976,7 +57976,7 @@
    "section": "11月16日追加 · 天気・外出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1365",
    "parts": [
     {
@@ -57996,7 +57996,7 @@
    "section": "11月16日追加 · 天気・外出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "健康・体調",
    "favoriteKey": "n1366",
    "parts": [
     {
@@ -58016,7 +58016,7 @@
    "section": "11月16日追加 · 天気・外出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1367",
    "parts": [
     {
@@ -58036,7 +58036,7 @@
    "section": "11月16日追加 · 提案・おすすめ・申し出",
    "date": "",
    "added_on": "2026-11-16",
-   "tags": "",
+   "tags": "予定",
    "favoriteKey": "n1368",
    "parts": [
     {
@@ -58056,7 +58056,7 @@
    "section": "11月12日追加 · ウォーミングアップ",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1323",
    "parts": [
     {
@@ -58076,7 +58076,7 @@
    "section": "11月12日追加 · ウォーミングアップ",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1327",
    "parts": [
     {
@@ -58096,7 +58096,7 @@
    "section": "11月12日追加 · 所要時間",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1328",
    "parts": [
     {
@@ -58116,7 +58116,7 @@
    "section": "11月12日追加 · 所要時間",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1329",
    "parts": [
     {
@@ -58136,7 +58136,7 @@
    "section": "11月12日追加 · 所要時間",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1330",
    "parts": [
     {
@@ -58156,7 +58156,7 @@
    "section": "11月12日追加 · 所要時間",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "スマホ",
    "favoriteKey": "n1331",
    "parts": [
     {
@@ -58176,7 +58176,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1332",
    "parts": [
     {
@@ -58196,7 +58196,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1333",
    "parts": [
     {
@@ -58216,7 +58216,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1334",
    "parts": [
     {
@@ -58236,7 +58236,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1335",
    "parts": [
     {
@@ -58256,7 +58256,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1336",
    "parts": [
     {
@@ -58276,7 +58276,7 @@
    "section": "11月12日追加 · 方法・道案内",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1337",
    "parts": [
     {
@@ -58296,7 +58296,7 @@
    "section": "11月12日追加 · 遊びに誘う",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1169",
    "parts": [
     {
@@ -58316,7 +58316,7 @@
    "section": "11月12日追加 · 遊びに誘う",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "気持ち",
    "favoriteKey": "n1338",
    "parts": [
     {
@@ -58336,7 +58336,7 @@
    "section": "11月12日追加 · 遊びに誘う",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1167",
    "parts": [
     {
@@ -58356,7 +58356,7 @@
    "section": "11月12日追加 · 日々の習慣",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1339",
    "parts": [
     {
@@ -58376,7 +58376,7 @@
    "section": "11月12日追加 · 日々の習慣",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1340",
    "parts": [
     {
@@ -58396,7 +58396,7 @@
    "section": "11月12日追加 · 日々の習慣",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "趣味",
    "favoriteKey": "n1341",
    "parts": [
     {
@@ -58416,7 +58416,7 @@
    "section": "11月12日追加 · 日々の習慣",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1342",
    "parts": [
     {
@@ -58436,7 +58436,7 @@
    "section": "11月12日追加 · 日々の習慣",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1343",
    "parts": [
     {
@@ -58476,7 +58476,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1344",
    "parts": [
     {
@@ -58496,7 +58496,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1345",
    "parts": [
     {
@@ -58516,7 +58516,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "家",
    "favoriteKey": "n1346",
    "parts": [
     {
@@ -58536,7 +58536,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1347",
    "parts": [
     {
@@ -58556,7 +58556,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1348",
    "parts": [
     {
@@ -58576,7 +58576,7 @@
    "section": "11月12日追加 · 家事・買い物のお願い",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1349",
    "parts": [
     {
@@ -58596,7 +58596,7 @@
    "section": "11月12日追加 · フリートークの添削",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1350",
    "parts": [
     {
@@ -58616,7 +58616,7 @@
    "section": "11月12日追加 · フリートークの添削",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1351",
    "parts": [
     {
@@ -58636,7 +58636,7 @@
    "section": "11月12日追加 · 街の様子",
    "date": "",
    "added_on": "2026-11-12",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1352",
    "parts": [
     {
@@ -58696,7 +58696,7 @@
    "section": "11月10日追加 · 比較・最上級",
    "date": "",
    "added_on": "2026-11-10",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1326",
    "parts": [
     {
@@ -58856,7 +58856,7 @@
    "section": "11月9日追加 · プロジェクトの話し合い",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1317",
    "parts": [
     {
@@ -58876,7 +58876,7 @@
    "section": "11月9日追加 · プロジェクトの話し合い",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "仕事",
    "favoriteKey": "n1318",
    "parts": [
     {
@@ -58896,7 +58896,7 @@
    "section": "11月9日追加 · 提案・好み・返事",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "予定",
    "favoriteKey": "n1319",
    "parts": [
     {
@@ -58916,7 +58916,7 @@
    "section": "11月9日追加 · 提案・好み・返事",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "気持ち",
    "favoriteKey": "n1320",
    "parts": [
     {
@@ -58936,7 +58936,7 @@
    "section": "11月9日追加 · 提案・好み・返事",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "趣味",
    "favoriteKey": "n1321",
    "parts": [
     {
@@ -58956,7 +58956,7 @@
    "section": "11月9日追加 · 提案・好み・返事",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1169",
    "parts": [
     {
@@ -58976,7 +58976,7 @@
    "section": "11月9日追加 · 距離・方向",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1322",
    "parts": [
     {
@@ -58996,7 +58996,7 @@
    "section": "11月9日追加 · 距離・方向",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1323",
    "parts": [
     {
@@ -59016,7 +59016,7 @@
    "section": "11月9日追加 · 距離・方向",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1324",
    "parts": [
     {
@@ -59036,7 +59036,7 @@
    "section": "11月9日追加 · 距離・方向",
    "date": "",
    "added_on": "2026-11-09",
-   "tags": "",
+   "tags": "旅行",
    "favoriteKey": "n1325",
    "parts": [
     {
@@ -61316,7 +61316,7 @@
    "section": "11月2日追加② · try on（試着する）",
    "date": "",
    "added_on": "2026-11-02",
-   "tags": "",
+   "tags": "買い物",
    "favoriteKey": "n1204",
    "parts": [
     {
@@ -62836,7 +62836,7 @@
    "section": "Speakの表現",
    "date": "2026-10-29",
    "added_on": "2026-10-30",
-   "tags": "",
+   "tags": "食事",
    "favoriteKey": "n1167",
    "parts": [
     {
@@ -62876,7 +62876,7 @@
    "section": "Speakの表現",
    "date": "2026-10-29",
    "added_on": "2026-10-30",
-   "tags": "",
+   "tags": "あいさつ",
    "favoriteKey": "n1169",
    "parts": [
     {

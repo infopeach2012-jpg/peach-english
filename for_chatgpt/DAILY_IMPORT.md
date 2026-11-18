@@ -6,6 +6,7 @@
 
 1. 既存mainの状態と既存教材を調べる。`data/imports/YYYY-MM-DD-NN.json` を作り、画像と照合する。日付は受領日 `added_on` と、元ノートに明記された日付 `lesson_date` を分ける（不明ならnull）。
 2. `python for_chatgpt/import_note_batch.py data/imports/YYYY-MM-DD-NN.json`。同じ英文の既存ノートIDを優先して再利用し、ノートになければ既存フレーズIDも再利用する。両方にない新規のみノートへ追記する。今回の和訳・文法メモはバッチに保存し、元の教材・学習記録・音声を保持する。同じバッチの再実行は追記しない。既存バッチの内容を訂正する場合は、対象と差分を確認して明示的に編集する。
+   聞き流しにも反映するため、追加・再利用した各教材の主な場面を英文・和訳・文脈から確認し、`data/situations.json` に既存ID（`n1353` など）で分類を保存する。既存14場面のいずれかを使い、重複提出は同じIDを維持する。未確認の古いノートを一括で推測分類しない。分類済みノートは聞き流しの一覧に自動で含まれる。
 3. `python for_chatgpt/generate_missing_audio.py --model-dir work/models`。Python環境にはkokoro-onnx、onnxruntime、numpy、soundfile、システムにはFFmpegが必要。モデルはkokoro-v1.0.onnxとvoices-v1.0.bin。失敗した音声を無音で埋めない。
    続けて `python for_chatgpt/generate_japanese_audio.py` で和訳の音声も追加し、全件の対応・復号・無音・音量を検査する。pyopenjtalkと公式辞書が必要。日本語の音声は `audio/ja/`、索引は `audio/ja_index.json`。既存の音声を保持し、新しい和訳にも必ず音声ファイルを用意する。
 4. `python for_chatgpt/audit_audio.py --report /tmp/peach-audio-audit.json`。音声の欠落・復号・音量・速度別の長さを検査。警告も確認する。機械検査を「全件試聴した」と表現しない。

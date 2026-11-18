@@ -1,5 +1,5 @@
 {
-  "checked_on": "2026-11-16",
+  "checked_on": "2026-11-18",
   "catalog_records": 4004,
   "teaching_records": 3205,
   "counts": {
@@ -33,7 +33,7 @@
     "data/speeches.json": "0b8ff5cac9826718622d5059ac18d4481b2f9daf7ea0f2223200be673a37f3d2",
     "data/patterns.json": "3bc88e0ea207b1f3f8de23b8fde891b53f17d092ac6a90517e882c25b05cfa6c",
     "data/note_batches.json": "f53c6372d5d73c6de07b76cdb43bb463a9c027b67f5bb271d9edd233d41b3e41",
-    "data/situations.json": "a73f8d96f20ed49ca4c366f888f21f19cccc0c561546d52a0749fff411fd45ca",
+    "data/situations.json": "635262cfb21ea05f55594dcf53dd1127ef59b4a64ae0c4b66398193f4cb2272b",
     "audio/audio_index.json": "21ff9c1f356f834130b2e4a6e2fb4b8379f483e4c0f58f7356b9ad788c8a00c7",
     "audio/ja_index.json": "82a8753b11994798635effd9e1b9a5117e3940acdd04029a59f073e5e21ce860",
     "js/freetalk.js": "3bdceb840bd4977a24fb852381f0b8cb34370b62e681310b10c862b1e2062e5e",
