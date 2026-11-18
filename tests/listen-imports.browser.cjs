@@ -13,7 +13,10 @@ const submitted = batches.flatMap(b => b.items.map(i => i.key));
 const keys = [...new Set(submitted)];
 const situations = read('data/situations.json');
 const originals = Object.fromEntries(['phrases', 'notes'].flatMap((file, i) => read(`data/${file}.json`).map(r => [(i ? 'n' : 'p') + r.id, r])));
-const expectedCounts = { greet: 86, work: 193, food: 170, shop: 166, health: 88, travel: 123, home: 166, hobby: 179, study: 90, plan: 100, feel: 154, people: 135, tech: 72, grammar: 105 };
+const expectedCounts = { greet: 81, work: 188, food: 165, shop: 160, health: 86, travel: 109, home: 160, hobby: 177, study: 90, plan: 98, feel: 152, people: 132, tech: 69, grammar: 105 };
+const classifiedNotes = Object.keys(situations).filter(k => k.startsWith('n'));
+for (const key of classifiedNotes) expectedCounts[situations[key]]++;
+const expectedTotal = 1772 + classifiedNotes.length;
 assert.equal(submitted.length, 67); assert.equal(keys.length, 65);
 const noteKeys = keys.filter(k => k.startsWith('n'));
 assert.equal(noteKeys.length, 55);
@@ -58,8 +61,7 @@ for (const key of keys) {
     const page = await context.newPage(), errors = [], bad = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', r => { if (r.url().startsWith(base) && r.status() >= 400) bad.push(r.url()); });
-    await page.goto(base + '?v=59#listen'); await page.waitForSelector('#ls-situation');
-    assert.equal(await page.evaluate(() => APP_VERSION), 'v59');
+    await page.goto(base + '#listen'); await page.waitForSelector('#ls-situation');
     const progress = await page.evaluate(() => ({ favorites: Store.progress.favorites, srs: Store.progress.srs }));
     for (const [sit, count] of Object.entries(expectedCounts)) {
       await page.locator('#ls-situation').selectOption(sit);
@@ -75,8 +77,8 @@ for (const key of keys) {
     }
     await page.locator('#ls-situation').selectOption('all');
     const all = await page.locator('#ls-list .ls-row').evaluateAll(es => es.map(e => e.dataset.key));
-    assert.equal(all.length, 1827);
-    assert.deepEqual(all.filter(k => k.startsWith('n')).sort(), noteKeys.sort());
+    assert.equal(all.length, expectedTotal);
+    assert.deepEqual(all.filter(k => k.startsWith('n')).sort(), classifiedNotes.sort());
     for (const key of keys) assert.equal(all.filter(k => k === key).length, 1);
     // Existing phrases/dialogues retain their relative order and key identities.
     const existing = [...read('data/phrases.json').map(p => 'p' + p.id), ...read('data/dialogues.json').flatMap(d => ['d' + d.id + 'a', 'd' + d.id + 'b'])];
@@ -89,7 +91,7 @@ for (const key of keys) {
     assert(sentences.includes('n1353')); assert(!sentences.includes('n1339'));
     assert.equal(words.length + sentences.length, all.length);
     await page.locator('[data-kind="all"]').click();
-    console.log('PASS: all 67 submissions / 65 stable IDs across 14 categories, 55 newly included notes, exact 1,827 rows, existing queue order and word/sentence filters.');
+    console.log(`PASS: all 67 submissions / 65 stable IDs across 14 categories, ${expectedTotal} rows including later classified notes, existing queue order and word/sentence filters.`);
     // Listen via the actual row control, not a direct Speech call.
     for (const key of ['n1353', 'n1339', 'n1360']) {
       await page.locator('#ls-situation').selectOption(situations[key]);

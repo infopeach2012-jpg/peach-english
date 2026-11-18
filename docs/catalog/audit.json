@@ -1,22 +1,22 @@
 {
   "checked_on": "2026-11-18",
-  "catalog_records": 4004,
-  "teaching_records": 3205,
+  "catalog_records": 4081,
+  "teaching_records": 3241,
   "counts": {
     "phrases": 1686,
-    "notes": 1368,
+    "notes": 1404,
     "dialogues": 86,
     "reading": 12,
     "speeches": 7,
     "patterns": 40,
     "freetalk": 6,
-    "batches": 260,
+    "batches": 300,
     "ocr": 512,
     "legacy": 12,
-    "documents": 15
+    "documents": 16
   },
-  "manifests_checked": 14,
-  "batch_occurrences": 260,
+  "manifests_checked": 15,
+  "batch_occurrences": 300,
   "legacy_counts": {
     "dialogues": 43,
     "notes": 1124,
@@ -27,16 +27,17 @@
   "legacy_differences": 12,
   "source_sha256": {
     "data/phrases.json": "3ec19280e6d6cab8c820325d6027db2e4349844948938a8c8fcd091257270358",
-    "data/notes.json": "859f556da3a92b63a2085d87d69ee0db3130e91ac5c0b15e54e29634d5f4a24b",
+    "data/notes.json": "30030a0c08f2e573aca40f09807839554a819d66ecf518f216faf5f72092611d",
     "data/dialogues.json": "0da63a5178c222d507a5b1d25e8de4092396650aceb9540eebfdd0d26d40bc87",
     "data/reading.json": "349187befd459adc4824a3fc15856bca09b9b3ffa9578689565d6458f0d4088c",
     "data/speeches.json": "0b8ff5cac9826718622d5059ac18d4481b2f9daf7ea0f2223200be673a37f3d2",
     "data/patterns.json": "3bc88e0ea207b1f3f8de23b8fde891b53f17d092ac6a90517e882c25b05cfa6c",
-    "data/note_batches.json": "f53c6372d5d73c6de07b76cdb43bb463a9c027b67f5bb271d9edd233d41b3e41",
-    "data/situations.json": "635262cfb21ea05f55594dcf53dd1127ef59b4a64ae0c4b66398193f4cb2272b",
-    "audio/audio_index.json": "21ff9c1f356f834130b2e4a6e2fb4b8379f483e4c0f58f7356b9ad788c8a00c7",
-    "audio/ja_index.json": "82a8753b11994798635effd9e1b9a5117e3940acdd04029a59f073e5e21ce860",
+    "data/note_batches.json": "ce21c13a10bfea92502f64e00142fed986d314f74ceb72671f02979405c23a14",
+    "data/situations.json": "6540ba0d9338a163a495cf326d8f4e22c812d174554d0a5fd2e578fb561bfb0a",
+    "audio/audio_index.json": "1b32313ce563dec8e6a16bfb4cfd877376074fc2ff6e3d36dc19f038b5303a4e",
+    "audio/ja_index.json": "30f74222dcb788e2bc2fa8c207947237164cf8b49dc949ec44c28cfb3b25fb71",
     "js/freetalk.js": "3bdceb840bd4977a24fb852381f0b8cb34370b62e681310b10c862b1e2062e5e",
+    "data/imports/2026-11-18-01.json": "1fd4711b9dda4f545bb8e55f4c1e8ae8a1d335e2789e9a2879af239bdcf780f8",
     "data/imports/2026-11-16-01.json": "d066bfee2822e934fde410132306dcdc76b3c43b9b9473723fb1f5aada043847",
     "data/imports/2026-11-12-01.json": "db915b24a9c90a49c06a6a6c90774ca285e9f97cf2eb4782b6952ac6c18c25e9",
     "data/imports/2026-11-10-01.json": "08d064b6c6c289bfc0fc3faf932910652ec1baaa53ee2472f8699289f35be1a2",
@@ -67,7 +68,8 @@
     "docs/lesson-notes/2026-11-09-01.md": "2c2df18030a1c3105370602c14c20479fd13c12d51e8379f51d80629a0e03435",
     "docs/lesson-notes/2026-11-10-01.md": "4abbab6cea5fa547fae2219db1a815d1aaaefbd2254936425b6a117dc097392b",
     "docs/lesson-notes/2026-11-12-01.md": "21bf574d38d8ae5e634fcb5bfe9b4114e171a08aa303931b17f4df34f972cfe3",
-    "docs/lesson-notes/2026-11-16-01.md": "4b3bef7d63b1564e19f623fec94c18ac140845c60a19466f62b4c8fce85365c4"
+    "docs/lesson-notes/2026-11-16-01.md": "4b3bef7d63b1564e19f623fec94c18ac140845c60a19466f62b4c8fce85365c4",
+    "docs/lesson-notes/2026-11-18-01.md": "c076d0475ed0e22102c555778c1650898eec4f73236257a735bddb83f8e2fe9f"
   },
   "problems": [],
   "scope": "保存中の教材JSON・全提出記録・教材文書・旧単一ファイル版・未確認OCR原文を照合。追加画像は提出ごとの記録に枚数・転記範囲を保存。過去の元画像・Excel・PDFファイル自体はこの環境にないため、保存済みの転記との照合であり、元画像全点の再読取ではない。端末内の学習履歴とAI生成会話は個人のブラウザ内にあり、この公開教材一覧には含めない。件数は表現の重複を含む記録数。"

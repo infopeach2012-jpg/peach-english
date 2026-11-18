@@ -14,23 +14,23 @@
  },
  "audit": {
   "checked_on": "2026-11-18",
-  "catalog_records": 4004,
-  "teaching_records": 3205,
+  "catalog_records": 4081,
+  "teaching_records": 3241,
   "counts": {
    "phrases": 1686,
-   "notes": 1368,
+   "notes": 1404,
    "dialogues": 86,
    "reading": 12,
    "speeches": 7,
    "patterns": 40,
    "freetalk": 6,
-   "batches": 260,
+   "batches": 300,
    "ocr": 512,
    "legacy": 12,
-   "documents": 15
+   "documents": 16
   },
-  "manifests_checked": 14,
-  "batch_occurrences": 260,
+  "manifests_checked": 15,
+  "batch_occurrences": 300,
   "legacy_counts": {
    "dialogues": 43,
    "notes": 1124,
@@ -55016,6 +55016,654 @@
    ]
   },
   {
+   "id": "n1369",
+   "kind": "notes",
+   "en": "in the box",
+   "ja": "箱の中に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1369",
+   "parts": [
+    {
+     "key": "n1369",
+     "en": "in the box"
+    }
+   ]
+  },
+  {
+   "id": "n1370",
+   "kind": "notes",
+   "en": "in the kitchen",
+   "ja": "台所に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1370",
+   "parts": [
+    {
+     "key": "n1370",
+     "en": "in the kitchen"
+    }
+   ]
+  },
+  {
+   "id": "n1371",
+   "kind": "notes",
+   "en": "in Japan",
+   "ja": "日本に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1371",
+   "parts": [
+    {
+     "key": "n1371",
+     "en": "in Japan"
+    }
+   ]
+  },
+  {
+   "id": "n1372",
+   "kind": "notes",
+   "en": "in 2022",
+   "ja": "2022年に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1372",
+   "parts": [
+    {
+     "key": "n1372",
+     "en": "in 2022"
+    }
+   ]
+  },
+  {
+   "id": "n1373",
+   "kind": "notes",
+   "en": "in June",
+   "ja": "6月に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1373",
+   "parts": [
+    {
+     "key": "n1373",
+     "en": "in June"
+    }
+   ]
+  },
+  {
+   "id": "n1374",
+   "kind": "notes",
+   "en": "in winter",
+   "ja": "冬に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1374",
+   "parts": [
+    {
+     "key": "n1374",
+     "en": "in winter"
+    }
+   ]
+  },
+  {
+   "id": "n1375",
+   "kind": "notes",
+   "en": "on May 5",
+   "ja": "5月5日に",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1375",
+   "parts": [
+    {
+     "key": "n1375",
+     "en": "on May 5"
+    }
+   ]
+  },
+  {
+   "id": "n1376",
+   "kind": "notes",
+   "en": "on Monday",
+   "ja": "月曜日に",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1376",
+   "parts": [
+    {
+     "key": "n1376",
+     "en": "on Monday"
+    }
+   ]
+  },
+  {
+   "id": "n1377",
+   "kind": "notes",
+   "en": "at six",
+   "ja": "6時に",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1377",
+   "parts": [
+    {
+     "key": "n1377",
+     "en": "at six"
+    }
+   ]
+  },
+  {
+   "id": "n1378",
+   "kind": "notes",
+   "en": "at 10:30",
+   "ja": "10時30分に",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1378",
+   "parts": [
+    {
+     "key": "n1378",
+     "en": "at 10:30"
+    }
+   ]
+  },
+  {
+   "id": "n1379",
+   "kind": "notes",
+   "en": "before dinner",
+   "ja": "夕食前に",
+   "note": "画像1の例。原資料の説明: before は「〜の前に」。 補足: この例は時間の前後関係。場所の「〜の前に」は、この表の in front of と比較する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1379",
+   "parts": [
+    {
+     "key": "n1379",
+     "en": "before dinner"
+    }
+   ]
+  },
+  {
+   "id": "n1380",
+   "kind": "notes",
+   "en": "after school",
+   "ja": "放課後に",
+   "note": "画像1の例。原資料の説明: after は「〜のあとに」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1380",
+   "parts": [
+    {
+     "key": "n1380",
+     "en": "after school"
+    }
+   ]
+  },
+  {
+   "id": "n1381",
+   "kind": "notes",
+   "en": "a letter from him",
+   "ja": "彼からの手紙",
+   "note": "画像1の例。原資料の説明: from は「〜から」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1381",
+   "parts": [
+    {
+     "key": "n1381",
+     "en": "a letter from him"
+    }
+   ]
+  },
+  {
+   "id": "n1382",
+   "kind": "notes",
+   "en": "go to school",
+   "ja": "学校へ行く",
+   "note": "画像1の例。原資料の説明: to は「〜へ」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1382",
+   "parts": [
+    {
+     "key": "n1382",
+     "en": "go to school"
+    }
+   ]
+  },
+  {
+   "id": "n1383",
+   "kind": "notes",
+   "en": "go with him",
+   "ja": "彼といっしょに行く",
+   "note": "画像1の例。原資料の説明: with は「〜といっしょに」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1383",
+   "parts": [
+    {
+     "key": "n1383",
+     "en": "go with him"
+    }
+   ]
+  },
+  {
+   "id": "n1384",
+   "kind": "notes",
+   "en": "live without water",
+   "ja": "水なしで生きる",
+   "note": "画像1の例。原資料の説明: without は「〜なしで」。 補足: 英文は全文判読できる。和訳の末尾は指に一部隠れているため、見える「水なしで生き…」をもとに「生きる」と補完した。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1384",
+   "parts": [
+    {
+     "key": "n1384",
+     "en": "live without water"
+    }
+   ]
+  },
+  {
+   "id": "n1385",
+   "kind": "notes",
+   "en": "buy a present for him",
+   "ja": "彼のためにプレゼントを買う",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1385",
+   "parts": [
+    {
+     "key": "n1385",
+     "en": "buy a present for him"
+    }
+   ]
+  },
+  {
+   "id": "n1386",
+   "kind": "notes",
+   "en": "walk for ten minutes",
+   "ja": "10分間歩く",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1386",
+   "parts": [
+    {
+     "key": "n1386",
+     "en": "walk for ten minutes"
+    }
+   ]
+  },
+  {
+   "id": "n1387",
+   "kind": "notes",
+   "en": "stay there for two weeks",
+   "ja": "そこに2週間滞在する",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1387",
+   "parts": [
+    {
+     "key": "n1387",
+     "en": "stay there for two weeks"
+    }
+   ]
+  },
+  {
+   "id": "n1388",
+   "kind": "notes",
+   "en": "the name of this song",
+   "ja": "この歌の名前",
+   "note": "画像2の例。原資料の説明: of は「〜の」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1388",
+   "parts": [
+    {
+     "key": "n1388",
+     "en": "the name of this song"
+    }
+   ]
+  },
+  {
+   "id": "n1389",
+   "kind": "notes",
+   "en": "work as a volunteer",
+   "ja": "ボランティアとして働く",
+   "note": "画像2の例。原資料の説明: as は「〜として」。 補足: as は役割・立場、like は似ていることを表す。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1389",
+   "parts": [
+    {
+     "key": "n1389",
+     "en": "work as a volunteer"
+    }
+   ]
+  },
+  {
+   "id": "n1390",
+   "kind": "notes",
+   "en": "fly like a bird",
+   "ja": "鳥のように飛ぶ",
+   "note": "画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1390",
+   "parts": [
+    {
+     "key": "n1390",
+     "en": "fly like a bird"
+    }
+   ]
+  },
+  {
+   "id": "n1391",
+   "kind": "notes",
+   "en": "That cloud looks like a fish.",
+   "ja": "あの雲は魚のように見えます。",
+   "note": "画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1391",
+   "parts": [
+    {
+     "key": "n1391",
+     "en": "That cloud looks like a fish."
+    }
+   ]
+  },
+  {
+   "id": "n1392",
+   "kind": "notes",
+   "en": "fly over the house",
+   "ja": "家の上を飛ぶ",
+   "note": "画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1392",
+   "parts": [
+    {
+     "key": "n1392",
+     "en": "fly over the house"
+    }
+   ]
+  },
+  {
+   "id": "n1393",
+   "kind": "notes",
+   "en": "over $100",
+   "ja": "100ドルをこえて",
+   "note": "画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1393",
+   "parts": [
+    {
+     "key": "n1393",
+     "en": "over $100"
+    }
+   ]
+  },
+  {
+   "id": "n1394",
+   "kind": "notes",
+   "en": "under the table",
+   "ja": "テーブルの下に",
+   "note": "画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1394",
+   "parts": [
+    {
+     "key": "n1394",
+     "en": "under the table"
+    }
+   ]
+  },
+  {
+   "id": "n1395",
+   "kind": "notes",
+   "en": "under 20 years old",
+   "ja": "20歳未満",
+   "note": "画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1395",
+   "parts": [
+    {
+     "key": "n1395",
+     "en": "under 20 years old"
+    }
+   ]
+  },
+  {
+   "id": "n1396",
+   "kind": "notes",
+   "en": "talk about it",
+   "ja": "それについて話す",
+   "note": "画像2の例。原資料の説明: about は「〜について」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1396",
+   "parts": [
+    {
+     "key": "n1396",
+     "en": "talk about it"
+    }
+   ]
+  },
+  {
+   "id": "n1397",
+   "kind": "notes",
+   "en": "walk around the house",
+   "ja": "家のまわりを歩く",
+   "note": "画像2の例。原資料の説明: around は「〜のまわりに［を］」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1397",
+   "parts": [
+    {
+     "key": "n1397",
+     "en": "walk around the house"
+    }
+   ]
+  },
+  {
+   "id": "n1398",
+   "kind": "notes",
+   "en": "near my house",
+   "ja": "私の家の近くに",
+   "note": "画像2の例。原資料の説明: near は「〜の近くに」。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1398",
+   "parts": [
+    {
+     "key": "n1398",
+     "en": "near my house"
+    }
+   ]
+  },
+  {
+   "id": "n1399",
+   "kind": "notes",
+   "en": "by bus",
+   "ja": "バスで",
+   "note": "画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1399",
+   "parts": [
+    {
+     "key": "n1399",
+     "en": "by bus"
+    }
+   ]
+  },
+  {
+   "id": "n1400",
+   "kind": "notes",
+   "en": "come back by ten",
+   "ja": "10時までに戻ってくる",
+   "note": "画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1400",
+   "parts": [
+    {
+     "key": "n1400",
+     "en": "come back by ten"
+    }
+   ]
+  },
+  {
+   "id": "n1401",
+   "kind": "notes",
+   "en": "wait until ten",
+   "ja": "10時まで待つ",
+   "note": "画像2の例。原資料の説明: until は「〜までずっと」。 補足: 待つ状態が10時まで続くことを表す。by ten は完了の期限、until ten は継続の終点。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1401",
+   "parts": [
+    {
+     "key": "n1401",
+     "en": "wait until ten"
+    }
+   ]
+  },
+  {
+   "id": "n1402",
+   "kind": "notes",
+   "en": "between A and B",
+   "ja": "AとBの間に",
+   "note": "画像2の例。原資料の説明: between は「（2つ）の間に」。 補足: 原資料は基本形を「2つ」と整理している。ただし、個々を区別した関係では3つ以上に between を使う場合もあり、数だけで決まるわけではない。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1402",
+   "parts": [
+    {
+     "key": "n1402",
+     "en": "between A and B"
+    }
+   ]
+  },
+  {
+   "id": "n1403",
+   "kind": "notes",
+   "en": "popular among young people",
+   "ja": "若い人たちの間で人気がある",
+   "note": "画像2の例。原資料の説明: among は「（3つ以上）の間に」。 補足: 原資料は「3つ以上」と整理している。among は集団の中・一員としての関係を表す。between との区別は数だけでなく、個々の関係か集団かにもよる。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1403",
+   "parts": [
+    {
+     "key": "n1403",
+     "en": "popular among young people"
+    }
+   ]
+  },
+  {
+   "id": "n1404",
+   "kind": "notes",
+   "en": "stand in front of the door",
+   "ja": "ドアの前に立つ",
+   "note": "画像2の例。原資料の説明: in front of は場所について「〜の前に」。 補足: in front of は場所の前方。before dinner の before は時間の前後を表す。",
+   "source": "data/notes.json",
+   "sourceLabel": "ノート",
+   "date": "",
+   "tags": "単語・文法",
+   "favoriteKey": "n1404",
+   "parts": [
+    {
+     "key": "n1404",
+     "en": "stand in front of the door"
+    }
+   ]
+  },
+  {
    "id": "d1a",
    "kind": "dialogues",
    "en": "Are there any tickets left?",
@@ -57702,6 +58350,806 @@
     {
      "key": "ft_meat",
      "en": "Hello! I run a restaurant and I'm looking for a new meat supplier. What kind of products do you offer?"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:0",
+   "kind": "batches",
+   "en": "in the box",
+   "ja": "箱の中に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1369",
+   "parts": [
+    {
+     "key": "n1369",
+     "en": "in the box"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:1",
+   "kind": "batches",
+   "en": "in the kitchen",
+   "ja": "台所に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1370",
+   "parts": [
+    {
+     "key": "n1370",
+     "en": "in the kitchen"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:2",
+   "kind": "batches",
+   "en": "in Japan",
+   "ja": "日本に［で］",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1371",
+   "parts": [
+    {
+     "key": "n1371",
+     "en": "in Japan"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:3",
+   "kind": "batches",
+   "en": "in 2022",
+   "ja": "2022年に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1372",
+   "parts": [
+    {
+     "key": "n1372",
+     "en": "in 2022"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:4",
+   "kind": "batches",
+   "en": "in June",
+   "ja": "6月に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1373",
+   "parts": [
+    {
+     "key": "n1373",
+     "en": "in June"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:5",
+   "kind": "batches",
+   "en": "in winter",
+   "ja": "冬に",
+   "note": "画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1374",
+   "parts": [
+    {
+     "key": "n1374",
+     "en": "in winter"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:6",
+   "kind": "batches",
+   "en": "on the table",
+   "ja": "テーブルの上に［で］",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · on（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "p1646",
+   "parts": [
+    {
+     "key": "p1646",
+     "en": "on the table"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:7",
+   "kind": "batches",
+   "en": "on the wall",
+   "ja": "壁に〈くっついて〉",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · on（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "p1642",
+   "parts": [
+    {
+     "key": "p1642",
+     "en": "on the wall"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:8",
+   "kind": "batches",
+   "en": "on May 5",
+   "ja": "5月5日に",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · on（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1375",
+   "parts": [
+    {
+     "key": "n1375",
+     "en": "on May 5"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:9",
+   "kind": "batches",
+   "en": "on Monday",
+   "ja": "月曜日に",
+   "note": "画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · on（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1376",
+   "parts": [
+    {
+     "key": "n1376",
+     "en": "on Monday"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:10",
+   "kind": "batches",
+   "en": "at the door",
+   "ja": "ドアのところに［で］",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · at（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "p1639",
+   "parts": [
+    {
+     "key": "p1639",
+     "en": "at the door"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:11",
+   "kind": "batches",
+   "en": "at the bus stop",
+   "ja": "バス停に［で］",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · at（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "p1638",
+   "parts": [
+    {
+     "key": "p1638",
+     "en": "at the bus stop"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:12",
+   "kind": "batches",
+   "en": "at six",
+   "ja": "6時に",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · at（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1377",
+   "parts": [
+    {
+     "key": "n1377",
+     "en": "at six"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:13",
+   "kind": "batches",
+   "en": "at 10:30",
+   "ja": "10時30分に",
+   "note": "画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · at（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1378",
+   "parts": [
+    {
+     "key": "n1378",
+     "en": "at 10:30"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:14",
+   "kind": "batches",
+   "en": "before dinner",
+   "ja": "夕食前に",
+   "note": "画像1の例。原資料の説明: before は「〜の前に」。 補足: この例は時間の前後関係。場所の「〜の前に」は、この表の in front of と比較する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · before（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1379",
+   "parts": [
+    {
+     "key": "n1379",
+     "en": "before dinner"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:15",
+   "kind": "batches",
+   "en": "after school",
+   "ja": "放課後に",
+   "note": "画像1の例。原資料の説明: after は「〜のあとに」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · after（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1380",
+   "parts": [
+    {
+     "key": "n1380",
+     "en": "after school"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:16",
+   "kind": "batches",
+   "en": "a letter from him",
+   "ja": "彼からの手紙",
+   "note": "画像1の例。原資料の説明: from は「〜から」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · from（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1381",
+   "parts": [
+    {
+     "key": "n1381",
+     "en": "a letter from him"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:17",
+   "kind": "batches",
+   "en": "go to school",
+   "ja": "学校へ行く",
+   "note": "画像1の例。原資料の説明: to は「〜へ」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · to（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1382",
+   "parts": [
+    {
+     "key": "n1382",
+     "en": "go to school"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:18",
+   "kind": "batches",
+   "en": "go with him",
+   "ja": "彼といっしょに行く",
+   "note": "画像1の例。原資料の説明: with は「〜といっしょに」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · with（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1383",
+   "parts": [
+    {
+     "key": "n1383",
+     "en": "go with him"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:19",
+   "kind": "batches",
+   "en": "live without water",
+   "ja": "水なしで生きる",
+   "note": "画像1の例。原資料の説明: without は「〜なしで」。 補足: 英文は全文判読できる。和訳の末尾は指に一部隠れているため、見える「水なしで生き…」をもとに「生きる」と補完した。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · without（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1384",
+   "parts": [
+    {
+     "key": "n1384",
+     "en": "live without water"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:20",
+   "kind": "batches",
+   "en": "buy a present for him",
+   "ja": "彼のためにプレゼントを買う",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · for（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1385",
+   "parts": [
+    {
+     "key": "n1385",
+     "en": "buy a present for him"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:21",
+   "kind": "batches",
+   "en": "walk for ten minutes",
+   "ja": "10分間歩く",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · for（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1386",
+   "parts": [
+    {
+     "key": "n1386",
+     "en": "walk for ten minutes"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:22",
+   "kind": "batches",
+   "en": "stay there for two weeks",
+   "ja": "そこに2週間滞在する",
+   "note": "画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · for（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1387",
+   "parts": [
+    {
+     "key": "n1387",
+     "en": "stay there for two weeks"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:23",
+   "kind": "batches",
+   "en": "the name of this song",
+   "ja": "この歌の名前",
+   "note": "画像2の例。原資料の説明: of は「〜の」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · of（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1388",
+   "parts": [
+    {
+     "key": "n1388",
+     "en": "the name of this song"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:24",
+   "kind": "batches",
+   "en": "work as a volunteer",
+   "ja": "ボランティアとして働く",
+   "note": "画像2の例。原資料の説明: as は「〜として」。 補足: as は役割・立場、like は似ていることを表す。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · as（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1389",
+   "parts": [
+    {
+     "key": "n1389",
+     "en": "work as a volunteer"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:25",
+   "kind": "batches",
+   "en": "fly like a bird",
+   "ja": "鳥のように飛ぶ",
+   "note": "画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · like（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1390",
+   "parts": [
+    {
+     "key": "n1390",
+     "en": "fly like a bird"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:26",
+   "kind": "batches",
+   "en": "That cloud looks like a fish.",
+   "ja": "あの雲は魚のように見えます。",
+   "note": "画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · like（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1391",
+   "parts": [
+    {
+     "key": "n1391",
+     "en": "That cloud looks like a fish."
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:27",
+   "kind": "batches",
+   "en": "fly over the house",
+   "ja": "家の上を飛ぶ",
+   "note": "画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · over（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1392",
+   "parts": [
+    {
+     "key": "n1392",
+     "en": "fly over the house"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:28",
+   "kind": "batches",
+   "en": "over $100",
+   "ja": "100ドルをこえて",
+   "note": "画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · over（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1393",
+   "parts": [
+    {
+     "key": "n1393",
+     "en": "over $100"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:29",
+   "kind": "batches",
+   "en": "under the table",
+   "ja": "テーブルの下に",
+   "note": "画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · under（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1394",
+   "parts": [
+    {
+     "key": "n1394",
+     "en": "under the table"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:30",
+   "kind": "batches",
+   "en": "under 20 years old",
+   "ja": "20歳未満",
+   "note": "画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · under（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1395",
+   "parts": [
+    {
+     "key": "n1395",
+     "en": "under 20 years old"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:31",
+   "kind": "batches",
+   "en": "talk about it",
+   "ja": "それについて話す",
+   "note": "画像2の例。原資料の説明: about は「〜について」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · about（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1396",
+   "parts": [
+    {
+     "key": "n1396",
+     "en": "talk about it"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:32",
+   "kind": "batches",
+   "en": "walk around the house",
+   "ja": "家のまわりを歩く",
+   "note": "画像2の例。原資料の説明: around は「〜のまわりに［を］」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · around（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1397",
+   "parts": [
+    {
+     "key": "n1397",
+     "en": "walk around the house"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:33",
+   "kind": "batches",
+   "en": "near my house",
+   "ja": "私の家の近くに",
+   "note": "画像2の例。原資料の説明: near は「〜の近くに」。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · near（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1398",
+   "parts": [
+    {
+     "key": "n1398",
+     "en": "near my house"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:34",
+   "kind": "batches",
+   "en": "by bus",
+   "ja": "バスで",
+   "note": "画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · by（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1399",
+   "parts": [
+    {
+     "key": "n1399",
+     "en": "by bus"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:35",
+   "kind": "batches",
+   "en": "come back by ten",
+   "ja": "10時までに戻ってくる",
+   "note": "画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · by（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1400",
+   "parts": [
+    {
+     "key": "n1400",
+     "en": "come back by ten"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:36",
+   "kind": "batches",
+   "en": "wait until ten",
+   "ja": "10時まで待つ",
+   "note": "画像2の例。原資料の説明: until は「〜までずっと」。 補足: 待つ状態が10時まで続くことを表す。by ten は完了の期限、until ten は継続の終点。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · until（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1401",
+   "parts": [
+    {
+     "key": "n1401",
+     "en": "wait until ten"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:37",
+   "kind": "batches",
+   "en": "between A and B",
+   "ja": "AとBの間に",
+   "note": "画像2の例。原資料の説明: between は「（2つ）の間に」。 補足: 原資料は基本形を「2つ」と整理している。ただし、個々を区別した関係では3つ以上に between を使う場合もあり、数だけで決まるわけではない。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · between（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1402",
+   "parts": [
+    {
+     "key": "n1402",
+     "en": "between A and B"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:38",
+   "kind": "batches",
+   "en": "popular among young people",
+   "ja": "若い人たちの間で人気がある",
+   "note": "画像2の例。原資料の説明: among は「（3つ以上）の間に」。 補足: 原資料は「3つ以上」と整理している。among は集団の中・一員としての関係を表す。between との区別は数だけでなく、個々の関係か集団かにもよる。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · among（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1403",
+   "parts": [
+    {
+     "key": "n1403",
+     "en": "popular among young people"
+    }
+   ]
+  },
+  {
+   "id": "2026-11-18-01:39",
+   "kind": "batches",
+   "en": "stand in front of the door",
+   "ja": "ドアの前に立つ",
+   "note": "画像2の例。原資料の説明: in front of は場所について「〜の前に」。 補足: in front of は場所の前方。before dinner の before は時間の前後を表す。",
+   "source": "data/imports/2026-11-18-01.json",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）",
+   "section": "11月18日追加 · in front of（前置詞）",
+   "date": "",
+   "added_on": "2026-11-18",
+   "tags": "単語・文法",
+   "favoriteKey": "n1404",
+   "parts": [
+    {
+     "key": "n1404",
+     "en": "stand in front of the door"
     }
    ]
   },
@@ -67755,6 +69203,15 @@
    "note": "# Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気\n\n追加日: 2026-11-16 / 教材の日付: 記載なし\n\n出典: 2026-11-16受領のSpeak画像17枚。中央カードの全文と和訳17項目を転記。画像14は灰色表示でも全文が明瞭なため収録。画像14下部に見える日焼け止めの英文は画像15と同一のため、画像15を完全な出典として1項目に整理。画面上部の薄い別カード、隠れた見出しや穴埋めの背景は推測で復元しない。学習日の記載はないため追加日と区別する。文法・語彙の説明と華氏・摂氏の換算は補足と明記。\n\n英文は画像から転記。和訳・説明は画像の内容を基に、未記載部分を補っています。\n\n## 11月16日追加 · 提案・おすすめ・申し出\n\n- **Shall we call it a night?**\n  - 和訳: そろそろお開きにしようか？\n  - メモ: 画像1の英文・和訳。画面の型: Shall we ___? 補足: Shall we + 動詞の原形? は「一緒に～しましょうか」。call it a night は夜の活動や集まりを切り上げるという慣用表現。\n\n- **Who do you recommend?**\n  - 和訳: 誰がおすすめですか？\n  - メモ: 画像2の英文・和訳。補足: who はここでは recommend の目的語で「誰をすすめますか」。相手がすすめる人を尋ねる。\n\n- **I can take you there!**\n  - 和訳: そこまでお連れできますよ！\n  - メモ: 画像3の英文・和訳。画面の題: 声かけ・申し出・返事。補足: take + 人 + there は人をそこへ連れて行く。Can I take you there?（連れて行きましょうか）と語順・形が異なる。\n\n## 11月16日追加 · 出来事・トラブル\n\n- **My phone got soaked in the rain.**\n  - 和訳: 私の携帯電話が雨でびしょ濡れになった。\n  - メモ: 画像4の英文・和訳。補足: get + 過去分詞でその状態になることを表す。soaked はびしょ濡れの。got は get の過去形。\n\n- **My passport got misplaced during check-in.**\n  - 和訳: チェックイン中に私のパスポートを紛失してしまいました。\n  - メモ: 画像5の英文・和訳。補足: misplaced は置き場所が分からなくなった・誤った場所に置かれた。盗まれたことや永久に失ったことまでは意味しない。during check-in はチェックインの間に。\n\n## 11月16日追加 · 持ち物・体調を尋ねる\n\n- **Do you have any cash on you?**\n  - 和訳: あなたは現金を持っていますか？\n  - メモ: 画像6の英文・和訳。補足: on you は「今、身につけて・手元に」。現金を所有しているか一般論でなく、現在持ち合わせているかを尋ねる。\n\n- **Do you have any spare batteries?**\n  - 和訳: 予備の電池はありますか？\n  - メモ: 画像7の英文・和訳。補足: spare は予備の。batteries は battery の複数形。疑問文の any で何か・いくつかあるかを尋ねる。\n\n- **Do you have any allergies?**\n  - 和訳: 何かアレルギーはありますか？\n  - メモ: 画像8の英文・和訳。補足: allergy の複数形が allergies。食べ物・薬などに対するアレルギーの有無を尋ねる。対象は文脈による。\n\n## 11月16日追加 · 試着・必要なこと\n\n- **They have to try on helmets for the ride.**\n  - 和訳: 彼らは乗る前にヘルメットを試着しなければなりません。\n  - メモ: 画像9の英文・和訳。補足: have to + 動詞の原形で必要・義務を表す。try on は試着する。for the ride は乗るために・乗車に備えてという意味。画面の和訳は「乗る前に」と表現している。\n\n- **I have to try on a different size.**\n  - 和訳: 別のサイズを試着しなければなりません。\n  - メモ: 画像10の英文・和訳。補足: a different size は別のサイズ。try on の目的語が代名詞なら try it on のように間に置く。\n\n## 11月16日追加 · 人・物の説明\n\n- **I am your neighbor from across the street.**\n  - 和訳: 私は通りの向かいに住んでいるあなたの隣人です。\n  - メモ: 画像11の英文・和訳。補足: across the street は通りの向かい側に。neighbor は隣の家に限らず近所の人。from across the street が neighbor を説明する。\n\n- **They're incredibly helpful during emergencies.**\n  - 和訳: 彼らは緊急時にとても役立ちます。\n  - メモ: 画像12の英文・和訳。補足: incredibly は非常に・驚くほど。helpful は役に立つ、emergencies は emergency（緊急事態）の複数形。\n\n- **Mine is slightly scratched.**\n  - 和訳: 私のものは少し傷がついています。\n  - メモ: 画像13の英文・和訳。補足: mine は my + 名詞に相当する「私のもの」。slightly は少し、scratched はひっかき傷などが付いた状態。\n\n## 11月16日追加 · 天気・外出\n\n- **It's cold out; grab a jacket.**\n  - 和訳: 外は寒いから、ジャケットを取ってきて。\n  - メモ: 画像14の英文・和訳。補足: out は屋外で。grab はここではさっと取る・持ってくるというくだけた表現。画像14の灰色表示でも中央の英文・和訳は全文読めるため収録。\n\n- **It's sunny out, so wear sunscreen.**\n  - 和訳: 外は晴れているから、日焼け止めを塗って。\n  - メモ: 画像15の英文・和訳。補足: so はだから。wear sunscreen は日焼け止めを肌に付けている状態・使用すること。画像14の下部にも同じ英文が一部見えるが、全文・和訳が読める画像15を基準に収録。\n\n- **It's 72 degrees out today, so let's walk.**\n  - 和訳: 今日は外が72度だから、歩いて行こう。\n  - メモ: 画像16の英文・和訳。補足: degrees は温度の度。画像に単位は明記されていないが、米国の日常的な気温としては華氏72°F（約22.2°C）と考えられる。摂氏72°Cという意味で覚えない。out は外で、let’s walk は歩いて行こうという提案。\n\n## 11月16日追加 · 提案・おすすめ・申し出\n\n- **What do you recommend we do?**\n  - 和訳: 私たちに何をするのをおすすめしますか？\n  - メモ: 画像17の英文・和訳。補足: recommend (that) we do の that が省かれた形で、私たちがすることについておすすめを尋ねる。自然な和訳の例は「私たちは何をするのがおすすめですか？」。原文の和訳は画面どおり保持。\n",
    "source": "docs/lesson-notes/2026-11-16-01.md",
    "sourceLabel": "Speak画像：提案・おすすめ・トラブル・持ち物・試着・天気"
+  },
+  {
+   "id": "doc:2026-11-18-01",
+   "kind": "documents",
+   "en": "",
+   "ja": "",
+   "note": "# 教科書画像：前置詞の使い分け（23項目・例40件）\n\n追加日: 2026-11-18 / 教材の日付: 記載なし\n\n出典: 2026-11-18受領の教科書写真2枚。画像1のp.134と、続きの表の画像2。見出し「基礎ができたら、もっとくわしく。」「前置詞の使い分けを知ろう / Using Prepositions」、導入「前置詞（→p.50）の意味と使い分けを確認しておきましょう。」、表「in, on, at の使い分け」「いろいろな前置詞」。23種類の前置詞の説明と例40件を転記。画像1の右端に一部写る次ページの表は画像2で確認し、重複計上しない。live without water の和訳末尾は指に一部隠れているため補完箇所をメモに明記した。その他の英文・和訳は画像から転記。表記の空白・数字・括弧は読みやすく整えた。between / among、by / until などの追加説明は「補足」と区別。学習日は記載されていない。\n\n英文は画像から転記。和訳・説明は画像の内容を基に、未記載部分を補っています。\n\n## 11月18日追加 · in（前置詞）\n\n- **in the box**\n  - 和訳: 箱の中に［で］\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n- **in the kitchen**\n  - 和訳: 台所に［で］\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n- **in Japan**\n  - 和訳: 日本に［で］\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n- **in 2022**\n  - 和訳: 2022年に\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n- **in June**\n  - 和訳: 6月に\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n- **in winter**\n  - 和訳: 冬に\n  - メモ: 画像1の例。原資料の説明: in は「（ある空間）の中に［で］」。時間では年・月・季節に使う。 補足: 場所の内部や広がりのある期間を表す。英文が句の場合は、文中の一部分として練習する。\n\n## 11月18日追加 · on（前置詞）\n\n- **on the table**\n  - 和訳: テーブルの上に［で］\n  - メモ: 画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。\n\n- **on the wall**\n  - 和訳: 壁に〈くっついて〉\n  - メモ: 画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。\n\n- **on May 5**\n  - 和訳: 5月5日に\n  - メモ: 画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。\n\n- **on Monday**\n  - 和訳: 月曜日に\n  - メモ: 画像1の例。原資料の説明: on は「〜の上に［で］」「〜の表面に接触して」。時間では日付・曜日に使う。 補足: on the wall のように、接する面は水平な面とは限らない。\n\n## 11月18日追加 · at（前置詞）\n\n- **at the door**\n  - 和訳: ドアのところに［で］\n  - メモ: 画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。\n\n- **at the bus stop**\n  - 和訳: バス停に［で］\n  - メモ: 画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。\n\n- **at six**\n  - 和訳: 6時に\n  - メモ: 画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。\n\n- **at 10:30**\n  - 和訳: 10時30分に\n  - メモ: 画像1の例。原資料の説明: at は「〜のところに［で］」。時間では時刻に使う。 補足: 地点や特定の時点を示す。at six / at 10:30 は、この表では時刻の例。\n\n## 11月18日追加 · before（前置詞）\n\n- **before dinner**\n  - 和訳: 夕食前に\n  - メモ: 画像1の例。原資料の説明: before は「〜の前に」。 補足: この例は時間の前後関係。場所の「〜の前に」は、この表の in front of と比較する。\n\n## 11月18日追加 · after（前置詞）\n\n- **after school**\n  - 和訳: 放課後に\n  - メモ: 画像1の例。原資料の説明: after は「〜のあとに」。\n\n## 11月18日追加 · from（前置詞）\n\n- **a letter from him**\n  - 和訳: 彼からの手紙\n  - メモ: 画像1の例。原資料の説明: from は「〜から」。\n\n## 11月18日追加 · to（前置詞）\n\n- **go to school**\n  - 和訳: 学校へ行く\n  - メモ: 画像1の例。原資料の説明: to は「〜へ」。\n\n## 11月18日追加 · with（前置詞）\n\n- **go with him**\n  - 和訳: 彼といっしょに行く\n  - メモ: 画像1の例。原資料の説明: with は「〜といっしょに」。\n\n## 11月18日追加 · without（前置詞）\n\n- **live without water**\n  - 和訳: 水なしで生きる\n  - メモ: 画像1の例。原資料の説明: without は「〜なしで」。 補足: 英文は全文判読できる。和訳の末尾は指に一部隠れているため、見える「水なしで生き…」をもとに「生きる」と補完した。\n\n## 11月18日追加 · for（前置詞）\n\n- **buy a present for him**\n  - 和訳: 彼のためにプレゼントを買う\n  - メモ: 画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。\n\n- **walk for ten minutes**\n  - 和訳: 10分間歩く\n  - メモ: 画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。\n\n- **stay there for two weeks**\n  - 和訳: そこに2週間滞在する\n  - メモ: 画像2の例。原資料の説明: for は「〜のために」「〜にとって」。時間の長さについて「（〜分）間」「（〜日）間」。 補足: for ten minutes / for two weeks の for は継続する期間を表す。\n\n## 11月18日追加 · of（前置詞）\n\n- **the name of this song**\n  - 和訳: この歌の名前\n  - メモ: 画像2の例。原資料の説明: of は「〜の」。\n\n## 11月18日追加 · as（前置詞）\n\n- **work as a volunteer**\n  - 和訳: ボランティアとして働く\n  - メモ: 画像2の例。原資料の説明: as は「〜として」。 補足: as は役割・立場、like は似ていることを表す。\n\n## 11月18日追加 · like（前置詞）\n\n- **fly like a bird**\n  - 和訳: 鳥のように飛ぶ\n  - メモ: 画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。\n\n- **That cloud looks like a fish.**\n  - 和訳: あの雲は魚のように見えます。\n  - メモ: 画像2の例。原資料の説明: like は「〜のように［な］」。 補足: ここでの like は「好き」という動詞ではなく、類似を表す前置詞。look like は「〜のように見える」。\n\n## 11月18日追加 · over（前置詞）\n\n- **fly over the house**\n  - 和訳: 家の上を飛ぶ\n  - メモ: 画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。\n\n- **over $100**\n  - 和訳: 100ドルをこえて\n  - メモ: 画像2の例。原資料の説明: over は接触せずに「〜の上に」、または「〜をこえて」。 補足: この表は代表的な意味の整理。over は覆うなど別の用法もある。over $100 は100ドルより多く、ちょうど100ドルを含まない。\n\n## 11月18日追加 · under（前置詞）\n\n- **under the table**\n  - 和訳: テーブルの下に\n  - メモ: 画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。\n\n- **under 20 years old**\n  - 和訳: 20歳未満\n  - メモ: 画像2の例。原資料の説明: under は接触せずに「〜の下に」、または「〜より低い」。 補足: この表は代表的な意味の整理。under が常に非接触を意味するわけではない。under 20 は20を含まない。\n\n## 11月18日追加 · about（前置詞）\n\n- **talk about it**\n  - 和訳: それについて話す\n  - メモ: 画像2の例。原資料の説明: about は「〜について」。\n\n## 11月18日追加 · around（前置詞）\n\n- **walk around the house**\n  - 和訳: 家のまわりを歩く\n  - メモ: 画像2の例。原資料の説明: around は「〜のまわりに［を］」。\n\n## 11月18日追加 · near（前置詞）\n\n- **near my house**\n  - 和訳: 私の家の近くに\n  - メモ: 画像2の例。原資料の説明: near は「〜の近くに」。\n\n## 11月18日追加 · by（前置詞）\n\n- **by bus**\n  - 和訳: バスで\n  - メモ: 画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。\n\n- **come back by ten**\n  - 和訳: 10時までに戻ってくる\n  - メモ: 画像2の例。原資料の説明: by は「〜で」「〜によって」。期限を表して「〜までに」。 補足: by bus は交通手段。by ten は10時を期限とし、それまでのどこかで戻る。until ten（10時までずっと）と区別する。\n\n## 11月18日追加 · until（前置詞）\n\n- **wait until ten**\n  - 和訳: 10時まで待つ\n  - メモ: 画像2の例。原資料の説明: until は「〜までずっと」。 補足: 待つ状態が10時まで続くことを表す。by ten は完了の期限、until ten は継続の終点。\n\n## 11月18日追加 · between（前置詞）\n\n- **between A and B**\n  - 和訳: AとBの間に\n  - メモ: 画像2の例。原資料の説明: between は「（2つ）の間に」。 補足: 原資料は基本形を「2つ」と整理している。ただし、個々を区別した関係では3つ以上に between を使う場合もあり、数だけで決まるわけではない。\n\n## 11月18日追加 · among（前置詞）\n\n- **popular among young people**\n  - 和訳: 若い人たちの間で人気がある\n  - メモ: 画像2の例。原資料の説明: among は「（3つ以上）の間に」。 補足: 原資料は「3つ以上」と整理している。among は集団の中・一員としての関係を表す。between との区別は数だけでなく、個々の関係か集団かにもよる。\n\n## 11月18日追加 · in front of（前置詞）\n\n- **stand in front of the door**\n  - 和訳: ドアの前に立つ\n  - メモ: 画像2の例。原資料の説明: in front of は場所について「〜の前に」。 補足: in front of は場所の前方。before dinner の before は時間の前後を表す。\n",
+   "source": "docs/lesson-notes/2026-11-18-01.md",
+   "sourceLabel": "教科書画像：前置詞の使い分け（23項目・例40件）"
   }
  ]
 }
